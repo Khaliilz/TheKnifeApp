@@ -1,0 +1,1 @@
+mvn clean package && java -jar target/theknife-1.0-shaded.jar
