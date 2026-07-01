@@ -1,19 +1,4 @@
-.debug {
-    -fx-border-color: red;
-    -fx-border-width: 2;
-    -fx-border-style: dashed;
-}
-
-#homepage
-{
-  -fx-background-color: #dadada;
-  -fx-background-radius: 14px;
-}
-
-#toolbar
-{
-  -fx-background-radius: 14 14 0 0;
-}
+@import "theknifeStyle.css";
 
 #exit_B
 {
@@ -24,7 +9,7 @@
   -fx-cursor: hand;
   -fx-background-radius: 14px;
   -fx-padding: 0;
-  -fx-background-image: url(img/exitIcon.png);
+  -fx-background-image: url(../img/exitIcon.png);
   -fx-background-repeat: no-repeat;
   -fx-background-position: center center;
 }
@@ -32,11 +17,6 @@
 #exit_B:hover
 {
   -fx-background-color: #FF6666;
-}
-
-#exit_B:pressed
-{
-  -fx-background-color: #FF0000;
 }
 
 #minimize_B
@@ -48,7 +28,7 @@
   -fx-cursor: hand;
   -fx-background-radius: 14px;
   -fx-padding: 0;
-  -fx-background-image: url(img/minimizeIcon.png);
+  -fx-background-image: url(../img/minimizeIcon.png);
   -fx-background-repeat: no-repeat;
   -fx-background-position: center center;
 }
@@ -56,9 +36,4 @@
 #minimize_B:hover
 {
   -fx-background-color: #FFB266;
-}
-
-#minimize_B:pressed
-{
-  -fx-background-color: #FF8000;
 }
