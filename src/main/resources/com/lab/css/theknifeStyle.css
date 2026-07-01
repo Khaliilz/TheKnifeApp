@@ -1,0 +1,43 @@
+.debug {
+    -fx-border-color: BLACK;
+    -fx-border-width: 2;
+}
+
+#homepage
+{
+  -fx-background-color: #dadada;
+  -fx-background-radius: 14px;
+}
+
+#toolbar
+{
+  -fx-background-radius: 14 14 0 0;
+}
+
+.theKnifeText
+{
+  -fx-fill: #dadada;
+  -fx-stroke: #000000;
+  -fx-strokeWidth: 1px;
+  -fx-font-family: "Impact";
+  -fx-font-size: 30px;
+}
+
+.theknifeButton
+{
+  -fx-background-color: #009900;
+  -fx-focus-color: transparent;
+  -fx-faint-focus-color: transparent;
+  -fx-cursor: hand;
+  -fx-background-radius: 30px;
+  -fx-border-radius: 30px;
+  -fx-border-color: #000000;
+  -fx-border-width: 2px;
+  -fx-background-insets: 2px;
+}
+
+.theknifeButton:hover
+{
+  -fx-background-color: #00a500;
+  -fx-border-style: segments(20, 5);
+}
