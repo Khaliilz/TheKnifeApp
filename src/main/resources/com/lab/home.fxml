@@ -31,14 +31,6 @@
       </Text>
     </StackPane>
 
-    <StackPane layoutY="230" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
-      <Text text="Come desideri accedere?">
-        <font>
-          <Font name="Verdana" size="30"/>
-        </font>
-      </Text>
-    </StackPane>
-
     <VBox alignment="CENTER" spacing="60" AnchorPane.topAnchor="300" AnchorPane.leftAnchor="500" AnchorPane.rightAnchor="500">
       <Button fx:id="signin_B" styleClass="theknifeButton"  prefWidth="230" prefHeight="70" onAction="#signinClicked">
         <graphic>

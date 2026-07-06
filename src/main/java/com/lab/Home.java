@@ -28,7 +28,7 @@ public class Home extends Application {
 			return;
 		}
 
-		//if(home instanceof javafx.scene.layout.Pane) Lib.drawGridLines((javafx.scene.layout.Pane) home);
+		if(home instanceof javafx.scene.layout.Pane) Lib.drawGridLines((javafx.scene.layout.Pane) home);
 
 		Scene scene = new Scene(home, 1280, 700);
 		scene.setFill(Color.TRANSPARENT);
