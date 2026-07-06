@@ -12,18 +12,10 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.geometry.Insets?>
 
-<AnchorPane fx:id="homepage" stylesheets="@css/homepageStyle.css" prefWidth="1280" prefHeight="700" xmlns="http://javafx.com/javafx/17.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.lab.HomeController">
+<AnchorPane fx:id="homePage" prefWidth="1280" prefHeight="700" xmlns="http://javafx.com/javafx/17.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.lab.controller.HomeController">
   <children>
-    <StackPane fx:id="toolbar" prefHeight="50" AnchorPane.topAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" style="-fx-background-color: #009900;">
-      <Text text="TheKnife" styleClass="theKnifeText"/>
 
-      <HBox alignment="CENTER_RIGHT" StackPane.alignment="CENTER_RIGHT" pickOnBounds="false">
-        <Button fx:id="minimize_B" prefWidth="40" prefHeight="40" onAction="#minimizeClicked"/>
-        <Button fx:id="exit_B" prefWidth="40" prefHeight="40" onAction="#exitClicked"/>
-      </HBox>
-    </StackPane>
-
-    <StackPane layoutY="100" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+    <StackPane AnchorPane.topAnchor="80" AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0">
       <Text text="Benvenuto su TheKnife" fill="#009900" stroke="black" strokeWidth="1.5">
         <font>
           <Font name="Impact" size="80"/>
@@ -31,7 +23,7 @@
       </Text>
     </StackPane>
 
-    <VBox alignment="CENTER" spacing="60" AnchorPane.topAnchor="300" AnchorPane.leftAnchor="500" AnchorPane.rightAnchor="500">
+    <VBox alignment="CENTER" spacing="60" AnchorPane.topAnchor="250" AnchorPane.leftAnchor="500" AnchorPane.rightAnchor="500">
       <Button fx:id="signin_B" styleClass="theknifeButton"  prefWidth="230" prefHeight="70" onAction="#signinClicked">
         <graphic>
           <Text text="Accedi" styleClass="theKnifeText"/>

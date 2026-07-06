@@ -1,4 +1,23 @@
-@import "theknifeStyle.css";
+@import "defaultStyle.css";
+
+#back_B
+{
+  -fx-background-color: transparent;
+  -fx-border-color: transparent;
+  -fx-focus-color: transparent;
+  -fx-faint-focus-color: transparent;
+  -fx-cursor: hand;
+  -fx-background-radius: 14px;
+  -fx-padding: 0;
+  -fx-background-image: url(../img/backIcon.png);
+  -fx-background-repeat: no-repeat;
+  -fx-background-position: center center;
+}
+
+#back_B:hover
+{
+  -fx-background-color: #52bcfe;
+}
 
 #exit_B
 {
