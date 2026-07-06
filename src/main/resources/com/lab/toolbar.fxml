@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.text.Text?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.geometry.Insets?>
+
+
+<StackPane fx:id="toolbar" stylesheets="@css/toolbarStyle.css" prefHeight="50" xmlns="http://javafx.com/javafx/17.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.lab.controller.ToolbarController">
+  <Text text="TheKnife" styleClass="theKnifeText"/>
+  <HBox alignment="CENTER_LEFT" pickOnBounds="false">
+      <Button fx:id="back_B" visible="false" prefWidth="40" prefHeight="40" onAction="#backClicked"/>
+    </HBox>
+
+  <HBox alignment="CENTER_RIGHT" StackPane.alignment="CENTER_RIGHT" pickOnBounds="false">
+    <Button fx:id="minimize_B" prefWidth="40" prefHeight="40" onAction="#minimizeClicked"/>
+    <Button fx:id="exit_B" prefWidth="40" prefHeight="40" onAction="#exitClicked"/>
+  </HBox>
+</StackPane>

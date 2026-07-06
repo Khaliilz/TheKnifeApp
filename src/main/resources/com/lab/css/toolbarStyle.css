@@ -1,18 +1,22 @@
-.debug {
-    -fx-border-color: red;
-    -fx-border-width: 2;
-    -fx-border-style: dashed;
-}
+@import "defaultStyle.css";
 
-#homepage
+#back_B
 {
-  -fx-background-color: #dadada;
+  -fx-background-color: transparent;
+  -fx-border-color: transparent;
+  -fx-focus-color: transparent;
+  -fx-faint-focus-color: transparent;
+  -fx-cursor: hand;
   -fx-background-radius: 14px;
+  -fx-padding: 0;
+  -fx-background-image: url(../img/backIcon.png);
+  -fx-background-repeat: no-repeat;
+  -fx-background-position: center center;
 }
 
-#toolbar
+#back_B:hover
 {
-  -fx-background-radius: 14 14 0 0;
+  -fx-background-color: #52bcfe;
 }
 
 #exit_B
@@ -24,7 +28,7 @@
   -fx-cursor: hand;
   -fx-background-radius: 14px;
   -fx-padding: 0;
-  -fx-background-image: url(img/exitIcon.png);
+  -fx-background-image: url(../img/exitIcon.png);
   -fx-background-repeat: no-repeat;
   -fx-background-position: center center;
 }
@@ -32,11 +36,6 @@
 #exit_B:hover
 {
   -fx-background-color: #FF6666;
-}
-
-#exit_B:pressed
-{
-  -fx-background-color: #FF0000;
 }
 
 #minimize_B
@@ -48,7 +47,7 @@
   -fx-cursor: hand;
   -fx-background-radius: 14px;
   -fx-padding: 0;
-  -fx-background-image: url(img/minimizeIcon.png);
+  -fx-background-image: url(../img/minimizeIcon.png);
   -fx-background-repeat: no-repeat;
   -fx-background-position: center center;
 }
@@ -56,9 +55,4 @@
 #minimize_B:hover
 {
   -fx-background-color: #FFB266;
-}
-
-#minimize_B:pressed
-{
-  -fx-background-color: #FF8000;
 }

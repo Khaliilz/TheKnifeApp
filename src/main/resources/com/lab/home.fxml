@@ -5,52 +5,40 @@
 <?import javafx.scene.text.Text?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
+<?import javafx.geometry.Insets?>
 
-<AnchorPane fx:id="homepage" stylesheets="@theknifeStyle.css" prefWidth="1280" prefHeight="700" xmlns="http://javafx.com/javafx/17.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.lab.HomeController">
+<AnchorPane fx:id="homePage" prefWidth="1280" prefHeight="700" xmlns="http://javafx.com/javafx/17.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.lab.controller.HomeController">
   <children>
-    <Pane fx:id="toolbar" layoutX="0" layoutY="0" prefWidth="1280" prefHeight="45" style="-fx-background-color: #009900;">
 
-      <Text text="TheKnife" layoutX="600" layoutY="33.5" fill="#dadada" stroke="black" strokeWidth="1">
+    <StackPane AnchorPane.topAnchor="80" AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0">
+      <Text text="Benvenuto su TheKnife" fill="#009900" stroke="black" strokeWidth="1.5">
         <font>
-          <Font name="Impact" size="30"/>
+          <Font name="Impact" size="80"/>
         </font>
-      </Text> 
+      </Text>
+    </StackPane>
 
-      <Button fx:id="exit_B" prefWidth="40" prefHeight="40" layoutX="1235" layoutY="2"
-        onAction="#exitClicked"/>
-
-      <Button fx:id="minimize_B" prefWidth="40" prefHeight="40" layoutX="1190" layoutY="2"
-        onAction="#minimizeClicked"/>
-    </Pane>
-
-    <Text text="Benvenuto su TheKnife" layoutX="370" layoutY="150" fill="#009900" stroke="black" strokeWidth="1.5">
-      <font>
-        <Font name="Impact" size="60"/>
-      </font>
-    </Text>
-
-    <Text text="Come desideri accedere?" layoutX="460" layoutY="230">
-      <font>
-        <Font name="Verdana" size="30"/>
-      </font>
-    </Text>
-
-    <VBox spacing="60" alignment="CENTER" 
-      AnchorPane.topAnchor="300" AnchorPane.leftAnchor="500" AnchorPane.rightAnchor="500">
-
-      <Button fx:id="signin_B" text="Accedi" prefWidth="230" prefHeight="70"
-        onAction="#signinClicked"/>
-
-      <Button fx:id="signup_B" text="Registrati" prefWidth="230" prefHeight="70"
-        onAction="#signupClicked"/>
-
-      <Button fx:id="guest_B" text="Ospite" prefWidth="230" prefHeight="70"
-        onAction="#guestClicked"/>
+    <VBox alignment="CENTER" spacing="60" AnchorPane.topAnchor="250" AnchorPane.leftAnchor="500" AnchorPane.rightAnchor="500">
+      <Button fx:id="signin_B" styleClass="theknifeButton"  prefWidth="230" prefHeight="70" onAction="#signinClicked">
+        <graphic>
+          <Text text="Accedi" styleClass="theKnifeText"/>
+        </graphic>  
+      </Button>
+      <Button fx:id="signup_B" styleClass="theknifeButton" prefWidth="230" prefHeight="70" onAction="#signupClicked">
+        <graphic>
+          <Text text="Registrati" styleClass="theKnifeText"/>
+        </graphic>
+      </Button>
+      <Button fx:id="guest_B" styleClass="theknifeButton" prefWidth="230" prefHeight="70" onAction="#guestClicked">
+        <graphic>
+          <Text text="Ospite" styleClass="theKnifeText"/>
+        </graphic>
+      </Button>
     </VBox>
-
   </children>
 </AnchorPane>
