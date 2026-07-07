@@ -10,6 +10,8 @@ import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
 
+import java.time.LocalDate;
+
 public class SignupController {
   
   @FXML private TextField nome_TF;
@@ -58,7 +60,7 @@ public class SignupController {
       Lib.errorBorder(cognome_TF);
       error = true;
     }
-    if(dataNascita.isEmpty() || !dataNascita.matches("\\d{2}/\\d{2}/\\d{4}")){ 
+    if(dataNascita.isEmpty() || !dataNascita.matches("\\d{2}/\\d{2}/\\d{4}") || !checkDataNascita(dataNascita)){ 
       Lib.errorBorder(dataNascita_TF); 
       error = true; 
     }
@@ -77,5 +79,25 @@ public class SignupController {
 
     if(error) return;
     System.out.println("[" + Lib.GREEN + "SIGNIN" + Lib.RESET + "]" + " Signup completed [ " + username + ", " + password + ", " + ruolo + " ]");
+  }
+
+  public boolean checkDataNascita(String date)
+  {
+    int[] dayPerMonth = {31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
+
+    LocalDate today = LocalDate.now();
+    int todayYear = today.getYear();
+
+    String[] dateSplitted = date.split("/");
+    int day = Integer.parseInt(dateSplitted[0]);
+    int month = Integer.parseInt(dateSplitted[1]);
+    int year = Integer.parseInt(dateSplitted[2]);
+
+    if(year > todayYear) return false;
+    if(month > 12 || month < 1) return false;
+    if(day > 31 || day < 1) return false;
+    if(day > dayPerMonth[month-1]) return false;
+    if(month == 2 && day == 29) return year%4==0 && (year%100!=0 || year%400==0); 
+    return true;
   }
 }

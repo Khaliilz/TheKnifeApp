@@ -3,10 +3,10 @@ package com.lab;
 import javafx.application.Platform;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.Pane;
+
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-
 import org.junit.jupiter.api.BeforeAll;
 
 public class LibTest{

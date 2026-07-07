@@ -39,7 +39,7 @@
       <HBox alignment="CENTER" spacing="40">
         <VBox alignment="CENTER_LEFT" spacing="5">
           <Label styleClass="theknifeLabel" text="Data di nascita:"/> 
-          <TextField fx:id="dataNascita_TF" styleClass="theknifeInput" prefWidth="300" prefHeight="45" promptText="gg/mm/2004" alignment="CENTER"/>
+          <TextField fx:id="dataNascita_TF" styleClass="theknifeInput" prefWidth="300" prefHeight="45" promptText="gg/mm/aaaa" alignment="CENTER"/>
         </VBox>
         <VBox alignment="CENTER_LEFT" spacing="5">
           <Label styleClass="theknifeLabel" text="Domicilio:"/> 
