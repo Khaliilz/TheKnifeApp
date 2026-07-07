@@ -20,19 +20,20 @@ public class HomeController {
   @FXML
   public void signinClicked(ActionEvent event)
   {
-    System.out.println("[" + Lib.GREEN + "SIGNIN" + Lib.RESET + "]" + " signin scene...");
+    System.out.println("[" + Lib.GREEN + "SIGNIN" + Lib.RESET + "]" + " Signin scene");
     PageController.selectPage("signin.fxml");
   }
 
   @FXML
   public void signupClicked(ActionEvent event)
   {
-    System.out.println("[" + Lib.GREEN + "SIGNUP" + Lib.RESET + "]" + " signup scene...");
+    System.out.println("[" + Lib.GREEN + "SIGNUP" + Lib.RESET + "]" + " Signup scene");
+    PageController.selectPage("signup.fxml");
   }
 
   @FXML
   public void guestClicked(ActionEvent event)
   {
-    System.out.println("[" + Lib.GREEN + "GUEST" + Lib.RESET + "]" + " guest scene...");
+    System.out.println("[" + Lib.GREEN + "GUEST" + Lib.RESET + "]" + " Guest scene");
   }
 }

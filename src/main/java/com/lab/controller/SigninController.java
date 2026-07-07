@@ -20,11 +20,27 @@ public class SigninController {
   {
     password_PF.setOnAction(this::signinClicked);
     ToolbarController.setupBackButton(true, "home.fxml");
+    Lib.resetBorder(username_TF);
+    Lib.resetBorder(password_PF);
   }
 
   @FXML
   public void signinClicked(ActionEvent event)
   {
-    System.out.println("[" + Lib.GREEN + "SIGNIN" + Lib.RESET + "]" + " Accesso completato");
+    boolean error = false;
+    String username = username_TF.getText();
+    String password = password_PF.getText();
+
+    if(username.isEmpty()){
+      Lib.errorBorder(username_TF);
+      error = true;
+    }
+    if(password.isEmpty() || password.length() < 8){ 
+      Lib.errorBorder(password_PF); 
+      error = true; 
+    }
+
+    if(error) return;
+    System.out.println("[" + Lib.GREEN + "SIGNIN" + Lib.RESET + "]" + " Signin completed [ " + username + ", " + password + " ]");
   }
 }

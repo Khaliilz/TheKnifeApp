@@ -1,5 +1,6 @@
 package com.lab;
 
+import javafx.scene.control.TextField;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
@@ -47,6 +48,19 @@ public class Lib {
     lineC.setStrokeWidth(3);
     lineC.setOpacity(0.5);
     root.getChildren().add(lineC);
+  }
+
+  public static void errorBorder(TextField field)
+  {
+    field.clear();
+    if (!field.getStyleClass().contains("errorInput")) field.getStyleClass().add("errorInput");
+  }
+
+  public static void resetBorder(TextField field)
+  {
+    field.focusedProperty().addListener((observable, wasFocused, isNowFocused) -> {
+      if(isNowFocused) field.getStyleClass().remove("errorInput");
+    });
   }
 
 }

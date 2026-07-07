@@ -1,8 +1,3 @@
-.debug {
-    -fx-border-color: BLACK;
-    -fx-border-width: 2;
-}
-
 .theKnifeText
 {
   -fx-fill: #dadada;
@@ -57,5 +52,26 @@
 .theknifeInput:focused
 {
   -fx-border-color: #009900;
-  -fx-border-width: 3px;
+  -fx-border-width: 2px;
+}
+
+.errorInput
+{
+  -fx-border-color: red;
+  -fx-border-width: 2px;
+}
+
+.theknifeLabel
+{
+  -fx-font-family: 'Verdana';
+  -fx-font-size: 14px;
+  -fx-text-fill: #333333;
+  -fx-font-weight: bold;
+}
+
+.theknifeRadioButton
+{
+  -fx-font-size: 16px;
+  -fx-focus-color: #009900;
+  -fx-accent: #009900;
 }
