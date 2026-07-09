@@ -30,7 +30,9 @@ public class SignupController {
   @FXML
   public void initialize()
   {
+    PageController.showTitle(true);
     ToolbarController.setupBackButton(true, "home.fxml");
+    password_PF.setOnAction(this::signupClicked);
     Lib.resetBorder(nome_TF);
     Lib.resetBorder(cognome_TF);
     Lib.resetBorder(dataNascita_TF);
@@ -78,7 +80,7 @@ public class SignupController {
     }
 
     if(error) return;
-    System.out.println("[" + Lib.GREEN + "SIGNIN" + Lib.RESET + "]" + " Signup completed [ " + username + ", " + password + ", " + ruolo + " ]");
+    System.out.println("[" + Lib.GREEN + "SCENE" + Lib.RESET + "]" + " Signup completed [" + username + ", " + password + ", " + ruolo + "]");
   }
 
   public boolean checkDataNascita(String date)

@@ -3,6 +3,7 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.text.Text?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -13,21 +14,20 @@
 <AnchorPane fx:id="signinPage" prefWidth="1280" prefHeight="700" xmlns="http://javafx.com/javafx/17.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.lab.controller.SigninController">
   <children>
 
-    <StackPane AnchorPane.topAnchor="80" AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0">
-      <Text text="Benvenuto su TheKnife" fill="#009900" stroke="black" strokeWidth="1.5">
-        <font>
-          <Font name="Impact" size="80"/>
-        </font>
-      </Text>
-    </StackPane>
+    <VBox alignment="CENTER" spacing="25" AnchorPane.topAnchor="250" AnchorPane.leftAnchor="500" AnchorPane.rightAnchor="500">
+      <VBox alignment="CENTER_LEFT" spacing="5">
+        <Label styleClass="theknifeLabel" text="Username:"/> 
+        <TextField fx:id="username_TF" styleClass="theknifeInput" prefWidth="230" prefHeight="70" alignment="CENTER"/>
+      </VBox>
 
-    <VBox alignment="CENTER" spacing="60" AnchorPane.topAnchor="250" AnchorPane.leftAnchor="500" AnchorPane.rightAnchor="500">
-      <TextField fx:id="username_TF" styleClass="theknifeInput" maxWidth="300" prefWidth="230" prefHeight="70" promptText="Inserisci il tuo username..." alignment="CENTER"/>
-      <PasswordField fx:id="password_PF" styleClass="theknifeInput" maxWidth="300" prefWidth="230" prefHeight="70" promptText="Inserisci la tua password..." alignment="CENTER"/>
+      <VBox alignment="CENTER_LEFT" spacing="5">
+        <Label styleClass="theknifeLabel" text="Password:"/> 
+        <PasswordField fx:id="password_PF" styleClass="theknifeInput" prefWidth="230" prefHeight="70" alignment="CENTER"/>
+      </VBox>
 
       <Button fx:id="signin_B" styleClass="theknifeButton" prefWidth="230" prefHeight="70" onAction="#signinClicked">
         <graphic>
-          <Text text="Accedi" styleClass="theKnifeText"/>
+          <Text text="Accedi" styleClass="theknifeText"/>
         </graphic>
       </Button>
     </VBox>

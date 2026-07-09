@@ -14,26 +14,28 @@ public class HomeController {
 
   public void initialize()
   {
+    PageController.showTitle(true);
     ToolbarController.showBackButton(false);
   }
 
   @FXML
   public void signinClicked(ActionEvent event)
   {
-    System.out.println("[" + Lib.GREEN + "SIGNIN" + Lib.RESET + "]" + " Signin scene");
+    System.out.println("[" + Lib.GREEN + "SCENE" + Lib.RESET + "]" + " Signin");
     PageController.selectPage("signin.fxml");
   }
 
   @FXML
   public void signupClicked(ActionEvent event)
   {
-    System.out.println("[" + Lib.GREEN + "SIGNUP" + Lib.RESET + "]" + " Signup scene");
+    System.out.println("[" + Lib.GREEN + "SCENE" + Lib.RESET + "]" + " Signup");
     PageController.selectPage("signup.fxml");
   }
 
   @FXML
   public void guestClicked(ActionEvent event)
   {
-    System.out.println("[" + Lib.GREEN + "GUEST" + Lib.RESET + "]" + " Guest scene");
+    System.out.println("[" + Lib.GREEN + "SCENE" + Lib.RESET + "]" + " Guest");
+    PageController.selectPage("guest.fxml");
   }
 }

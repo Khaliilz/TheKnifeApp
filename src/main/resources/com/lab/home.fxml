@@ -11,28 +11,20 @@
 <AnchorPane fx:id="homePage" prefWidth="1280" prefHeight="700" xmlns="http://javafx.com/javafx/17.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.lab.controller.HomeController">
   <children>
 
-    <StackPane AnchorPane.topAnchor="80" AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0">
-      <Text text="Benvenuto su TheKnife" fill="#009900" stroke="black" strokeWidth="1.5">
-        <font>
-          <Font name="Impact" size="80"/>
-        </font>
-      </Text>
-    </StackPane>
-
     <VBox alignment="CENTER" spacing="60" AnchorPane.topAnchor="250" AnchorPane.leftAnchor="500" AnchorPane.rightAnchor="500">
       <Button fx:id="signin_B" styleClass="theknifeButton"  prefWidth="230" prefHeight="70" onAction="#signinClicked">
         <graphic>
-          <Text text="Accedi" styleClass="theKnifeText"/>
+          <Text text="Accedi" styleClass="theknifeText"/>
         </graphic>  
       </Button>
       <Button fx:id="signup_B" styleClass="theknifeButton" prefWidth="230" prefHeight="70" onAction="#signupClicked">
         <graphic>
-          <Text text="Registrati" styleClass="theKnifeText"/>
+          <Text text="Registrati" styleClass="theknifeText"/>
         </graphic>
       </Button>
       <Button fx:id="guest_B" styleClass="theknifeButton" prefWidth="230" prefHeight="70" onAction="#guestClicked">
         <graphic>
-          <Text text="Ospite" styleClass="theKnifeText"/>
+          <Text text="Ospite" styleClass="theknifeText"/>
         </graphic>
       </Button>
     </VBox>
