@@ -1,14 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.text.Text?>
+<?import javafx.scene.text.Font?>
 
 <BorderPane fx:id="page" stylesheets="@css/defaultStyle.css" prefWidth="1280" prefHeight="700" xmlns="http://javafx.com/javafx/17.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.lab.controller.PageController">
   <top>
     <fx:include source="toolbar.fxml"/>
   </top>
-
+  
   <center>
-    <StackPane fx:id="contentArea"/>
+    <AnchorPane>
+      <StackPane fx:id="pageTitle" AnchorPane.topAnchor="80" AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0">
+        <Text fx:id="textTitle" text="Benvenuto su TheKnife" fill="#009900" stroke="black" strokeWidth="1.5">
+          <font>
+            <Font name="Impact" size="80"/>
+          </font>
+        </Text>
+      </StackPane>
+
+      <StackPane fx:id="contentArea" AnchorPane.topAnchor="0" AnchorPane.bottomAnchor="0" AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0"/>
+    </AnchorPane>
   </center>
 </BorderPane>

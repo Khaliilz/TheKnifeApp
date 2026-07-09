@@ -10,11 +10,14 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.layout.StackPane;
+import javafx.scene.text.Text;
 import javafx.util.Duration;
 
 public class PageController {
   
   @FXML private StackPane contentArea;
+  @FXML private StackPane pageTitle;
+  @FXML private Text textTitle;
 
   private static PageController pageController;
 
@@ -26,6 +29,18 @@ public class PageController {
     selectPage("home.fxml");
   }
 
+  public static void showTitle(boolean show) {
+      if (pageController != null && pageController.pageTitle != null) {
+          pageController.pageTitle.setVisible(show);
+      }
+  }
+
+  public static void setTitleText(String text) {
+      if (pageController != null && pageController.textTitle != null) {
+          pageController.textTitle.setText(text);
+      }
+  }
+  
   public static void selectPage(String fileName)
   {
     if(pageController != null) pageController.loadPage(fileName);

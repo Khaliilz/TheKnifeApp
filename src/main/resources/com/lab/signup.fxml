@@ -15,14 +15,6 @@
 
 <AnchorPane fx:id="signupPage" prefWidth="1280" prefHeight="700" xmlns="http://javafx.com/javafx/17.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.lab.controller.SignupController">
   <children>
-
-    <StackPane AnchorPane.topAnchor="80" AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0">
-      <Text text="Benvenuto su TheKnife" fill="#009900" stroke="black" strokeWidth="1.5">
-        <font>
-          <Font name="Impact" size="80"/>
-        </font>
-      </Text>
-    </StackPane>
     
     <VBox alignment="CENTER" spacing="25" AnchorPane.topAnchor="200" AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0">
       <HBox alignment="CENTER" spacing="40">
@@ -70,7 +62,7 @@
 
       <Button fx:id="signup_B" styleClass="theknifeButton" prefWidth="230" prefHeight="70" onAction="#signupClicked">
         <graphic>
-          <Text text="Registrati" styleClass="theKnifeText"/>
+          <Text text="Registrati" styleClass="theknifeText"/>
         </graphic>
       </Button>
     </VBox>

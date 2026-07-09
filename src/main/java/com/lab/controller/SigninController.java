@@ -18,8 +18,10 @@ public class SigninController {
   @FXML
   public void initialize()
   {
-    password_PF.setOnAction(this::signinClicked);
+    
+    PageController.showTitle(true);
     ToolbarController.setupBackButton(true, "home.fxml");
+    password_PF.setOnAction(this::signinClicked);
     Lib.resetBorder(username_TF);
     Lib.resetBorder(password_PF);
   }
@@ -41,6 +43,6 @@ public class SigninController {
     }
 
     if(error) return;
-    System.out.println("[" + Lib.GREEN + "SIGNIN" + Lib.RESET + "]" + " Signin completed [ " + username + ", " + password + " ]");
+    System.out.println("[" + Lib.GREEN + "SCENE" + Lib.RESET + "]" + " Signin completed [" + username + ", " + password + "]");
   }
 }
