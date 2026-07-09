@@ -22,7 +22,7 @@ public class HomeController {
   public void signinClicked(ActionEvent event)
   {
     System.out.println("[" + Lib.GREEN + "SCENE" + Lib.RESET + "]" + " Signin");
-    PageController.selectPage("signin.fxml");
+    PageController.selectPage("signedinHome.fxml");
   }
 
   @FXML

@@ -43,6 +43,7 @@ public class SigninController {
     }
 
     if(error) return;
-    System.out.println("[" + Lib.GREEN + "SCENE" + Lib.RESET + "]" + " Signin completed [" + username + ", " + password + "]");
+    System.out.println("[" + Lib.GREEN + "SCENE" + Lib.RESET + "] Signin completed [" + username + ", " + password + "]");
+    PageController.selectPage("signinHome.fxml");
   }
 }

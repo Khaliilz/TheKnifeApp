@@ -1,0 +1,47 @@
+.textInButtons
+{
+  -fx-font-family: "Verdana";
+  -fx-font-size: 14px;
+}
+
+.detailButton
+{
+  -fx-background-color: #ffffff;
+  -fx-cursor: hand;
+  -fx-background-radius: 5px;
+  -fx-border-radius: 5px;
+  -fx-border-color: #000000;
+  -fx-border-width: 2px;
+  -fx-font-family: "Verdana";
+  -fx-font-size: 14px;
+  -fx-font-weight: bold;
+}
+
+.detailButton:hover
+{
+  -fx-border-color: #009900;
+}
+
+.bookmarkButton
+{
+  -fx-background-color: transparent;
+  -fx-cursor: hand;
+  -fx-background-image: url("../img/bookmarkIcon.png");
+  -fx-background-repeat: no-repeat;
+  -fx-background-position: center center;
+  -fx-background-size: 20px 20px;
+}
+
+#listOfRestaurants
+{
+  -fx-border-color: blac;
+  -fx-border-width: 1px;
+  -fx-background-color: white;
+  -fx-padding: 15;
+}
+
+#listContainer_SP
+{
+  -fx-background-color: transparent;
+  -fx-border-color: #000000;
+}
