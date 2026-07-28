@@ -27,14 +27,14 @@
 }
 
 #page {
-    -fx-background-color: #d3d3d3;
-    -fx-background-radius: 20px;
-    -fx-border-radius: 20px;
+  -fx-background-color: #d3d3d3;
+  -fx-background-radius: 20px;
+  -fx-border-radius: 20px;
 }
 
 #toolbar {
-    -fx-background-color: #009900;
-    -fx-background-radius: 18px 18px 0 0; 
+  -fx-background-color: #009900;
+  -fx-background-radius: 18px 18px 0 0; 
 }
 
 .theknifeInput

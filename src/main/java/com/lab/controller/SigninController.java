@@ -18,7 +18,6 @@ public class SigninController {
   @FXML
   public void initialize()
   {
-    
     PageController.showTitle(true);
     ToolbarController.setupBackButton(true, "home.fxml");
     password_PF.setOnAction(this::signinClicked);
@@ -43,6 +42,7 @@ public class SigninController {
     }
 
     if(error) return;
-    System.out.println("[" + Lib.GREEN + "SCENE" + Lib.RESET + "]" + " Signin completed [" + username + ", " + password + "]");
+    System.out.println("[" + Lib.GREEN + "SCENE" + Lib.RESET + "] Signin completed [" + username + ", " + password + "]");
+    PageController.selectPage("signinHome.fxml");
   }
 }

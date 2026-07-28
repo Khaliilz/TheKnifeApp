@@ -11,6 +11,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 public class SignupController {
   
@@ -24,8 +25,6 @@ public class SignupController {
   @FXML private RadioButton cliente_RB;
   @FXML private RadioButton ristoratore_RB;
   @FXML private Button signup_B;
-
-  
 
   @FXML
   public void initialize()
@@ -80,26 +79,21 @@ public class SignupController {
     }
 
     if(error) return;
-    System.out.println("[" + Lib.GREEN + "SCENE" + Lib.RESET + "]" + " Signup completed [" + username + ", " + password + ", " + ruolo + "]");
+    System.out.println("[" + Lib.GREEN + "SCENE" + Lib.RESET + "] Signup completed [" + username + ", " + password + ", " + ruolo + "]");
   }
 
   public boolean checkDataNascita(String date)
   {
-    int[] dayPerMonth = {31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
+    DateTimeFormatter format = DateTimeFormatter.ofPattern("dd/MM/uuuu");
 
-    LocalDate today = LocalDate.now();
-    int todayYear = today.getYear();
+    try{
+      LocalDate dateParsed = LocalDate.parse(date, format);
+      LocalDate today = LocalDate.now();
+      long betweenDates = java.time.temporal.ChronoUnit.YEARS.between(dateParsed, today);
+      if(dateParsed.isAfter(today)) return false;
+      if(betweenDates >= 90 || betweenDates <= 16) return false;
+    }catch(java.time.format.DateTimeParseException e) { return false; }
 
-    String[] dateSplitted = date.split("/");
-    int day = Integer.parseInt(dateSplitted[0]);
-    int month = Integer.parseInt(dateSplitted[1]);
-    int year = Integer.parseInt(dateSplitted[2]);
-
-    if(year > todayYear) return false;
-    if(month > 12 || month < 1) return false;
-    if(day > 31 || day < 1) return false;
-    if(day > dayPerMonth[month-1]) return false;
-    if(month == 2 && day == 29) return year%4==0 && (year%100!=0 || year%400==0); 
     return true;
   }
 }

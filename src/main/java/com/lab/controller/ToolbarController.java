@@ -52,21 +52,21 @@ public class ToolbarController {
 
   @FXML
   public void backClicked(ActionEvent event) {
-    System.out.println("[" + Lib.BLUE + "BACK" + Lib.RESET + "]" + " Backed to Home page");
+    System.out.println("[" + Lib.BLUE + "ACTION" + Lib.RESET + "] Backed to Home page");
     PageController.selectPage(page);
   }
 
   @FXML
   public void exitClicked(ActionEvent event)
   {
-    System.out.println("[" + Lib.RED + "EXIT" + Lib.RESET + "]" + " Application closed");
+    System.out.println("[" + Lib.BLUE + "ACTION" + Lib.RESET + "] Application closed");
     Platform.exit();
   }
 
   @FXML
   public void minimizeClicked(ActionEvent event)
   {
-    System.out.println("[" + Lib.ORANGE + "MINIMIZE" + Lib.RESET + "]" + " Window minimized");
+    System.out.println("[" + Lib.BLUE + "ACTION" + Lib.RESET + "] Window minimized");
     Stage stage = (Stage) toolbar.getScene().getWindow();
     stage.setIconified(true);
   }
