@@ -18,7 +18,6 @@ public class SigninController {
   @FXML
   public void initialize()
   {
-    
     PageController.showTitle(true);
     ToolbarController.setupBackButton(true, "home.fxml");
     password_PF.setOnAction(this::signinClicked);

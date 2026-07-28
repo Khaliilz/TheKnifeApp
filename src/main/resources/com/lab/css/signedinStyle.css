@@ -32,16 +32,108 @@
   -fx-background-size: 20px 20px;
 }
 
-#listOfRestaurants
+.container
 {
-  -fx-border-color: blac;
-  -fx-border-width: 1px;
-  -fx-background-color: white;
+  -fx-border-color: #000000;
+  -fx-border-radius: 5px;
+  -fx-background-color: #ffffff;
+  -fx-background-radius: 5px;
+}
+
+#listOfRestaurants_VB
+{
+  -fx-background-color: #ffffff;
   -fx-padding: 15;
 }
 
 #listContainer_SP
 {
   -fx-background-color: transparent;
-  -fx-border-color: #000000;
+  -fx-padding: 0; 
+  -fx-border-color: transparent;
+}
+
+#listContainer_SP > .viewport
+{
+  -fx-background-color: transparent;
+}
+
+#listContainer_SP .scroll-bar:vertical
+{
+  -fx-background-color: #ffffff;
+  -fx-pref-width: 12px;
+}
+
+#listContainer_SP .scroll-bar:vertical .track,
+#listContainer_SP .scroll-bar:vertical .track-background
+{
+  -fx-background-color: transparent;
+  -fx-border-color: transparent;
+}
+
+#listContainer_SP .scroll-bar:vertical .increment-button,
+#listContainer_SP .scroll-bar:vertical .decrement-button,
+#listContainer_SP .scroll-bar:vertical .increment-arrow,
+#listContainer_SP .scroll-bar:vertical .decrement-arrow
+{
+  -fx-background-color: transparent;
+  -fx-shape: " ";
+  -fx-padding: 2px;
+  -fx-pref-height: 0px;
+}
+
+#listContainer_SP .scroll-bar:vertical .thumb
+{
+  -fx-background-color: #ffffff;
+  -fx-background-radius: 5px;
+  -fx-border-color: #009900;
+  -fx-border-radius: 5px;
+}
+
+#listContainer_SP .scroll-bar:vertical .thumb:hover,
+#listContainer_SP .scroll-bar:vertical .thumb:pressed
+{
+  -fx-background-color: #009900;
+}
+
+#titleText
+{
+  -fx-fill: #ffffff;
+  -fx-stroke: #000000;
+  -fx-stroke-width: 1.3px;
+  -fx-font-family: "Impact";
+  -fx-font-size: 40px;
+}
+
+#luogo_TF
+{
+  -fx-font-family: "Verdana";
+  -fx-font-size: 18px;
+  -fx-background-color: #ffffff;
+  -fx-background-radius: 10px;
+  -fx-border-radius: 10px;
+  -fx-border-color: black;
+  -fx-border-width: 1.3px;
+  -fx-padding: 10px;
+  -fx-min-width: 270px;
+  -fx-pref-width: 270px;
+  -fx-max-width: 270px;
+}
+
+#luogo_TF:focused
+{
+  -fx-border-color: #009900;
+  -fx-border-width: 1.3px;
+}
+
+#luogo_TF.errorInput
+{
+  -fx-border-color: red;
+  -fx-border-width: 1.3px;
+}
+
+#luogo_TF.errorInput:focused
+{
+  -fx-border-color: red;
+  -fx-border-width: 1.3px;
 }

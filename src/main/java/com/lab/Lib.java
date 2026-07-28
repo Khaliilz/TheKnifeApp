@@ -61,6 +61,14 @@ public class Lib {
     field.focusedProperty().addListener((observable, wasFocused, isNowFocused) -> {
       if(isNowFocused) field.getStyleClass().remove("errorInput");
     });
+
+    field.textProperty().addListener((observable, oldValue, newValue) -> {
+      field.getStyleClass().remove("errorInput");
+    });
+
+    field.setOnMouseClicked(event -> {
+      field.getStyleClass().remove("errorInput");
+    });
   }
 
 }

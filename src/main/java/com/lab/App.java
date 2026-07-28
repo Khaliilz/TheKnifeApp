@@ -35,7 +35,7 @@ public class App extends Application {
 
 		Image icon = new Image(getClass().getResource("img/logo.png").toExternalForm());
 		stage.getIcons().add(icon);
-
+		
 		stage.setTitle("TheKnife");
 		stage.initStyle(StageStyle.TRANSPARENT);
 		stage.setScene(scene);
