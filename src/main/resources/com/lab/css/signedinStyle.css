@@ -96,13 +96,19 @@
   -fx-background-color: #009900;
 }
 
+@font-face
+{
+  src: url("../font/Oswald-Bold.ttf");
+}
+
 #titleText
 {
   -fx-fill: #ffffff;
   -fx-stroke: #000000;
-  -fx-stroke-width: 1.3px;
-  -fx-font-family: "Impact";
-  -fx-font-size: 40px;
+  -fx-stroke-width: 1.5px;
+  -fx-font-family: "Oswald";
+  -fx-font-weight: bold;
+  -fx-font-size: 56px;
 }
 
 #luogo_TF
@@ -115,9 +121,6 @@
   -fx-border-color: black;
   -fx-border-width: 1.3px;
   -fx-padding: 10px;
-  -fx-min-width: 270px;
-  -fx-pref-width: 270px;
-  -fx-max-width: 270px;
 }
 
 #luogo_TF:focused

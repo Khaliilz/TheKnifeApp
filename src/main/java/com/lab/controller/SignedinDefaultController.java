@@ -25,13 +25,47 @@ public class SignedinDefaultController {
   @FXML private Text titleText;
   @FXML private VBox listOfRestaurants_VB;
 
+  private static SignedinDefaultController instance;
+
   @FXML
   public void initialize()
   {
+    instance = this;
+
     PageController.showTitle(false); 
     ToolbarController.showBackButton(false);
     loadRightMenu("Ristoranti nelle vicinanze", "rightMenuSearch.fxml");
-    fillListOfRestaurants();
+    
+    loadNearest();
+  }
+
+  public static SignedinDefaultController getInstance()
+  {
+    return instance;
+  }
+
+  public void loadNearest()
+  {
+    titleText.setText("Ristoranti nelle vicinanze");
+    listOfRestaurants_VB.getChildren().clear();
+
+    fillRestaurants();
+  }
+
+  public void loadBookmarked()
+  {
+    titleText.setText("Ristoranti preferiti");
+    listOfRestaurants_VB.getChildren().clear();
+
+    fillRestaurants();
+  }
+
+  public void loadReviewed()
+  {
+    titleText.setText("Ristoranti recensiti");
+    listOfRestaurants_VB.getChildren().clear();
+
+    fillReviewed();
   }
 
   public void loadRightMenu(String newTitle, String fileName)
@@ -46,7 +80,15 @@ public class SignedinDefaultController {
     }
   }
 
-  private void fillListOfRestaurants() 
+  public void searchByPlace(String place)
+  {
+    titleText.setText("Ristoranti a: " + place);
+    listOfRestaurants_VB.getChildren().clear();
+
+    fillRestaurants();
+  }
+
+  private void fillRestaurants() 
   {
     String[] ristorante1 = {"Ristorante 1", "via Trieste 12, Milano", "5", "10"};
     ArrayList<String[]> ristoranti = new ArrayList<>();
@@ -93,6 +135,40 @@ public class SignedinDefaultController {
       });
 
       line_HB.getChildren().addAll(text_VB, spacer, details_B, bookmark_B);
+      listOfRestaurants_VB.getChildren().addAll(line_HB);
+    }
+  }
+
+  private void fillReviewed()
+  {
+    String[] ristorante1 = {"Ristorante 1", "via Trieste 12, Milano", "5", "10"};
+    ArrayList<String[]> ristoranti = new ArrayList<>();
+    for(int i=0; i<15; i++) ristoranti.add(ristorante1);
+
+    for(String[] r : ristoranti){
+      HBox line_HB = new HBox();
+      line_HB.setSpacing(15);
+      line_HB.setAlignment(Pos.CENTER_LEFT);
+      line_HB.setStyle("-fx-border-color: #009900; -fx-border-width: 0 0 1 0; -fx-padding: 20;");
+
+      VBox text_VB = new VBox();
+      text_VB.setSpacing(5);
+
+      Label name_L = new Label(r[0] + "\t-\t" + r[1]);
+      name_L.getStyleClass().add("theknifeLabel");
+      Label stats_L = new Label("Il tuo voto: ⭐⭐⭐⭐⭐ \t 💬 Il cibo era fantastico, il cameriere molto gentile. Ci tornerò sicuramente la prossima settimana con gli amici!");
+
+      text_VB.getChildren().addAll(name_L, stats_L);
+
+      Pane spacer = new Pane();
+      HBox.setHgrow(spacer, Priority.ALWAYS);
+
+      Button view_B = new Button("Visualizza");
+      view_B.getStyleClass().add("detailButton");
+      view_B.setPrefSize(150, 40);
+      view_B.setOnAction(e -> System.out.println("[" + Lib.BLUE + "ACTION" + Lib.RESET + "] View button pressed"));
+
+      line_HB.getChildren().addAll(text_VB, spacer, view_B);
       listOfRestaurants_VB.getChildren().addAll(line_HB);
     }
   }

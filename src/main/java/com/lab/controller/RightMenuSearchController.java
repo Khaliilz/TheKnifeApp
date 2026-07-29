@@ -30,18 +30,28 @@ public class RightMenuSearchController {
     }
 
     if(error) return;
+
     System.out.println("[" + Lib.GREEN + "SCENE" + Lib.RESET + "] Search: " + place);
+    SignedinDefaultController.getInstance().searchByPlace(place);
+  }
+
+  @FXML
+  public void filterClicked(ActionEvent event)
+  {
+    System.out.println("[" + Lib.GREEN + "SCENE" + Lib.RESET + "] Filter");
   }
 
   @FXML
   public void bookmarkClicked(ActionEvent event)
   {
+    SignedinDefaultController.getInstance().loadBookmarked();
     System.out.println("[" + Lib.GREEN + "SCENE" + Lib.RESET + "] Bookmark");
   }
 
   @FXML
   public void reviewClicked(ActionEvent event)
   {
+    SignedinDefaultController.getInstance().loadReviewed();
     System.out.println("[" + Lib.GREEN + "SCENE" + Lib.RESET + "] Review");
   }
 }

@@ -9,7 +9,7 @@
 <AnchorPane prefWidth="1280" prefHeight="700" stylesheets="@css/signedinStyle.css" xmlns="http://javafx.com/javafx/17.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.lab.controller.SignedinDefaultController">
   <children>
     <StackPane alignment="CENTER" AnchorPane.topAnchor="50" AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0">
-      <Text fx:id="titleText" text="Ristoranti nelle vicinanze"/>
+      <Text fx:id="titleText" text="Default title"/>
     </StackPane>
 
     <StackPane styleClass="container" AnchorPane.topAnchor="150" AnchorPane.bottomAnchor="70" AnchorPane.leftAnchor="30" AnchorPane.rightAnchor="350">

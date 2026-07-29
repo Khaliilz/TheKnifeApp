@@ -15,11 +15,7 @@
   <center>
     <AnchorPane>
       <StackPane fx:id="pageTitle" AnchorPane.topAnchor="80" AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0">
-        <Text fx:id="textTitle" text="Benvenuto su TheKnife" fill="#009900" stroke="black" strokeWidth="1.5">
-          <font>
-            <Font name="Impact" size="80"/>
-          </font>
-        </Text>
+        <Text fx:id="textTitle" text="Benvenuto su TheKnife"/>
       </StackPane>
 
       <StackPane fx:id="contentArea" AnchorPane.topAnchor="0" AnchorPane.bottomAnchor="0" AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0"/>
