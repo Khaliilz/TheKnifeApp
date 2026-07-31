@@ -16,15 +16,15 @@
     <TextField fx:id="luogo_TF" maxWidth="220" prefHeight="30" alignment="CENTER"/>
 
     <HBox spacing="10" alignment="CENTER" prefWidth="200">
-      	<Button styleClass="detailButton" prefWidth="105" prefHeight="40" onAction="#searchClicked"> 
+		<Button styleClass="detailButton" prefWidth="105" prefHeight="40" onAction="#filterClicked"> 
             <graphic> 
-            	<Text styleClass="textInButtons" text="Cerca"/> 
+            	<Text styleClass="textInButtons" text="Filtra"/> 
             </graphic> 
         </Button>
 
-				<Button styleClass="detailButton" prefWidth="105" prefHeight="40" onAction="#filterClicked"> 
+      	<Button styleClass="detailButton" prefWidth="105" prefHeight="40" onAction="#searchClicked"> 
             <graphic> 
-            	<Text styleClass="textInButtons" text="Filtra"/> 
+            	<Text styleClass="textInButtons" text="Cerca"/> 
             </graphic> 
         </Button>
     </HBox>
