@@ -12,6 +12,7 @@ import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Priority;
@@ -24,8 +25,11 @@ public class SignedinDefaultController {
   @FXML private StackPane rightMenuArea;
   @FXML private Text titleText;
   @FXML private VBox listOfRestaurants_VB;
+  @FXML private ScrollPane listContainer_SP;
+  @FXML private StackPane leftMenuArea;
 
   private static SignedinDefaultController instance;
+  private javafx.scene.Node detailsNode;
 
   @FXML
   public void initialize()
@@ -46,6 +50,8 @@ public class SignedinDefaultController {
 
   public void loadNearest()
   {
+    closeDetails();
+
     titleText.setText("Ristoranti nelle vicinanze");
     listOfRestaurants_VB.getChildren().clear();
 
@@ -54,6 +60,8 @@ public class SignedinDefaultController {
 
   public void loadBookmarked()
   {
+    closeDetails();
+
     titleText.setText("Ristoranti preferiti");
     listOfRestaurants_VB.getChildren().clear();
 
@@ -62,6 +70,8 @@ public class SignedinDefaultController {
 
   public void loadReviewed()
   {
+    closeDetails();
+
     titleText.setText("Ristoranti recensiti");
     listOfRestaurants_VB.getChildren().clear();
 
@@ -82,10 +92,22 @@ public class SignedinDefaultController {
 
   public void searchByPlace(String place)
   {
-    titleText.setText("Ristoranti a: " + place);
+    closeDetails();
+
+    titleText.setText("Ristoranti a " + place);
     listOfRestaurants_VB.getChildren().clear();
 
     fillRestaurants();
+  }
+
+  public void applyFilters()
+  {
+    closeDetails();
+    
+    titleText.setText("Ristoranti trovati");
+    listOfRestaurants_VB.getChildren().clear();
+    
+    fillRestaurants(); 
   }
 
   private void fillRestaurants() 
@@ -115,7 +137,10 @@ public class SignedinDefaultController {
       Button details_B = new Button("Dettagli");
       details_B.getStyleClass().add("detailButton");
       details_B.setPrefSize(150, 40);
-      details_B.setOnAction(e -> System.out.println("[" + Lib.BLUE + "ACTION" + Lib.RESET + "] Detail button pressed"));
+      details_B.setOnAction(e -> {
+        System.out.println("[" + Lib.BLUE + "ACTION" + Lib.RESET + "] Detail button pressed");
+        viewDetails(r);
+      });
 
       final boolean[] isBookmarked = {false};
       Button bookmark_B = new Button();
@@ -166,10 +191,41 @@ public class SignedinDefaultController {
       Button view_B = new Button("Visualizza");
       view_B.getStyleClass().add("detailButton");
       view_B.setPrefSize(150, 40);
-      view_B.setOnAction(e -> System.out.println("[" + Lib.BLUE + "ACTION" + Lib.RESET + "] View button pressed"));
+      view_B.setOnAction(e -> {
+        System.out.println("[" + Lib.BLUE + "ACTION" + Lib.RESET + "] View button pressed");
+        viewDetails(r);
+      });
 
       line_HB.getChildren().addAll(text_VB, spacer, view_B);
       listOfRestaurants_VB.getChildren().addAll(line_HB);
     }
+  }
+
+  public void viewDetails(String[] restaurant)
+  {
+    try {
+      FXMLLoader loader = new FXMLLoader(App.class.getResource("/com/lab/details.fxml"));
+      detailsNode = loader.load();
+
+      DetailsController controller = loader.getController();
+      controller.setDetails(restaurant);
+
+      listContainer_SP.setVisible(false); 
+      leftMenuArea.getChildren().add(detailsNode); 
+
+    }catch(IOException e) {
+      System.out.println("[" + Lib.RED + "ERROR" + Lib.RESET + "] Loading details");
+      e.printStackTrace();
+    }
+  }
+
+  public void closeDetails()
+  {
+    if(detailsNode != null){
+      leftMenuArea.getChildren().remove(detailsNode);
+      detailsNode = null;
+    }
+    
+    listContainer_SP.setVisible(true); 
   }
 }

@@ -12,8 +12,8 @@
       <Text fx:id="titleText" text="Default title"/>
     </StackPane>
 
-    <StackPane styleClass="container" AnchorPane.topAnchor="150" AnchorPane.bottomAnchor="70" AnchorPane.leftAnchor="30" AnchorPane.rightAnchor="350">
-      <ScrollPane fx:id="listContainer_SP" fitToWidth="true" vbarPolicy="AS_NEEDED" pannable="true">
+    <StackPane fx:id="leftMenuArea" styleClass="container" AnchorPane.topAnchor="150" AnchorPane.bottomAnchor="70" AnchorPane.leftAnchor="30" AnchorPane.rightAnchor="350">
+      <ScrollPane fx:id="listContainer_SP" styleClass="listContainer_SP" fitToWidth="true" vbarPolicy="AS_NEEDED" pannable="true">
         <VBox fx:id="listOfRestaurants_VB" spacing="10"/>
       </ScrollPane>
     </StackPane>

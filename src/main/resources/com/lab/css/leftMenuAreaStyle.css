@@ -1,7 +1,16 @@
-.textInButtons
+@font-face
 {
-  -fx-font-family: "Verdana";
-  -fx-font-size: 14px;
+  src: url("../font/Oswald-Bold.ttf");
+}
+
+#name_L
+{
+  -fx-fill: #dadada;
+  -fx-stroke: #000000;
+  -fx-stroke-width: 0.7px;
+  -fx-font-family: "Oswald";
+  -fx-font-weight: bold;
+  -fx-font-size: 30px;
 }
 
 .detailButton
@@ -22,14 +31,18 @@
   -fx-border-color: #009900;
 }
 
-.bookmarkButton
+.titleLabel
 {
-  -fx-background-color: transparent;
-  -fx-cursor: hand;
-  -fx-background-image: url("../img/bookmarkIcon.png");
-  -fx-background-repeat: no-repeat;
-  -fx-background-position: center center;
-  -fx-background-size: 20px 20px;
+  -fx-font-family: 'Verdana';
+  -fx-font-size: 18px;
+  -fx-text-fill: #333333;
+  -fx-font-weight: bold;
+}
+
+.textLabel
+{
+  -fx-font-family: 'Verdana';
+  -fx-font-size: 16px;
 }
 
 .container
@@ -40,17 +53,12 @@
   -fx-background-radius: 5px;
 }
 
-#listOfRestaurants_VB
-{
-  -fx-background-color: #ffffff;
-  -fx-padding: 15;
-}
-
 .listContainer_SP
 {
   -fx-background-color: transparent;
   -fx-padding: 0; 
   -fx-border-color: transparent;
+  -fx-padding: 10px;
 }
 
 .listContainer_SP > .viewport
@@ -61,7 +69,7 @@
 .listContainer_SP .scroll-bar:vertical
 {
   -fx-background-color: #ffffff;
-  -fx-pref-width: 12px;
+  -fx-pref-width: 10px;
 }
 
 .listContainer_SP .scroll-bar:vertical .track,
@@ -85,58 +93,13 @@
 .listContainer_SP .scroll-bar:vertical .thumb
 {
   -fx-background-color: #ffffff;
-  -fx-background-radius: 5px;
+  -fx-background-radius: 3px;
   -fx-border-color: #009900;
-  -fx-border-radius: 5px;
+  -fx-border-radius: 3px;
 }
 
 .listContainer_SP .scroll-bar:vertical .thumb:hover,
 .listContainer_SP .scroll-bar:vertical .thumb:pressed
 {
   -fx-background-color: #009900;
-}
-
-@font-face
-{
-  src: url("../font/Oswald-Bold.ttf");
-}
-
-#titleText
-{
-  -fx-fill: #009900;
-  -fx-stroke: #000000;
-  -fx-stroke-width: 0.8px;
-  -fx-font-family: "Oswald";
-  -fx-font-weight: bold;
-  -fx-font-size: 56px;
-}
-
-#luogo_TF
-{
-  -fx-font-family: "Verdana";
-  -fx-font-size: 18px;
-  -fx-background-color: #ffffff;
-  -fx-background-radius: 10px;
-  -fx-border-radius: 10px;
-  -fx-border-color: black;
-  -fx-border-width: 1.3px;
-  -fx-padding: 10px;
-}
-
-#luogo_TF:focused
-{
-  -fx-border-color: #009900;
-  -fx-border-width: 1.3px;
-}
-
-#luogo_TF.errorInput
-{
-  -fx-border-color: red;
-  -fx-border-width: 1.3px;
-}
-
-#luogo_TF.errorInput:focused
-{
-  -fx-border-color: red;
-  -fx-border-width: 1.3px;
 }

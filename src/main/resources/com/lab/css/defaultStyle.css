@@ -7,7 +7,7 @@
 {
   -fx-fill: #dadada;
   -fx-stroke: #000000;
-  -fx-strokeWidth: 1.5px;
+  -fx-stroke-width: 1.5px;
   -fx-font-family: "Oswald";
   -fx-font-weight: bold;
   -fx-font-size: 30px;
