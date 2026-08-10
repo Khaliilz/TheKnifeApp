@@ -260,4 +260,32 @@ public class SignedinDefaultController {
     
     listContainer_SP.setVisible(true); 
   }
+
+  public void openWriteComment(String restaurantName)
+  {
+    try {
+      FXMLLoader loader = new FXMLLoader(App.class.getResource("/com/lab/writeComment.fxml"));
+      commentNode = loader.load();
+
+      WriteCommentController controller = loader.getController();
+      controller.setRestaurantName(restaurantName);
+
+      if (detailsNode != null) detailsNode.setVisible(false);
+      leftMenuArea.getChildren().add(commentNode); 
+
+    }catch(IOException e){
+      System.out.println("[" + Lib.RED + "ERROR" + Lib.RESET + "] Loading write comment page");
+      e.printStackTrace();
+    }
+  }
+
+  public void closeWriteComment()
+  {
+    if(commentNode != null){
+      leftMenuArea.getChildren().remove(commentNode);
+      commentNode = null;
+    }
+    
+    if (detailsNode != null) detailsNode.setVisible(true);
+  }
 }

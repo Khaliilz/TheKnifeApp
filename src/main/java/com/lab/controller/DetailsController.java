@@ -1,9 +1,13 @@
 package com.lab.controller;
 
+import java.io.IOException;
+
+import com.lab.App;
 import com.lab.Lib;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
@@ -34,6 +38,9 @@ public class DetailsController {
   public void reviewClicked(ActionEvent event)
 	{
     System.out.println("[" + Lib.BLUE + "ACTION] " + Lib.RESET + "Review pressed");
+
+    String name = name_L.getText();
+    SignedinDefaultController.getInstance().openWriteComment(name);
   }
 
   private void caricaRecensioni()
