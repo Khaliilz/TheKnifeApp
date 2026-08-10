@@ -26,14 +26,14 @@ public class DetailsController {
   @FXML
   public void backClicked(ActionEvent event)
 	{
-    System.out.println("[" + Lib.BLUE + "ACTION" + Lib.RESET + "Details view closed");
+    System.out.println("[" + Lib.BLUE + "ACTION] " + Lib.RESET + "Details view closed");
     SignedinDefaultController.getInstance().closeDetails();
   }
 
 	@FXML
   public void reviewClicked(ActionEvent event)
 	{
-    System.out.println("[" + Lib.BLUE + "ACTION" + Lib.RESET + "Review pressed");
+    System.out.println("[" + Lib.BLUE + "ACTION] " + Lib.RESET + "Review pressed");
   }
 
   private void caricaRecensioni()

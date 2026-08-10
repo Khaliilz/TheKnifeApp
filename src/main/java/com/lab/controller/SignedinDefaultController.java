@@ -30,6 +30,7 @@ public class SignedinDefaultController {
 
   private static SignedinDefaultController instance;
   private javafx.scene.Node detailsNode;
+  private javafx.scene.Node commentNode;
 
   @FXML
   public void initialize()
@@ -50,8 +51,6 @@ public class SignedinDefaultController {
 
   public void loadNearest()
   {
-    closeDetails();
-
     titleText.setText("Ristoranti nelle vicinanze");
     listOfRestaurants_VB.getChildren().clear();
 
@@ -61,6 +60,7 @@ public class SignedinDefaultController {
   public void loadBookmarked()
   {
     closeDetails();
+    closeComment();
 
     titleText.setText("Ristoranti preferiti");
     listOfRestaurants_VB.getChildren().clear();
@@ -71,6 +71,7 @@ public class SignedinDefaultController {
   public void loadReviewed()
   {
     closeDetails();
+    closeComment();
 
     titleText.setText("Ristoranti recensiti");
     listOfRestaurants_VB.getChildren().clear();
@@ -93,6 +94,7 @@ public class SignedinDefaultController {
   public void searchByPlace(String place)
   {
     closeDetails();
+    closeComment();
 
     titleText.setText("Ristoranti a " + place);
     listOfRestaurants_VB.getChildren().clear();
@@ -103,6 +105,7 @@ public class SignedinDefaultController {
   public void applyFilters()
   {
     closeDetails();
+    closeComment();
     
     titleText.setText("Ristoranti trovati");
     listOfRestaurants_VB.getChildren().clear();
@@ -193,7 +196,8 @@ public class SignedinDefaultController {
       view_B.setPrefSize(150, 40);
       view_B.setOnAction(e -> {
         System.out.println("[" + Lib.BLUE + "ACTION" + Lib.RESET + "] View button pressed");
-        viewDetails(r);
+        String[] comment = {"Ristorante 1", "Ottimo!", "Grazie!", "3"};
+        viewComment(comment);
       });
 
       line_HB.getChildren().addAll(text_VB, spacer, view_B);
@@ -224,6 +228,34 @@ public class SignedinDefaultController {
     if(detailsNode != null){
       leftMenuArea.getChildren().remove(detailsNode);
       detailsNode = null;
+    }
+    
+    listContainer_SP.setVisible(true); 
+  }
+
+  public void viewComment(String[] comment)
+  {
+    try {
+      FXMLLoader loader = new FXMLLoader(App.class.getResource("/com/lab/viewComment.fxml"));
+      commentNode = loader.load();
+
+      ViewCommentController controller = loader.getController();
+      controller.setComment(comment);
+
+      listContainer_SP.setVisible(false); 
+      leftMenuArea.getChildren().add(commentNode); 
+
+    }catch(IOException e) {
+      System.out.println("[" + Lib.RED + "ERROR" + Lib.RESET + "] Loading comment");
+      e.printStackTrace();
+    }
+  }
+
+  public void closeComment()
+  {
+    if(commentNode != null){
+      leftMenuArea.getChildren().remove(commentNode);
+      commentNode = null;
     }
     
     listContainer_SP.setVisible(true); 

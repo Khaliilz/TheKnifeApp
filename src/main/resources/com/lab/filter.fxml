@@ -46,7 +46,7 @@
           </toggleGroup>
         </RadioButton>
         <RadioButton fx:id="starsTwo_RB" styleClass="theknifeRadioButton" text="2" toggleGroup="$starsGroup"/>
-        <RadioButton fx:id="starsTree_RB" styleClass="theknifeRadioButton" text="3" toggleGroup="$starsGroup"/>
+        <RadioButton fx:id="starsThree_RB" styleClass="theknifeRadioButton" text="3" toggleGroup="$starsGroup"/>
         <RadioButton fx:id="starsFour_RB" styleClass="theknifeRadioButton" text="4" toggleGroup="$starsGroup"/>
       </HBox>
 
