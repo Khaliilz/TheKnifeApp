@@ -1,10 +1,26 @@
+@font-face
+{
+  src: url("../font/Oswald-Bold.ttf");
+}
+
 .theknifeText
 {
   -fx-fill: #dadada;
   -fx-stroke: #000000;
-  -fx-strokeWidth: 1px;
-  -fx-font-family: "Impact";
+  -fx-stroke-width: 1.5px;
+  -fx-font-family: "Oswald";
+  -fx-font-weight: bold;
   -fx-font-size: 30px;
+}
+
+#textTitle
+{
+  -fx-fill: #009900;
+  -fx-stroke: #000000;
+  -fx-strokeWidth: 1.8px;
+  -fx-font-family: "Oswald";
+  -fx-font-weight: bold;
+  -fx-font-size: 80px;
 }
 
 .theknifeButton

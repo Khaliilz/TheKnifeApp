@@ -19,31 +19,31 @@ public class PageController {
   @FXML private StackPane pageTitle;
   @FXML private Text textTitle;
 
-  private static PageController pageController;
+  private static PageController instance;
 
   @FXML
   public void initialize()
   {
-    pageController = this;
+    instance = this;
     
     selectPage("home.fxml");
   }
 
   public static void showTitle(boolean show) {
-      if (pageController != null && pageController.pageTitle != null) {
-          pageController.pageTitle.setVisible(show);
+      if (instance != null && instance.pageTitle != null) {
+          instance.pageTitle.setVisible(show);
       }
   }
 
   public static void setTitleText(String text) {
-      if (pageController != null && pageController.textTitle != null) {
-          pageController.textTitle.setText(text);
+      if (instance != null && instance.textTitle != null) {
+          instance.textTitle.setText(text);
       }
   }
   
   public static void selectPage(String fileName)
   {
-    if(pageController != null) pageController.loadPage(fileName);
+    if(instance != null) instance.loadPage(fileName);
     else System.out.print("[" + Lib.RED + "ERROR" + Lib.RESET + "]" + " File non trovato: " + fileName);
   }
 

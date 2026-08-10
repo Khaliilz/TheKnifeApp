@@ -12,22 +12,30 @@
 <?import javafx.scene.layout.HBox?>
 
 <VBox spacing="30" alignment="CENTER" prefWidth="200" xmlns="http://javafx.com/javafx/17.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.lab.controller.RightMenuSearchController">
-    <Label styleClass="theknifeLabel" text="Dove vuoi cercare?"/> 
-    <TextField fx:id="luogo_TF" maxWidth="170" prefHeight="30" alignment="CENTER"/>
+    <Label styleClass="theknifeLabel" text="Dove vuoi mangiare?"/> 
+    <TextField fx:id="luogo_TF" maxWidth="220" prefHeight="30" alignment="CENTER"/>
 
-    <Button styleClass="detailButton" prefWidth="170" prefHeight="40" onAction="#searchClicked"> 
-        <graphic> 
-            <Text styleClass="textInButtons" text="Cerca"/> 
-        </graphic> 
-    </Button>
+    <HBox spacing="10" alignment="CENTER" prefWidth="200"> 
+		<Button styleClass="detailButton" prefWidth="105" prefHeight="40" onAction="#filterClicked"> 
+            <graphic> 
+            	<Text styleClass="textInButtons" text="Filtra"/> 
+            </graphic> 
+        </Button>
 
-    <Button styleClass="detailButton" prefWidth="170" prefHeight="40" onAction="#bookmarkClicked"> 
+      	<Button styleClass="detailButton" prefWidth="105" prefHeight="40" onAction="#searchClicked"> 
+            <graphic> 
+            	<Text styleClass="textInButtons" text="Cerca"/> 
+            </graphic> 
+        </Button>
+    </HBox>
+
+    <Button styleClass="detailButton" prefWidth="220" prefHeight="40" onAction="#bookmarkClicked"> 
         <graphic> 
             <Text styleClass="textInButtons" text="Preferiti"/> 
         </graphic> 
     </Button>
 
-    <Button styleClass="detailButton" prefWidth="170" prefHeight="40" onAction="#reviewClicked"> 
+    <Button styleClass="detailButton" prefWidth="220" prefHeight="40" onAction="#reviewClicked"> 
         <graphic> 
             <Text styleClass="textInButtons" text="Recensiti"/> 
         </graphic> 
