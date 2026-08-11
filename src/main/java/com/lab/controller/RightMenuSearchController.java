@@ -41,7 +41,7 @@ public class RightMenuSearchController {
     if(error) return;
 
     System.out.println("[" + Lib.GREEN + "SCENE" + Lib.RESET + "] Search: " + place);
-    SignedinDefaultController.getInstance().searchByPlace(place);
+    UserHomeController.getInstance().searchByPlace(place);
   }
 
   @FXML
@@ -73,14 +73,14 @@ public class RightMenuSearchController {
   @FXML
   public void bookmarkClicked(ActionEvent event)
   {
-    SignedinDefaultController.getInstance().loadBookmarked();
+    UserHomeController.getInstance().loadBookmarked();
     System.out.println("[" + Lib.GREEN + "SCENE" + Lib.RESET + "] Bookmark");
   }
 
   @FXML
   public void reviewClicked(ActionEvent event)
   {
-    SignedinDefaultController.getInstance().loadReviewed();
+    UserHomeController.getInstance().loadReviewed();
     System.out.println("[" + Lib.GREEN + "SCENE" + Lib.RESET + "] Review");
   }
 }

@@ -26,6 +26,6 @@ public class WriteCommentController {
 
     System.out.println("[" + Lib.BLUE + "ACTION] " + Lib.RESET + "Save pressed [" + comment.getText() + ", " + selectedRadioButton.getText() + "]");
 
-    SignedinDefaultController.getInstance().closeWriteComment();
+    UserHomeController.getInstance().closeWriteComment();
   }
 }

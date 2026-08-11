@@ -13,7 +13,7 @@ public class FilterController {
   {
     System.out.println("[" + Lib.GREEN + "SCENE" + Lib.RESET + "] Filter scene closed");
 
-    SignedinDefaultController.getInstance().applyFilters();
+    UserHomeController.getInstance().applyFilters();
 
     Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
     stage.close();

@@ -31,7 +31,7 @@ public class DetailsController {
   public void backClicked(ActionEvent event)
 	{
     System.out.println("[" + Lib.BLUE + "ACTION] " + Lib.RESET + "Details view closed");
-    SignedinDefaultController.getInstance().closeDetails();
+    UserHomeController.getInstance().closeDetails();
   }
 
 	@FXML
@@ -40,7 +40,7 @@ public class DetailsController {
     System.out.println("[" + Lib.BLUE + "ACTION] " + Lib.RESET + "Review pressed");
 
     String name = name_L.getText();
-    SignedinDefaultController.getInstance().openWriteComment(name);
+    UserHomeController.getInstance().openWriteComment(name);
   }
 
   private void caricaRecensioni()

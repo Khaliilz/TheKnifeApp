@@ -22,15 +22,15 @@ public class ViewCommentController {
   public void saveClicked(ActionEvent e)
   {
     System.out.println("[" + Lib.BLUE + "ACTION] " + Lib.RESET + "Save pressed");
-    SignedinDefaultController.getInstance().closeComment();
-    SignedinDefaultController.getInstance().loadReviewed();
+    UserHomeController.getInstance().closeComment();
+    UserHomeController.getInstance().loadReviewed();
   }
 
   @FXML void removeClicked(ActionEvent e)
   {
     System.out.println("[" + Lib.BLUE + "ACTION] " + Lib.RESET + "Remove pressed");
-    SignedinDefaultController.getInstance().closeComment();
-    SignedinDefaultController.getInstance().loadReviewed();
+    UserHomeController.getInstance().closeComment();
+    UserHomeController.getInstance().loadReviewed();
   }
   
   public void setComment(String[] c)

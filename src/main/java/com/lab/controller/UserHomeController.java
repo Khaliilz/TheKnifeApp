@@ -20,7 +20,7 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 
-public class SignedinDefaultController {
+public class UserHomeController {
   
   @FXML private StackPane rightMenuArea;
   @FXML private Text titleText;
@@ -28,7 +28,7 @@ public class SignedinDefaultController {
   @FXML private ScrollPane listContainer_SP;
   @FXML private StackPane leftMenuArea;
 
-  private static SignedinDefaultController instance;
+  private static UserHomeController instance;
   private javafx.scene.Node detailsNode;
   private javafx.scene.Node commentNode;
 
@@ -44,7 +44,7 @@ public class SignedinDefaultController {
     loadNearest();
   }
 
-  public static SignedinDefaultController getInstance()
+  public static UserHomeController getInstance()
   {
     return instance;
   }
