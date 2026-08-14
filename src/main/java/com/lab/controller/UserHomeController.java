@@ -208,10 +208,10 @@ public class UserHomeController {
   public void viewDetails(String[] restaurant)
   {
     try {
-      FXMLLoader loader = new FXMLLoader(App.class.getResource("/com/lab/details.fxml"));
+      FXMLLoader loader = new FXMLLoader(App.class.getResource("/com/lab/detailsUser.fxml"));
       detailsNode = loader.load();
 
-      DetailsController controller = loader.getController();
+      DetailsUserController controller = loader.getController();
       controller.setDetails(restaurant);
 
       listContainer_SP.setVisible(false); 

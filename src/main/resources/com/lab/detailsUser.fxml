@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane stylesheets="@css/leftMenuAreaStyle.css" xmlns="http://javafx.com/javafx/17.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.lab.controller.DetailsController">
+<AnchorPane stylesheets="@css/leftMenuAreaStyle.css" xmlns="http://javafx.com/javafx/17.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.lab.controller.DetailsUserController">
   <children>
     <VBox alignment="CENTER" spacing="30" AnchorPane.topAnchor="5" AnchorPane.leftAnchor="20" AnchorPane.rightAnchor="20" AnchorPane.bottomAnchor="15">
       <Text fx:id="name_L" text="Name"/>

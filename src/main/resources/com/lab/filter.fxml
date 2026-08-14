@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.layout.HBox?>
 
-<AnchorPane fx:id="filterPage" prefWidth="450" prefHeight="550" stylesheets="@css/filterStyle.css, @css/signedinStyle.css, @css/defaultStyle.css" xmlns="http://javafx.com/javafx/17.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.lab.controller.FilterController">
+<AnchorPane fx:id="filterPage" prefWidth="450" prefHeight="550" stylesheets="@css/filterStyle.css, @css/userHomeStyle.css, @css/defaultStyle.css" xmlns="http://javafx.com/javafx/17.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.lab.controller.FilterController">
   <children>
     <VBox alignment="CENTER" spacing="20" AnchorPane.topAnchor="0" AnchorPane.bottomAnchor="0" AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0">
       <Label styleClass="theknifeLabel" text="Tipo di cucina:"/>

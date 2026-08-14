@@ -28,7 +28,6 @@
         <StackPane fx:id="answerContainer" alignment="TOP_LEFT" minWidth="400" maxWidth="400" minHeight="150" maxHeight="150">
           <VBox spacing="10">
             <Text styleClass="text" text="Risposta:"/>
-            
               <Text fx:id="answer" text="answer..."/>
           </VBox>
         </StackPane>
