@@ -98,7 +98,7 @@
 }
 
 .listContainer_SP .scroll-bar:vertical .thumb:hover,
-.listContainer_SP .scroll-bar:vertical .thumb:pressed
+.listContainer_SP .scroll-bar:vertical .thumb:clicked
 {
   -fx-background-color: #009900;
 }

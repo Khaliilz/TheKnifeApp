@@ -79,7 +79,7 @@ public class SignupController {
     }
 
     if(error) return;
-    System.out.println("[" + Lib.GREEN + "SCENE" + Lib.RESET + "] Signup completed [" + username + ", " + password + ", " + ruolo + "]");
+    System.out.println("[" + Lib.GREEN + "ACTION" + Lib.RESET + "] Signup completed [" + username + ", " + password + ", " + ruolo + "]");
   }
 
   public boolean checkDataNascita(String date)

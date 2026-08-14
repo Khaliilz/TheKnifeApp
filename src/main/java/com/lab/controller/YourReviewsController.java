@@ -1,11 +1,21 @@
 package com.lab.controller;
 
+import java.io.IOException;
+
+import com.lab.App;
 import com.lab.Lib;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
 import javafx.scene.text.Text;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 public class YourReviewsController {
   
@@ -13,8 +23,11 @@ public class YourReviewsController {
   @FXML private Label comment;
   @FXML private Text starsNum;
 
+  private String[] reviewData;
+
   public void setReviewData(String[] c)
   {
+    reviewData = c;
     name.setText(c[0]);
     comment.setText(c[1]);
     starsNum.setText(c[2]);
@@ -22,6 +35,30 @@ public class YourReviewsController {
 
   @FXML public void answerClicked(ActionEvent e)
   {
-    System.out.println("[" + Lib.BLUE + "ACTION" + Lib.RESET + "] Answer button pressed");
+    System.out.println("[" + Lib.GREEN + "ACTION" + Lib.RESET + "] Answer button clicked");
+
+    try{
+      FXMLLoader loader = new FXMLLoader(App.class.getResource("/com/lab/answerComment.fxml"));
+      Parent root = loader.load();
+
+      AnswerCommentController controller = loader.getController();
+      controller.setReviewData(reviewData);
+
+      Stage popupStage = new Stage();
+      popupStage.setTitle("TheKnife - Answer");
+      Image icon = new Image(getClass().getResource("/com/lab/img/logo.png").toExternalForm());
+		  popupStage.getIcons().add(icon);
+      popupStage.initStyle(StageStyle.TRANSPARENT); 
+      popupStage.setResizable(false);
+      popupStage.initModality(Modality.APPLICATION_MODAL);
+
+      Scene scene = new Scene(root, 450, 530);
+      scene.setFill(javafx.scene.paint.Color.TRANSPARENT);
+      popupStage.setScene(scene);
+      popupStage.show();
+    }catch (IOException ex){
+      System.out.println("[" + Lib.RED + "ERROR" + Lib.RESET + "] Loading answer popup");
+      ex.printStackTrace();
+    }
   }
 }

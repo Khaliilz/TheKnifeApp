@@ -29,6 +29,6 @@ public class GuestController {
       Lib.errorBorder(luogo_TF);
       return;
     }
-    System.out.println("[" + Lib.GREEN + "SCENE" + Lib.RESET + "] Guest serching [" + luogo + "]");
+    System.out.println("[" + Lib.GREEN + "ACTION" + Lib.RESET + "] Guest serching [" + luogo + "]");
   }
 }

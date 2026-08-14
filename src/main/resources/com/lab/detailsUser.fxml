@@ -46,8 +46,8 @@
       </HBox>
 
       <HBox alignment="CENTER_RIGHT" spacing="20">
-        <Button styleClass="detailButton" text="Recensisci" prefWidth="120" prefHeight="40" onAction="#reviewClicked"/>
-        <Button styleClass="detailButton" text="Indietro" prefWidth="120" prefHeight="40" onAction="#backClicked"/>
+        <Button styleClass="detailButton" text="RECENSISCI" prefWidth="120" prefHeight="40" onAction="#reviewClicked"/>
+        <Button styleClass="detailButton" text="INDIETRO" prefWidth="120" prefHeight="40" onAction="#backClicked"/>
       </HBox>
     </VBox>
   </children>

@@ -11,7 +11,7 @@ public class FilterController {
   @FXML
   public void applyFilterClicked(ActionEvent event)
   {
-    System.out.println("[" + Lib.GREEN + "SCENE" + Lib.RESET + "] Filter scene closed");
+    System.out.println("[" + Lib.GREEN + "ACTION" + Lib.RESET + "] Filter scene closed");
 
     UserHomeController.getInstance().applyFilters();
 

@@ -40,7 +40,7 @@ public class RightMenuSearchController {
 
     if(error) return;
 
-    System.out.println("[" + Lib.GREEN + "SCENE" + Lib.RESET + "] Search: " + place);
+    System.out.println("[" + Lib.GREEN + "ACTION" + Lib.RESET + "] Search: " + place);
     UserHomeController.getInstance().searchByPlace(place);
   }
 
@@ -50,20 +50,20 @@ public class RightMenuSearchController {
     try{
       Parent filterRoot = FXMLLoader.load(getClass().getResource("/com/lab/filter.fxml"));
       
-      Stage filterStage = new Stage();
+      Stage popupStage = new Stage();
       
-      filterStage.setTitle("TheKnife - Filter");
+      popupStage.setTitle("TheKnife - Filter");
       Image icon = new Image(getClass().getResource("/com/lab/img/logo.png").toExternalForm());
-		  filterStage.getIcons().add(icon);
-      filterStage.initStyle(StageStyle.TRANSPARENT); 
-      filterStage.setResizable(false);
-      filterStage.initModality(Modality.APPLICATION_MODAL); 
+		  popupStage.getIcons().add(icon);
+      popupStage.initStyle(StageStyle.TRANSPARENT); 
+      popupStage.setResizable(false);
+      popupStage.initModality(Modality.APPLICATION_MODAL); 
       
-      Scene scene = new Scene(filterRoot, 450, 550);
+      Scene scene = new Scene(filterRoot, 450, 530);
       scene.setFill(javafx.scene.paint.Color.TRANSPARENT);
-      filterStage.setScene(scene);
-      filterStage.show();
-      System.out.println("[" + Lib.GREEN + "SCENE" + Lib.RESET + "] Filter pressed");
+      popupStage.setScene(scene);
+      popupStage.show();
+      System.out.println("[" + Lib.GREEN + "ACTION" + Lib.RESET + "] Filter button clicked");
     }catch(IOException e){
       System.out.println("[" + Lib.RED + "ERROR" + Lib.RESET + "] Filter page loading");
       e.printStackTrace();
@@ -74,13 +74,13 @@ public class RightMenuSearchController {
   public void bookmarkClicked(ActionEvent event)
   {
     UserHomeController.getInstance().loadBookmarked();
-    System.out.println("[" + Lib.GREEN + "SCENE" + Lib.RESET + "] Bookmark");
+    System.out.println("[" + Lib.GREEN + "ACTION" + Lib.RESET + "] Bookmark button clicked");
   }
 
   @FXML
   public void reviewClicked(ActionEvent event)
   {
     UserHomeController.getInstance().loadReviewed();
-    System.out.println("[" + Lib.GREEN + "SCENE" + Lib.RESET + "] Review");
+    System.out.println("[" + Lib.GREEN + "ACTION" + Lib.RESET + "] Review button clicked");
   }
 }

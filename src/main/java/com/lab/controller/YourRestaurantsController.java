@@ -27,7 +27,7 @@ public class YourRestaurantsController {
 
   @FXML public void detailClicked(ActionEvent e)
   {
-    System.out.println("[" + Lib.BLUE + "ACTION" + Lib.RESET + "] Detail button pressed");
+    System.out.println("[" + Lib.GREEN + "ACTION" + Lib.RESET + "] Detail button clicked");
     RestaurateurHomeController.getInstance().openDetails(restaurantName);
   }
 }

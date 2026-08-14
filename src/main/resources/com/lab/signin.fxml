@@ -27,7 +27,7 @@
 
       <Button fx:id="signin_B" styleClass="theknifeButton" prefWidth="230" prefHeight="70" onAction="#signinClicked">
         <graphic>
-          <Text text="Accedi" styleClass="theknifeText"/>
+          <Text text="ACCEDI" styleClass="theknifeText"/>
         </graphic>
       </Button>
     </VBox>

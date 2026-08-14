@@ -84,7 +84,7 @@ public class RestaurateurHomeController {
       mainArea.setVisible(false);
       contentArea.getChildren().add(detailsNode);
 
-      System.out.println("[" + Lib.GREEN + "SCENE" + Lib.RESET + "] Restaurant Reviews");
+      System.out.println("[" + Lib.GREEN + "ACTION" + Lib.RESET + "] Restaurant Reviews opended");
     }catch(IOException e){
       System.out.println("[" + Lib.RED + "ERROR" + Lib.RESET + "] Loading details view");
       e.printStackTrace();
@@ -100,11 +100,11 @@ public class RestaurateurHomeController {
 
     setTitle("I tuoi ristoranti");
     mainArea.setVisible(true);
-    System.out.println("[" + Lib.GREEN + "SCENE" + Lib.RESET + "] Your restaurants");
+    System.out.println("[" + Lib.GREEN + "ACTION" + Lib.RESET + "] Your restaurants displayed");
   }
 
   @FXML public void addClicked(ActionEvent e)
   {
-    System.out.println("[" + Lib.BLUE + "ACTION" + Lib.RESET + "] Add button pressed");
+    System.out.println("[" + Lib.GREEN + "ACTION" + Lib.RESET + "] Add button clicked");
   }
 }

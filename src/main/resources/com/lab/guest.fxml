@@ -22,7 +22,7 @@
 
       <Button fx:id="cerca_B" styleClass="theknifeButton" prefWidth="230" prefHeight="70" onAction="#cercaClicked">
         <graphic>
-          <Text styleClass="theknifeText" text="Cerca"/>
+          <Text styleClass="theknifeText" text="CERCA"/>
         </graphic>
       </Button>
     </VBox>

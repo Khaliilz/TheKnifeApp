@@ -62,7 +62,7 @@
 
       <Button styleClass="detailButton" prefWidth="170" prefHeight="40" onAction="#applyFilterClicked">
         <graphic>
-          <Text styleClass="textInButtons" text="Filtra"/>
+          <Text styleClass="textInButtons" text="FILTRA"/>
         </graphic>
       </Button>
     </VBox>

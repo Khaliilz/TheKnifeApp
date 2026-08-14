@@ -14,17 +14,17 @@
     <VBox alignment="CENTER" spacing="60" AnchorPane.topAnchor="250" AnchorPane.leftAnchor="500" AnchorPane.rightAnchor="500">
       <Button fx:id="signin_B" styleClass="theknifeButton"  prefWidth="230" prefHeight="70" onAction="#signinClicked">
         <graphic>
-          <Text text="Accedi" styleClass="theknifeText"/>
+          <Text text="ACCEDI" styleClass="theknifeText"/>
         </graphic>  
       </Button>
       <Button fx:id="signup_B" styleClass="theknifeButton" prefWidth="230" prefHeight="70" onAction="#signupClicked">
         <graphic>
-          <Text text="Registrati" styleClass="theknifeText"/>
+          <Text text="REGISTRATI" styleClass="theknifeText"/>
         </graphic>
       </Button>
       <Button fx:id="guest_B" styleClass="theknifeButton" prefWidth="230" prefHeight="70" onAction="#guestClicked">
         <graphic>
-          <Text text="Ospite" styleClass="theknifeText"/>
+          <Text text="OSPITE" styleClass="theknifeText"/>
         </graphic>
       </Button>
     </VBox>

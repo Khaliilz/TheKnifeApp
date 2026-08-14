@@ -39,7 +39,7 @@
       </HBox>
 
       <HBox alignment="CENTER_RIGHT">
-        <Button styleClass="detailButton" text="Salva" prefWidth="120" prefHeight="40" onAction="#saveClicked"/>
+        <Button styleClass="detailButton" text="SALVA" prefWidth="120" prefHeight="40" onAction="#saveClicked"/>
       </HBox>
     </VBox>
   </children>

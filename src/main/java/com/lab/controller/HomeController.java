@@ -21,21 +21,21 @@ public class HomeController {
   @FXML
   public void signinClicked(ActionEvent event)
   {
-    System.out.println("[" + Lib.GREEN + "SCENE" + Lib.RESET + "] Signin");
+    System.out.println("[" + Lib.GREEN + "ACTION" + Lib.RESET + "] Signin button clicked");
     PageController.selectPage("restaurateurHome.fxml");
   }
 
   @FXML
   public void signupClicked(ActionEvent event)
   {
-    System.out.println("[" + Lib.GREEN + "SCENE" + Lib.RESET + "] Signup");
+    System.out.println("[" + Lib.GREEN + "ACTION" + Lib.RESET + "] Signup button clicked");
     PageController.selectPage("signup.fxml");
   }
 
   @FXML
   public void guestClicked(ActionEvent event)
   {
-    System.out.println("[" + Lib.GREEN + "SCENE" + Lib.RESET + "] Guest");
+    System.out.println("[" + Lib.GREEN + "ACTION" + Lib.RESET + "] Guest button clicked");
     PageController.selectPage("guest.fxml");
   }
 }

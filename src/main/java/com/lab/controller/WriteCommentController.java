@@ -24,7 +24,7 @@ public class WriteCommentController {
   {
     RadioButton selectedRadioButton = (RadioButton) starsGroup.getSelectedToggle();
 
-    System.out.println("[" + Lib.BLUE + "ACTION] " + Lib.RESET + "Save pressed [" + comment.getText() + ", " + selectedRadioButton.getText() + "]");
+    System.out.println("[" + Lib.GREEN + "ACTION] " + Lib.RESET + "Save clicked [" + comment.getText() + ", " + selectedRadioButton.getText() + "]");
 
     UserHomeController.getInstance().closeWriteComment();
   }

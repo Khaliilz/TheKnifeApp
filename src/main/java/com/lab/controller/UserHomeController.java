@@ -141,7 +141,7 @@ public class UserHomeController {
       details_B.getStyleClass().add("detailButton");
       details_B.setPrefSize(150, 40);
       details_B.setOnAction(e -> {
-        System.out.println("[" + Lib.BLUE + "ACTION" + Lib.RESET + "] Detail button pressed");
+        System.out.println("[" + Lib.GREEN + "ACTION" + Lib.RESET + "] Detail button clicked");
         viewDetails(r);
       });
 
@@ -155,10 +155,10 @@ public class UserHomeController {
           
         if(isBookmarked[0]){
           bookmark_B.setStyle("-fx-background-image: url('/com/lab/img/bookmarkedIcon.png');");
-          System.out.println("[" + Lib.BLUE + "ACTION" + Lib.RESET + "] Bookmarked [" + r[0] + "]");
+          System.out.println("[" + Lib.GREEN + "ACTION" + Lib.RESET + "] Bookmarked [" + r[0] + "]");
         }else{
           bookmark_B.setStyle("-fx-background-image: url('/com/lab/img/bookmarkIcon.png');");
-          System.out.println("[" + Lib.BLUE + "ACTION" + Lib.RESET + "] Unbookmarked [" + r[0] + "]");
+          System.out.println("[" + Lib.GREEN + "ACTION" + Lib.RESET + "] Unbookmarked [" + r[0] + "]");
         }
       });
 
@@ -195,7 +195,7 @@ public class UserHomeController {
       view_B.getStyleClass().add("detailButton");
       view_B.setPrefSize(150, 40);
       view_B.setOnAction(e -> {
-        System.out.println("[" + Lib.BLUE + "ACTION" + Lib.RESET + "] View button pressed");
+        System.out.println("[" + Lib.GREEN + "ACTION" + Lib.RESET + "] View button clicked");
         String[] comment = {"Ristorante 1", "Ottimo!", "Grazie!", "3"};
         viewComment(comment);
       });

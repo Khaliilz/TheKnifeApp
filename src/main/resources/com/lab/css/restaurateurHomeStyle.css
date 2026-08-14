@@ -101,7 +101,7 @@
 }
 
 #listContainer .scroll-bar:vertical .thumb:hover,
-#listContainer .scroll-bar:vertical .thumb:pressed
+#listContainer .scroll-bar:vertical .thumb:clicked
 {
   -fx-background-color: #009900;
 }
@@ -110,4 +110,57 @@
 {
   -fx-border-color: #009900;
   -fx-border-width: 1px 0 0 0;
+}
+
+.textArea
+{
+  -fx-background-color: transparent;
+  -fx-font-family: 'Verdana';
+  -fx-font-size: 14px;
+  -fx-padding: 0px;
+  -fx-background-insets: 0px;
+  -fx-border-color: #000000;
+  -fx-border-width: 1px;
+  -fx-border-radius: 5px;
+  -fx-background-radius: 5px;
+}
+
+.textArea .content
+{
+  -fx-background-color: transparent;
+}
+
+.textArea:focused
+{
+  -fx-border-color: #009900;
+  -fx-border-width: 1px;
+  -fx-border-radius: 5px;
+  -fx-background-color: #ffffff;
+  -fx-background-radius: 5px;
+}
+
+.textArea:focused .content
+{
+  -fx-background-color: #ffffff;
+}
+
+.textArea .viewport
+{
+  -fx-background-color: transparent;
+}
+
+.popup
+{
+  -fx-border-color: #000000, #009900;
+  -fx-border-width: 1.5px, 1.5px;
+  -fx-border-insets: 0, 1.5px;
+  -fx-border-radius: 20px, 18px;
+  -fx-background-color: #ffffff;
+  -fx-background-radius: 20px;
+  -fx-background-insets: 2px;
+}
+
+#reviewContainer
+{
+  -fx-padding: 20px;
 }

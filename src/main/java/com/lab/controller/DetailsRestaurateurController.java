@@ -9,6 +9,7 @@ import com.lab.Lib;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.control.Separator;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -28,7 +29,7 @@ public class DetailsRestaurateurController {
 
   public void fillReviews()
   {
-    String[] review = {"Carlo", "Ottimo!", "5"};
+    String[] review = {"Carlo", "Ottimo!", "5", "Grazie!"};
     ArrayList<String[]> lists = new ArrayList<>();
     for(int i=0; i<10; i++) lists.add(review);
 
@@ -52,7 +53,7 @@ public class DetailsRestaurateurController {
   }
   @FXML public void backClicked(ActionEvent e)
   {
-    System.out.println("[" + Lib.BLUE + "ACTION" + Lib.RESET + "] Back button pressed");
+    System.out.println("[" + Lib.GREEN + "ACTION" + Lib.RESET + "] Back button clicked");
     RestaurateurHomeController.getInstance().closeDetails();
   }
 }

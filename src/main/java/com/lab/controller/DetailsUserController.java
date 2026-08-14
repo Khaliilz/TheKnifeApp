@@ -30,14 +30,14 @@ public class DetailsUserController {
   @FXML
   public void backClicked(ActionEvent event)
 	{
-    System.out.println("[" + Lib.BLUE + "ACTION] " + Lib.RESET + "Details view closed");
+    System.out.println("[" + Lib.GREEN + "ACTION] " + Lib.RESET + "Details view closed");
     UserHomeController.getInstance().closeDetails();
   }
 
 	@FXML
   public void reviewClicked(ActionEvent event)
 	{
-    System.out.println("[" + Lib.BLUE + "ACTION] " + Lib.RESET + "Review pressed");
+    System.out.println("[" + Lib.GREEN + "ACTION] " + Lib.RESET + "Review clicked");
 
     String name = name_L.getText();
     UserHomeController.getInstance().openWriteComment(name);

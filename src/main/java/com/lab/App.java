@@ -21,7 +21,7 @@ public class App extends Application {
 	{
 		Parent root = null;
     try {
-      root = FXMLLoader.load(getClass().getResource("page.fxml"));
+      root = FXMLLoader.load(App.class.getResource("page.fxml"));
     } catch(IOException e) {
       System.out.println("[" + Lib.RED + "ERROR" + Lib.RESET + "]" + " file page.fxml non trovato: ");
       e.printStackTrace();
