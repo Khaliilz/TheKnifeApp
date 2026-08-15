@@ -38,7 +38,7 @@
   -fx-font-size: 16px;
 }
 
-.button
+.greenButton
 {
   -fx-background-color: #ffffff;
   -fx-cursor: hand;
@@ -51,9 +51,27 @@
   -fx-font-weight: bold;
 }
 
-.button:hover
+.greenButton:hover
 {
   -fx-border-color: #009900;
+}
+
+.redButton
+{
+  -fx-background-color: #ffffff;
+  -fx-cursor: hand;
+  -fx-background-radius: 5px;
+  -fx-border-radius: 5px;
+  -fx-border-color: #000000;
+  -fx-border-width: 2px;
+  -fx-font-family: "Verdana";
+  -fx-font-size: 14px;
+  -fx-font-weight: bold;
+}
+
+.redButton:hover
+{
+  -fx-border-color: #990000;
 }
 
 #listContainer
@@ -163,4 +181,36 @@
 #reviewContainer
 {
   -fx-padding: 20px;
+}
+
+.defaultRadioButton
+{
+  -fx-font-size: 16px;
+  -fx-focus-color: #009900;
+  -fx-accent: #009900;
+}
+
+.defaultTextField
+{
+  -fx-font-family: "Verdana";
+  -fx-font-size: 18px;
+  -fx-background-color: #e0e0e0;
+  -fx-background-radius: 5px;
+  -fx-border-radius: 5px;
+  -fx-border-color: black;
+  -fx-border-width: 2px;
+  -fx-padding: 10px;
+}
+
+.defaultTextField:focused
+{
+  -fx-border-color: #009900;
+  -fx-border-width: 2px;
+}
+
+#columnsArea
+{
+  -fx-background-color: #ffffff;
+  -fx-border-color: #000000;
+  -fx-padding: 10px;
 }

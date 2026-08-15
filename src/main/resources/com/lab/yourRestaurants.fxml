@@ -23,5 +23,5 @@
 
   <Pane HBox.hgrow="ALWAYS"/>
 
-  <Button fx:id="detail" styleClass="button" text="DETTAGLI" prefWidth="120" prefHeight="40" onAction="#detailClicked"/>
+  <Button fx:id="detail" styleClass="greenButton" text="DETTAGLI" prefWidth="120" prefHeight="40" onAction="#detailClicked"/>
 </HBox>

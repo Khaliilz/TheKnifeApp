@@ -16,6 +16,6 @@
 
       <Pane fx:id="spacer" prefHeight="15"/>
 
-      <Button fx:id="back" styleClass="button" text="INDIETRO" prefWidth="120" minHeight="50" onAction="#backClicked"/>
+      <Button fx:id="back" styleClass="greenButton" text="INDIETRO" prefWidth="120" minHeight="50" onAction="#backClicked"/>
     </VBox>
 </StackPane>

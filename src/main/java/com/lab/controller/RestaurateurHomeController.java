@@ -11,7 +11,6 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Separator;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
@@ -22,7 +21,9 @@ public class RestaurateurHomeController {
   @FXML private VBox list;
   @FXML private StackPane contentArea;
   @FXML private VBox mainArea;
+
   private javafx.scene.Node detailsNode;
+  private javafx.scene.Node newRestaurantNode;
 
   private static RestaurateurHomeController instance;
 
@@ -106,5 +107,33 @@ public class RestaurateurHomeController {
   @FXML public void addClicked(ActionEvent e)
   {
     System.out.println("[" + Lib.GREEN + "ACTION" + Lib.RESET + "] Add button clicked");
+    openNewRestaurant();
+  }
+
+  private void openNewRestaurant()
+  {
+    try {
+      FXMLLoader loader = new FXMLLoader(App.class.getResource("/com/lab/newRestaurant.fxml"));
+      newRestaurantNode = loader.load();
+
+      setTitle("Nuovo Ristorante");
+
+      mainArea.setVisible(false);
+      contentArea.getChildren().add(newRestaurantNode);
+    } catch(IOException ex) {
+      System.out.println("[" + Lib.RED + "ERROR" + Lib.RESET + "] Loading new restaurant view");
+      ex.printStackTrace();
+    }
+  }
+
+  public void closeNewRestaurant()
+  {
+    if(newRestaurantNode != null){
+      contentArea.getChildren().remove(newRestaurantNode);
+      newRestaurantNode = null;
+    }
+
+    setTitle("I tuoi ristoranti");
+    mainArea.setVisible(true);
   }
 }

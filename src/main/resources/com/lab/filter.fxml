@@ -24,7 +24,7 @@
           </toggleGroup>
         </RadioButton>
         <RadioButton fx:id="priceTwo_RB" styleClass="theknifeRadioButton" text="30-40" toggleGroup="$priceGroup"/>
-        <RadioButton fx:id="priceTree_RB" styleClass="theknifeRadioButton" text="50-60" toggleGroup="$priceGroup"/>
+        <RadioButton fx:id="priceThree_RB" styleClass="theknifeRadioButton" text="50-60" toggleGroup="$priceGroup"/>
         <RadioButton fx:id="priceFour_RB" styleClass="theknifeRadioButton" text="70-80" toggleGroup="$priceGroup"/>
       </HBox>
 

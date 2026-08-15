@@ -22,7 +22,7 @@
 
         <Pane fx:id="spacer" prefHeight="15"/>
 
-        <Button fx:id="add" styleClass="button" text="AGGIUNGI" prefWidth="120" minHeight="50" onAction="#addClicked"/>
+        <Button fx:id="add" styleClass="greenButton" text="AGGIUNGI" prefWidth="120" minHeight="50" onAction="#addClicked"/>
       </VBox>
     </StackPane>
   </children>
