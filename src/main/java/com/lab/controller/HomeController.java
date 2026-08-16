@@ -22,7 +22,7 @@ public class HomeController {
   public void signinClicked(ActionEvent event)
   {
     System.out.println("[" + Lib.GREEN + "ACTION" + Lib.RESET + "] Signin button clicked");
-    PageController.selectPage("restaurateurHome.fxml");
+    PageController.selectPage("userHome.fxml");
   }
 
   @FXML
@@ -36,6 +36,6 @@ public class HomeController {
   public void guestClicked(ActionEvent event)
   {
     System.out.println("[" + Lib.GREEN + "ACTION" + Lib.RESET + "] Guest button clicked");
-    PageController.selectPage("guest.fxml");
+    PageController.selectPage("guestHome.fxml");
   }
 }

@@ -22,7 +22,9 @@
 
 #row
 {
-  -fx-padding: 15px;
+  -fx-border-color: #009900;
+  -fx-border-width: 0 0 1 0;
+  -fx-padding: 15;
 }
 
 .lables
@@ -72,6 +74,26 @@
 .redButton:hover
 {
   -fx-border-color: #990000;
+}
+
+#bookmarkButton
+{
+  -fx-background-color: transparent;
+  -fx-cursor: hand;
+  -fx-background-image: url("../img/bookmarkIcon.png");
+  -fx-background-repeat: no-repeat;
+  -fx-background-position: center center;
+  -fx-background-size: 20px 20px;
+}
+
+#bookmarkedButton
+{
+  -fx-background-color: transparent;
+  -fx-cursor: hand;
+  -fx-background-image: url("../img/bookmarkedIcon.png");
+  -fx-background-repeat: no-repeat;
+  -fx-background-position: center center;
+  -fx-background-size: 20px 20px;
 }
 
 #listContainer
@@ -213,4 +235,10 @@
   -fx-background-color: #ffffff;
   -fx-border-color: #000000;
   -fx-padding: 10px;
+}
+
+.errorInput
+{
+  -fx-border-color: red;
+  -fx-border-width: 2px;
 }

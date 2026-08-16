@@ -24,7 +24,7 @@ public class DetailsUserController {
 	{
     name_L.setText(r[0]);
     address_L.setText(r[1]);
-		caricaRecensioni();
+		loadReviews();
   }
 
   @FXML
@@ -43,7 +43,7 @@ public class DetailsUserController {
     UserHomeController.getInstance().openWriteComment(name);
   }
 
-  private void caricaRecensioni()
+  private void loadReviews()
   {
     listOfComments.getChildren().clear();
 

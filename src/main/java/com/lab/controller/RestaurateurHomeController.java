@@ -62,11 +62,8 @@ public class RestaurateurHomeController {
 
         YourRestaurantsController controller = loader.getController();
         controller.setRestaurantData(r);
-        
-        Separator separator = new Separator();
-        separator.getStyleClass().add("separator");
 
-        list.getChildren().addAll(row, separator);
+        list.getChildren().add(row);
       }catch(IOException e){
         System.out.println("[" + Lib.RED + "ERROR" + Lib.RESET + "] Filling your restaurants list");
         e.printStackTrace();

@@ -34,7 +34,7 @@
           </HBox>
           <HBox spacing="5">
             <Label styleClass="titleLabel" text="Tipo di cucina:"/>
-            <Label fx:id="cousine_L" styleClass="textLabel" text="Type of cousine"/>
+            <Label fx:id="cuisine_L" styleClass="textLabel" text="Type of cuisine"/>
           </HBox>
         </VBox>
 

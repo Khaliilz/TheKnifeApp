@@ -13,24 +13,24 @@ public class ViewCommentController {
   @FXML private Text name_R;
   @FXML private TextArea comment;
   @FXML private Text answer;
-  @FXML private RadioButton starsOne_RB;
-  @FXML private RadioButton starsTwo_RB;
-  @FXML private RadioButton starsThree_RB;
-  @FXML private RadioButton starsFour_RB;
+  @FXML private RadioButton starsOne;
+  @FXML private RadioButton starsTwo;
+  @FXML private RadioButton starsThree;
+  @FXML private RadioButton starsFour;
 
   @FXML
   public void saveClicked(ActionEvent e)
   {
     System.out.println("[" + Lib.GREEN + "ACTION] " + Lib.RESET + "Save clicked");
     UserHomeController.getInstance().closeComment();
-    UserHomeController.getInstance().loadReviewed();
+    UserHomeController.getInstance().loadReviews();
   }
 
   @FXML void removeClicked(ActionEvent e)
   {
     System.out.println("[" + Lib.GREEN + "ACTION] " + Lib.RESET + "Remove clicked");
     UserHomeController.getInstance().closeComment();
-    UserHomeController.getInstance().loadReviewed();
+    UserHomeController.getInstance().loadReviews();
   }
   
   public void setComment(String[] c)
@@ -43,19 +43,19 @@ public class ViewCommentController {
 
     switch(stars){
       case 1:
-        starsOne_RB.setSelected(true);
+        starsOne.setSelected(true);
         break;
       case 2:
-        starsTwo_RB.setSelected(true);
+        starsTwo.setSelected(true);
         break;
       case 3:
-        starsThree_RB.setSelected(true);
+        starsThree.setSelected(true);
         break;
       case 4: 
-        starsFour_RB.setSelected(true);
+        starsFour.setSelected(true);
         break;
       default:
-        starsOne_RB.setSelected(true);
+        starsOne.setSelected(true);
     }
   }
 }

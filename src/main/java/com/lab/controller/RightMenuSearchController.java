@@ -80,7 +80,7 @@ public class RightMenuSearchController {
   @FXML
   public void reviewClicked(ActionEvent event)
   {
-    UserHomeController.getInstance().loadReviewed();
+    UserHomeController.getInstance().loadReviews();
     System.out.println("[" + Lib.GREEN + "ACTION" + Lib.RESET + "] Review button clicked");
   }
 }
