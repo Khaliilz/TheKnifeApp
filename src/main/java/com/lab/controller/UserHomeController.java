@@ -6,17 +6,12 @@ import java.util.ArrayList;
 import com.lab.App;
 import com.lab.Lib;
 
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.Priority;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
@@ -33,6 +28,8 @@ public class UserHomeController {
   private static UserHomeController instance;
   private javafx.scene.Node detailsNode;
   private javafx.scene.Node commentNode;
+
+  public static Boolean isGuest = false;
 
   @FXML
   public void initialize()
@@ -125,7 +122,7 @@ public class UserHomeController {
 
     for(String[] r : ristoranti){
       try {
-        FXMLLoader loader = new FXMLLoader(App.class.getResource("/com/lab/UserRestaurantsRow.fxml"));
+        FXMLLoader loader = new FXMLLoader(App.class.getResource("/com/lab/userRestaurantsRow.fxml"));
         HBox row = loader.load();
 
         UserRestaurantsRowController controller = loader.getController();

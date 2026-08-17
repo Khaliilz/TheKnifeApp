@@ -30,5 +30,6 @@ public class GuestController {
       return;
     }
     System.out.println("[" + Lib.GREEN + "ACTION" + Lib.RESET + "] Guest serching [" + luogo + "]");
+    PageController.selectPage("userHome.fxml");
   }
 }

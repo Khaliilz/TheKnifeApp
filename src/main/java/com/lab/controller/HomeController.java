@@ -22,6 +22,7 @@ public class HomeController {
   public void signinClicked(ActionEvent event)
   {
     System.out.println("[" + Lib.GREEN + "ACTION" + Lib.RESET + "] Signin button clicked");
+    UserHomeController.isGuest = false;
     PageController.selectPage("userHome.fxml");
   }
 
@@ -36,6 +37,7 @@ public class HomeController {
   public void guestClicked(ActionEvent event)
   {
     System.out.println("[" + Lib.GREEN + "ACTION" + Lib.RESET + "] Guest button clicked");
-    PageController.selectPage("guestHome.fxml");
+    UserHomeController.isGuest = true;
+    PageController.selectPage("guest.fxml");
   }
 }

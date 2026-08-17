@@ -9,6 +9,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.stage.Modality;
@@ -18,12 +19,21 @@ import javafx.stage.StageStyle;
 public class RightMenuSearchController {
   
   @FXML private TextField luogo_TF;
+  @FXML private Button bookmarkedButton;
+  @FXML private Button reviewedButton;
 
   @FXML
   public void initialize()
   {
     luogo_TF.setOnAction(this::searchClicked);
     Lib.resetBorder(luogo_TF);
+
+    if(UserHomeController.isGuest){
+      bookmarkedButton.setVisible(false);
+      bookmarkedButton.setManaged(false);
+      reviewedButton.setVisible(false);
+      reviewedButton.setManaged(false);
+    }
   }
 
   @FXML

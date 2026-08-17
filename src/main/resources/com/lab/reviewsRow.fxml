@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.Text?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.image.Image?>
+
+<VBox fx:id="row" spacing="5" stylesheets="@css/restaurateurHomeStyle.css" xmlns="http://javafx.com/javafx/17.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.lab.controller.ReviewsRowController">
+  <HBox spacing="10">
+    <Text fx:id="name" styleClass="lables" text="Name"/>
+    <Text fx:id="starsNum" styleClass="infos" text="stars number"/>
+    <ImageView fitHeight="20" fitWidth="20" preserveRatio="true">
+        <image>
+          <Image url="@img/starIcon.png" />
+        </image>
+      </ImageView>
+  </HBox>
+
+  <Label fx:id="comment" styleClass="infos" text="Default comment" wrapText="true"/>
+</VBox>

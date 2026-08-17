@@ -29,13 +29,13 @@
         </Button>
     </HBox>
 
-    <Button styleClass="detailButton" prefWidth="220" prefHeight="40" onAction="#bookmarkClicked"> 
+    <Button fx:id="bookmarkedButton" styleClass="detailButton" prefWidth="220" prefHeight="40" onAction="#bookmarkClicked"> 
         <graphic> 
             <Text styleClass="textInButtons" text="PREFERITI"/> 
         </graphic> 
     </Button>
 
-    <Button styleClass="detailButton" prefWidth="220" prefHeight="40" onAction="#reviewClicked"> 
+    <Button fx:id="reviewedButton" styleClass="detailButton" prefWidth="220" prefHeight="40" onAction="#reviewClicked"> 
         <graphic> 
             <Text styleClass="textInButtons" text="RECENSITI"/> 
         </graphic> 

@@ -8,6 +8,7 @@ import com.lab.Lib;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
@@ -18,6 +19,7 @@ public class DetailsUserController {
   @FXML private Label address_L;
   @FXML private Label stats_L;
 	@FXML private VBox listOfComments;
+  @FXML private Button reviewButton;
 
   
   public void setDetails(String[] r)
@@ -25,6 +27,11 @@ public class DetailsUserController {
     name_L.setText(r[0]);
     address_L.setText(r[1]);
 		loadReviews();
+
+    if(UserHomeController.isGuest){
+      reviewButton.setVisible(false);
+      reviewButton.setManaged(false);
+    }
   }
 
   @FXML
@@ -50,27 +57,30 @@ public class DetailsUserController {
     String[][] mockReviews = {
       {"Mario Rossi", "5", "Posto fantastico, la carne era cotta alla perfezione. Personale super gentile e accogliente. Consigliatissimo!"},
       {"Giulia Bianchi", "4", "Molto buono ma il dolce non mi ha convinto del tutto. Comunque il servizio è stato velocissimo."},
+      {"Luca Verdi", "5", "Tutto perfetto, torneremo sicuramente."},
+      {"Mario Rossi", "5", "Posto fantastico, la carne era cotta alla perfezione. Personale super gentile e accogliente. Consigliatissimo!"},
+      {"Giulia Bianchi", "4", "Molto buono ma il dolce non mi ha convinto del tutto. Comunque il servizio è stato velocissimo."},
+      {"Luca Verdi", "5", "Tutto perfetto, torneremo sicuramente."},
+      {"Mario Rossi", "5", "Posto fantastico, la carne era cotta alla perfezione. Personale super gentile e accogliente. Consigliatissimo!"},
+      {"Giulia Bianchi", "4", "Molto buono ma il dolce non mi ha convinto del tutto. Comunque il servizio è stato velocissimo."},
       {"Luca Verdi", "5", "Tutto perfetto, torneremo sicuramente."}
     };
 
-    for(String[] rev : mockReviews){
-      VBox commentBox = new VBox();
-      commentBox.setSpacing(5);
-      commentBox.setStyle("-fx-border-color: #009900; -fx-border-width: 0 0 1 0; -fx-padding: 10 0 15 0;");
+    listOfComments.getChildren().clear();
 
-      Label author_L = new Label(rev[0] + " \t ⭐ " + rev[1] + "/5");
-      author_L.getStyleClass().add("titleLabel");
-      author_L.setStyle("-fx-font-size: 14px;");
+    for(String[] r : mockReviews){
+      try{
+        javafx.fxml.FXMLLoader loader = new javafx.fxml.FXMLLoader(com.lab.App.class.getResource("/com/lab/reviewsRow.fxml"));
+        VBox row = loader.load();
 
-      Label text_L = new Label(rev[2]);
-      text_L.getStyleClass().add("textLabel");
-      text_L.setStyle("-fx-font-size: 14px;");
-      
-      text_L.setWrapText(true); 
+        ReviewsRowController controller = loader.getController();
+        controller.setReview(r);
 
-      commentBox.getChildren().addAll(author_L, text_L);
-
-      listOfComments.getChildren().add(commentBox);
+        listOfComments.getChildren().add(row);
+      }catch (IOException e){
+        System.out.println("[" + com.lab.Lib.RED + "ERROR" + com.lab.Lib.RESET + "] Loading review row");
+        e.printStackTrace();
+      }
     }
   }
 }
