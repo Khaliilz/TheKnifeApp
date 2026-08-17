@@ -24,6 +24,9 @@ public class DetailsRestaurateurController {
   {
     PageController.showTitle(false); 
     ToolbarController.showBackButton(false);
+    ToolbarController.showSigninButton(true);
+    ToolbarController.showSignupButton(true);
+    ToolbarController.showSignoutButton(false);
     
     fillReviews();
   }

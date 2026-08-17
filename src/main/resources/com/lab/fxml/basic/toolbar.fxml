@@ -8,17 +8,14 @@
 
 <StackPane fx:id="toolbar" stylesheets="@/com/lab/css/toolbarStyle.css" prefHeight="50" xmlns="http://javafx.com/javafx/17.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.lab.controller.basic.ToolbarController">
   <Text fx:id="logo" text="TheKnife"/>
-  <HBox alignment="CENTER_LEFT" pickOnBounds="false">
-    <padding>
-        <Insets left="2"/>
-    </padding>
+  <HBox fx:id="leftSide" alignment="CENTER_LEFT" pickOnBounds="false">
     <Button fx:id="back_B" visible="false" prefWidth="40" prefHeight="40" onAction="#backClicked"/>
+    <Button fx:id="signin_B" styleClass="accessButtons" text="ACCEDI" visible="false" prefWidth="120" prefHeight="40" onAction="#signinClicked"/>
+    <Button fx:id="signup_B" styleClass="accessButtons" text="REGISTRATI" visible="false" prefWidth="120" prefHeight="40" onAction="#signupClicked"/>
+    <Button fx:id="signout_B" styleClass="accessButtons" text="ESCI" visible="false" prefWidth="120" prefHeight="40" onAction="#signoutClicked"/>
   </HBox>
 
-  <HBox alignment="CENTER_RIGHT" StackPane.alignment="CENTER_RIGHT" pickOnBounds="false">
-    <padding>
-        <Insets right="2"/>
-    </padding>
+  <HBox fx:id="rightSide" alignment="CENTER_RIGHT" StackPane.alignment="CENTER_RIGHT" pickOnBounds="false">
     <Button fx:id="minimize_B" prefWidth="40" prefHeight="40" onAction="#minimizeClicked"/>
     <Button fx:id="exit_B" prefWidth="40" prefHeight="40" onAction="#exitClicked"/>
   </HBox>

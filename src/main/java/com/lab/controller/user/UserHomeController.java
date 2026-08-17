@@ -37,9 +37,19 @@ public class UserHomeController {
   public void initialize()
   {
     instance = this;
-
-    PageController.showTitle(false); 
+    
+    PageController.showTitle(false);
     ToolbarController.showBackButton(false);
+    if(isGuest){
+      ToolbarController.showSigninButton(true);
+      ToolbarController.showSignupButton(true);
+      ToolbarController.showSignoutButton(false);
+    }else{
+      ToolbarController.showSigninButton(false);
+      ToolbarController.showSignupButton(false);
+      ToolbarController.showSignoutButton(true);
+    }
+    
     loadRightMenu("Ristoranti nelle vicinanze", "/com/lab/fxml/user/rightMenuSearch.fxml");
     
     loadNearest();

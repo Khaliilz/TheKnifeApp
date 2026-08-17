@@ -14,6 +14,9 @@ public class ToolbarController {
   @FXML private Button exit_B;
   @FXML private Button minimize_B;
   @FXML private Button back_B;
+  @FXML private Button signin_B;
+  @FXML private Button signup_B;
+  @FXML private Button signout_B;
 
   private static ToolbarController toolbarController;
 
@@ -39,14 +42,39 @@ public class ToolbarController {
   }
 
   public static void showBackButton(boolean show) {
-    if(toolbarController != null) toolbarController.back_B.setVisible(show);
+    if(toolbarController != null){
+      toolbarController.back_B.setVisible(show);
+      toolbarController.back_B.setManaged(show);
+    }
   }
 
-  //
   public static void setupBackButton(boolean show, String prevPage) {
     if(toolbarController != null) {
       toolbarController.back_B.setVisible(show);
+      toolbarController.back_B.setManaged(show);
       toolbarController.page = prevPage;
+    }
+  }
+
+  public static void showSigninButton(boolean show) {
+    if(toolbarController != null){
+      toolbarController.signin_B.setVisible(show);
+      toolbarController.signin_B.setManaged(show);
+    } 
+
+  }
+
+  public static void showSignupButton(boolean show) {
+    if(toolbarController != null){
+      toolbarController.signup_B.setVisible(show);
+      toolbarController.signup_B.setManaged(show);
+    }
+  }
+
+  public static void showSignoutButton(boolean show) {
+    if(toolbarController != null){
+      toolbarController.signout_B.setVisible(show);
+      toolbarController.signout_B.setManaged(show);
     }
   }
 
@@ -54,6 +82,24 @@ public class ToolbarController {
   public void backClicked(ActionEvent event) {
     System.out.println("[" + Lib.BLUE + "ACTION" + Lib.RESET + "] Backed to Home page");
     PageController.selectPage(page);
+  }
+
+  @FXML
+  public void signinClicked(ActionEvent event) {
+    System.out.println("[" + Lib.BLUE + "ACTION" + Lib.RESET + "] Signing in");
+    PageController.selectPage("/com/lab/fxml/access/signin.fxml");
+  }
+
+  @FXML
+  public void signupClicked(ActionEvent event) {
+    System.out.println("[" + Lib.BLUE + "ACTION" + Lib.RESET + "] Signing up");
+    PageController.selectPage("/com/lab/fxml/access/signup.fxml");
+  }
+
+  @FXML
+  public void signoutClicked(ActionEvent event) {
+    System.out.println("[" + Lib.BLUE + "ACTION" + Lib.RESET + "] Signing out");
+    PageController.selectPage("/com/lab/fxml/basic/home.fxml");
   }
 
   @FXML

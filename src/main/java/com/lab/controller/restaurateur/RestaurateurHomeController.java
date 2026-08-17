@@ -35,6 +35,9 @@ public class RestaurateurHomeController {
 
     PageController.showTitle(false); 
     ToolbarController.showBackButton(false);
+    ToolbarController.showSigninButton(false);
+    ToolbarController.showSignupButton(false);
+    ToolbarController.showSignoutButton(true);
 
     title.setText("I tuoi ristoranti");
     fillRestaurants();

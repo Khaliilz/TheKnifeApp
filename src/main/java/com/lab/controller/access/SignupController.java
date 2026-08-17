@@ -33,6 +33,10 @@ public class SignupController {
   {
     PageController.showTitle(true);
     ToolbarController.setupBackButton(true, "/com/lab/fxml/basic/home.fxml");
+    ToolbarController.showSigninButton(false);
+    ToolbarController.showSignupButton(false);
+    ToolbarController.showSignoutButton(false);
+    
     password_PF.setOnAction(this::signupClicked);
     Lib.resetBorder(nome_TF);
     Lib.resetBorder(cognome_TF);

@@ -22,6 +22,9 @@ public class SigninController {
   {
     PageController.showTitle(true);
     ToolbarController.setupBackButton(true, "/com/lab/fxml/basic/home.fxml");
+    ToolbarController.showSigninButton(false);
+    ToolbarController.showSignupButton(false);
+    ToolbarController.showSignoutButton(false);
     password_PF.setOnAction(this::signinClicked);
     Lib.resetBorder(username_TF);
     Lib.resetBorder(password_PF);
