@@ -21,32 +21,32 @@
         <HBox alignment="CENTER_LEFT" spacing="15">
           <VBox alignment="CENTER_LEFT" spacing="15" HBox.hgrow="ALWAYS">
             <Text text="Indirizzo:" styleClass="labels"/>
-            <TextField fx:id="address" styleClass="defaultTextField" alignment="CENTER"/>
+            <TextField fx:id="address" styleClass="defaultTextField" promptText="Via Roma, 12" alignment="CENTER"/>
           </VBox>
           <VBox alignment="CENTER_LEFT" spacing="15" HBox.hgrow="ALWAYS">
             <Text text="Citta':" styleClass="labels"/>
-            <TextField fx:id="city" styleClass="defaultTextField" alignment="CENTER"/>
+            <TextField fx:id="city" styleClass="defaultTextField" promptText="Lazio" alignment="CENTER"/>
           </VBox>
           <VBox alignment="CENTER_LEFT" spacing="15" HBox.hgrow="ALWAYS">
             <Text text="Nazione:" styleClass="labels"/>
-            <TextField fx:id="country" styleClass="defaultTextField" alignment="CENTER"/>
+            <TextField fx:id="country" styleClass="defaultTextField" promptText="Italia" alignment="CENTER"/>
           </VBox>
         </HBox>
 
         <HBox alignment="CENTER_LEFT" spacing="15">
           <VBox alignment="CENTER_LEFT" spacing="15">
             <Text text="Latitudine:" styleClass="labels"/>
-            <TextField fx:id="latitude" styleClass="defaultTextField" maxWidth="250" alignment="CENTER"/>
+            <TextField fx:id="latitude" styleClass="defaultTextField" promptText="41.893" maxWidth="250" alignment="CENTER"/>
           </VBox>
           <VBox alignment="CENTER_LEFT" spacing="15">
             <Text text="Longitudine:" styleClass="labels"/>
-            <TextField fx:id="longitude" styleClass="defaultTextField" prefWidth="250" alignment="CENTER"/>
+            <TextField fx:id="longitude" styleClass="defaultTextField" promptText="12.483" prefWidth="250" alignment="CENTER"/>
           </VBox>
         </HBox>
 
         <VBox alignment="CENTER_LEFT" spacing="15">
           <Text text="Cucina:" styleClass="labels"/>
-          <TextField fx:id="cuisine" styleClass="defaultTextField" maxWidth="350" alignment="CENTER"/>
+          <TextField fx:id="cuisine" styleClass="defaultTextField" promptText="Mediterranea, orientale" maxWidth="350" alignment="CENTER"/>
         </VBox>
       </VBox>
 

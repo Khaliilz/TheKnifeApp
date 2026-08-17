@@ -34,7 +34,7 @@
         </VBox>
         <VBox alignment="CENTER_LEFT" spacing="5">
           <Label styleClass="labels" text="Domicilio:"/> 
-          <TextField fx:id="domicilio_TF" styleClass="defaultTextField" prefWidth="300" prefHeight="45" promptText="es. Legnano, Milano" alignment="CENTER"/>
+          <TextField fx:id="domicilio_TF" styleClass="defaultTextField" prefWidth="300" prefHeight="45" promptText="Legnano, Milano" alignment="CENTER"/>
         </VBox>
       </HBox>
 

@@ -49,6 +49,7 @@ public class SignupController {
   @FXML
   public void signupClicked(ActionEvent event)
   {
+    initialize();
     boolean error = false;
 
     String nome = nome_TF.getText().trim();

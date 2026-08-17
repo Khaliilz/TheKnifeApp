@@ -39,7 +39,7 @@ public class RightMenuSearchController {
   @FXML
   public void searchClicked(ActionEvent event)
   {
-    luogo_TF.getStyleClass().remove("errorInput");
+    initialize();
     boolean error = false;
     String place = luogo_TF.getText();
     

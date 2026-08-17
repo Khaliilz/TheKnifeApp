@@ -16,7 +16,6 @@ public class SigninController {
   @FXML private TextField username_TF;
   @FXML private PasswordField password_PF;
 
-
   @FXML
   public void initialize()
   {
@@ -33,7 +32,9 @@ public class SigninController {
   @FXML
   public void signinClicked(ActionEvent event)
   {
+    initialize();
     boolean error = false;
+    
     String username = username_TF.getText();
     String password = password_PF.getText();
 

@@ -29,11 +29,16 @@ public class GuestController {
   @FXML
   public void cercaClicked(ActionEvent event)
   {
+    initialize();
+    boolean error = false;
+
     String luogo = luogo_TF.getText().trim();
     if(luogo.isEmpty()){
       Lib.errorBorder(luogo_TF);
-      return;
+      error = true;
     }
+
+    if(error) return;
     System.out.println("[" + Lib.GREEN + "ACTION" + Lib.RESET + "] Guest serching [" + luogo + "]");
     PageController.selectPage("/com/lab/fxml/user/userHome.fxml");
   }

@@ -36,54 +36,72 @@ public class NewRestaurantController {
   @FXML
   public void saveClicked(ActionEvent e)
   {
-    String nameR = name.getText();
-    String addressR = address.getText();
-    String cityR = city.getText();
-    String countryR = country.getText();
-    String latitudeR = latitude.getText();
-    String longitudeR = longitude.getText();
-    String cuisineR = cuisine.getText();
-    RadioButton deliverySelected = (RadioButton) deliveryGroup.getSelectedToggle();
-    String delivery = deliverySelected.getText();
-    RadioButton bookingSelected = (RadioButton) deliveryGroup.getSelectedToggle();
-    String booking = bookingSelected.getText();
-    RadioButton priceSelected = (RadioButton) deliveryGroup.getSelectedToggle();
-    String price = priceSelected.getText();
+    initialize();
+    boolean error = false;
+
+    String nameR = name.getText().trim();
+    String addressR = address.getText().trim();
+    String cityR = city.getText().trim();
+    String countryR = country.getText().trim();
+    String latitudeR = latitude.getText().trim();
+    String longitudeR = longitude.getText().trim();
+    String cuisineR = cuisine.getText().trim();
+    String delivery = ((RadioButton) deliveryGroup.getSelectedToggle()).getText();
+    String booking = ((RadioButton) bookingGroup.getSelectedToggle()).getText();
+    String price = ((RadioButton) priceGroup.getSelectedToggle()).getText();
 
     if(nameR.isEmpty()){
       Lib.errorBorder(name);
-      return;
+      error = true;
     }
 
-    if(addressR.isEmpty()){
+    String addressRegex = "^.+?,\\s*\\d+[a-zA-Z]?$";
+    if(addressR.isEmpty() || !addressR.matches(addressRegex)){
       Lib.errorBorder(address);
-      return;
+      error = true;
     }
 
-    if(cityR.isEmpty()){
+    String nameRegex = "^[\\p{L}\\s\\'\\-\\.]+$";
+    if(cityR.isEmpty() || !cityR.matches(nameRegex)){
       Lib.errorBorder(city);
-      return;
+      error = true;
     }
 
-    if(countryR.isEmpty()){
+    if(countryR.isEmpty() || !countryR.matches(nameRegex)){
       Lib.errorBorder(country);
-      return;
+      error = true;
     }
 
-    if(latitudeR.isEmpty()){
+    String decimalRegex = "^-?\\d+(\\.\\d+)?$";
+    if(latitudeR.isEmpty() || !latitudeR.matches(decimalRegex)){
       Lib.errorBorder(latitude);
-      return;
+      error = true;
+    }else{
+      double lat = Double.parseDouble(latitudeR);
+      if(lat<-90.0 || lat>90.0){
+        Lib.errorBorder(latitude);
+        error = true;
+      }
     }
 
-    if(longitudeR.isEmpty()){
+    if(longitudeR.isEmpty() || !longitudeR.matches(decimalRegex)){
       Lib.errorBorder(longitude);
-      return;
+      error = true;
+    }else{
+      double lon = Double.parseDouble(longitudeR);
+      if(lon<-180.0 || lon>180.0){
+        Lib.errorBorder(longitude);
+        error = true;
+      }
     }
 
-    if(cuisineR.isEmpty()){
+    String cuisineRegex = "^[\\p{L}\\s\\'\\-]+(,\\s*[\\p{L}\\s\\'\\-]+)*$";
+    if(cuisineR.isEmpty() || !cuisineR.matches(cuisineRegex)){
       Lib.errorBorder(cuisine);
-      return;
+      error = true;
     }
+
+    if(error) return;
 
     System.out.println("[" + Lib.GREEN + "ACTION" + Lib.RESET + "] Save button clicked");
     RestaurateurHomeController.getInstance().closeNewRestaurant();
