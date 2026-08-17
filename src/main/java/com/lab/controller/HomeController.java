@@ -23,7 +23,7 @@ public class HomeController {
   {
     System.out.println("[" + Lib.GREEN + "ACTION" + Lib.RESET + "] Signin button clicked");
     UserHomeController.isGuest = false;
-    PageController.selectPage("userHome.fxml");
+    PageController.selectPage("signin.fxml");
   }
 
   @FXML

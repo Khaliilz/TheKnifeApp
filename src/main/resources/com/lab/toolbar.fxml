@@ -7,7 +7,7 @@
 <?import javafx.geometry.Insets?>
 
 <StackPane fx:id="toolbar" stylesheets="@css/toolbarStyle.css" prefHeight="50" xmlns="http://javafx.com/javafx/17.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.lab.controller.ToolbarController">
-  <Text text="TheKnife" styleClass="theknifeText"/>
+  <Text fx:id="logo" text="TheKnife"/>
   <HBox alignment="CENTER_LEFT" pickOnBounds="false">
     <padding>
         <Insets left="2"/>

@@ -12,42 +12,43 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane stylesheets="@css/viewStyle.css" xmlns="http://javafx.com/javafx/17.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.lab.controller.ViewCommentController">
+<AnchorPane stylesheets="@css/theKnifeStyle.css" xmlns="http://javafx.com/javafx/17.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.lab.controller.ViewCommentController">
   <children>
     <VBox alignment="CENTER" spacing="30" AnchorPane.topAnchor="5" AnchorPane.leftAnchor="35" AnchorPane.rightAnchor="35" AnchorPane.bottomAnchor="15">
-      <Text fx:id="name_R" styleClass="text" text="name User"/>
+      <Text fx:id="name_R" styleClass="labels" text="name User"/>
 
       <HBox spacing="30">
-        <StackPane fx:id="commentContainer" alignment="TOP_LEFT" minWidth="400" maxWidth="400" minHeight="150" maxHeight="150">
+        <StackPane fx:id="commentContainer" styleClass="answerCommentContainer" alignment="TOP_LEFT" minWidth="400" maxWidth="400" minHeight="150" maxHeight="150">
           <VBox spacing="10">
-            <Text styleClass="text" text="Recensione:"/>
+            <Text styleClass="labels" text="Recensione:"/>
             <TextArea fx:id="comment" wrapText="true" prefRowCount="3" VBox.vgrow="ALWAYS"/>
           </VBox>
         </StackPane>
 
-        <StackPane fx:id="answerContainer" alignment="TOP_LEFT" minWidth="400" maxWidth="400" minHeight="150" maxHeight="150">
+        <StackPane fx:id="answerContainer" styleClass="answerCommentContainer" alignment="TOP_LEFT" minWidth="400" maxWidth="400" minHeight="150" maxHeight="150">
           <VBox spacing="10">
-            <Text styleClass="text" text="Risposta:"/>
-              <Text fx:id="answer" text="answer..."/>
+            <Text styleClass="labels" text="Risposta:"/>
+            <Text fx:id="answer" text="answer..."/>
           </VBox>
         </StackPane>
       </HBox>
       
       <HBox alignment="CENTER" spacing="20">
-      <Text styleClass="text" text="Stelle:"/>
-        <RadioButton fx:id="starsOne" styleClass="radioButton" text="1">
-          <toggleGroup>
-            <ToggleGroup fx:id="starsGroup"/>
-          </toggleGroup>
-        </RadioButton>
-        <RadioButton fx:id="starsTwo" styleClass="radioButton" text="2" toggleGroup="$starsGroup"/>
-        <RadioButton fx:id="starsThree" styleClass="radioButton" text="3" toggleGroup="$starsGroup"/>
-        <RadioButton fx:id="starsFour" styleClass="radioButton" text="4" toggleGroup="$starsGroup"/>
+        <Text styleClass="labels" text="Stelle:"/>
+
+        <fx:define>
+          <ToggleGroup fx:id="starsGroup"/>
+        </fx:define>
+
+        <RadioButton fx:id="starsOne" styleClass="defaultRadioButton" text="1" toggleGroup="$starsGroup"/>
+        <RadioButton fx:id="starsTwo" styleClass="defaultRadioButton" text="2" toggleGroup="$starsGroup"/>
+        <RadioButton fx:id="starsThree" styleClass="defaultRadioButton" text="3" toggleGroup="$starsGroup"/>
+        <RadioButton fx:id="starsFour" styleClass="defaultRadioButton" text="4" toggleGroup="$starsGroup"/>
       </HBox>
 
       <HBox alignment="CENTER_RIGHT" spacing="20">
-        <Button styleClass="removeButton" text="RIMUOVI" prefWidth="120" prefHeight="40" onAction="#removeClicked"/>
-        <Button styleClass="detailButton" text="SALVA" prefWidth="120" prefHeight="40" onAction="#saveClicked"/>
+        <Button styleClass="redButton" text="RIMUOVI" prefWidth="120" prefHeight="40" onAction="#removeClicked"/>
+        <Button styleClass="greenButton" text="SALVA" prefWidth="120" prefHeight="40" onAction="#saveClicked"/>
       </HBox>
     </VBox>
   </children>

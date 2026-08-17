@@ -1,4 +1,12 @@
-@import "defaultStyle.css";
+#logo
+{
+  -fx-fill: #dadada;
+  -fx-stroke: #000000;
+  -fx-stroke-width: 1.5px;
+  -fx-font-family: "Oswald";
+  -fx-font-weight: bold;
+  -fx-font-size: 30px;
+}
 
 #back_B
 {

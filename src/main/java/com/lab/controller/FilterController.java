@@ -8,6 +8,7 @@ import javafx.scene.Node;
 import javafx.stage.Stage;
 
 public class FilterController {
+  
   @FXML
   public void applyFilterClicked(ActionEvent event)
   {

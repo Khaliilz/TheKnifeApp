@@ -8,25 +8,12 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.geometry.Insets?>
 
-<AnchorPane fx:id="homePage" prefWidth="1280" prefHeight="700" xmlns="http://javafx.com/javafx/17.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.lab.controller.HomeController">
+<AnchorPane fx:id="homePage" stylesheets="@css/theKnifeStyle.css" prefWidth="1280" prefHeight="700" xmlns="http://javafx.com/javafx/17.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.lab.controller.HomeController">
   <children>
-
     <VBox alignment="CENTER" spacing="60" AnchorPane.topAnchor="250" AnchorPane.leftAnchor="500" AnchorPane.rightAnchor="500">
-      <Button fx:id="signin_B" styleClass="theknifeButton"  prefWidth="230" prefHeight="70" onAction="#signinClicked">
-        <graphic>
-          <Text text="ACCEDI" styleClass="theknifeText"/>
-        </graphic>  
-      </Button>
-      <Button fx:id="signup_B" styleClass="theknifeButton" prefWidth="230" prefHeight="70" onAction="#signupClicked">
-        <graphic>
-          <Text text="REGISTRATI" styleClass="theknifeText"/>
-        </graphic>
-      </Button>
-      <Button fx:id="guest_B" styleClass="theknifeButton" prefWidth="230" prefHeight="70" onAction="#guestClicked">
-        <graphic>
-          <Text text="OSPITE" styleClass="theknifeText"/>
-        </graphic>
-      </Button>
+      <Button fx:id="signin_B" styleClass="greenButton" text="ACCEDI" prefWidth="230" prefHeight="70" onAction="#signinClicked"/>
+      <Button fx:id="signup_B" styleClass="greenButton" text="REGISTRATI" prefWidth="230" prefHeight="70" onAction="#signupClicked"/>
+      <Button fx:id="guest_B" styleClass="greenButton" text="OSPITE" prefWidth="230" prefHeight="70" onAction="#guestClicked"/>
     </VBox>
   </children>
 </AnchorPane>

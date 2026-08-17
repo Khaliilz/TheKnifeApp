@@ -11,25 +11,21 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.geometry.Insets?>
 
-<AnchorPane fx:id="signinPage" prefWidth="1280" prefHeight="700" xmlns="http://javafx.com/javafx/17.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.lab.controller.SigninController">
+<AnchorPane fx:id="signinPage" stylesheets="@css/theKnifeStyle.css" prefWidth="1280" prefHeight="700" xmlns="http://javafx.com/javafx/17.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.lab.controller.SigninController">
   <children>
 
     <VBox alignment="CENTER" spacing="25" AnchorPane.topAnchor="250" AnchorPane.leftAnchor="500" AnchorPane.rightAnchor="500">
       <VBox alignment="CENTER_LEFT" spacing="5">
-        <Label styleClass="theknifeLabel" text="Username:"/> 
-        <TextField fx:id="username_TF" styleClass="theknifeInput" prefWidth="230" prefHeight="70" alignment="CENTER"/>
+        <Label styleClass="labels" text="Username:"/> 
+        <TextField fx:id="username_TF" styleClass="defaultTextField" prefWidth="230" prefHeight="50" alignment="CENTER"/>
       </VBox>
 
       <VBox alignment="CENTER_LEFT" spacing="5">
-        <Label styleClass="theknifeLabel" text="Password:"/> 
-        <PasswordField fx:id="password_PF" styleClass="theknifeInput" prefWidth="230" prefHeight="70" alignment="CENTER"/>
+        <Label styleClass="labels" text="Password:"/> 
+        <PasswordField fx:id="password_PF" styleClass="defaultTextField" prefWidth="230" prefHeight="50" alignment="CENTER"/>
       </VBox>
 
-      <Button fx:id="signin_B" styleClass="theknifeButton" prefWidth="230" prefHeight="70" onAction="#signinClicked">
-        <graphic>
-          <Text text="ACCEDI" styleClass="theknifeText"/>
-        </graphic>
-      </Button>
+      <Button fx:id="signin_B" styleClass="greenButton" text="ACCEDI" prefWidth="230" prefHeight="60" onAction="#signinClicked"/>
     </VBox>
 
   </children>

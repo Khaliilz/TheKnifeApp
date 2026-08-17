@@ -11,33 +11,16 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.layout.HBox?>
 
-<VBox spacing="30" alignment="CENTER" prefWidth="200" xmlns="http://javafx.com/javafx/17.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.lab.controller.RightMenuSearchController">
-    <Label styleClass="theknifeLabel" text="Dove vuoi mangiare?"/> 
-    <TextField fx:id="luogo_TF" maxWidth="220" prefHeight="30" alignment="CENTER"/>
+<VBox stylesheets="@css/theKnifeStyle.css" spacing="30" alignment="CENTER" prefWidth="200" xmlns="http://javafx.com/javafx/17.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.lab.controller.RightMenuSearchController">
+    <Label styleClass="labels" text="Dove vuoi mangiare?"/> 
+    <TextField fx:id="luogo_TF" styleClass="defaultTextField" maxWidth="220" prefHeight="30" alignment="CENTER"/>
 
     <HBox spacing="10" alignment="CENTER" prefWidth="200"> 
-		<Button styleClass="detailButton" prefWidth="105" prefHeight="40" onAction="#filterClicked"> 
-            <graphic> 
-            	<Text styleClass="textInButtons" text="FILTRA"/> 
-            </graphic> 
-        </Button>
-
-      	<Button styleClass="detailButton" prefWidth="105" prefHeight="40" onAction="#searchClicked"> 
-            <graphic> 
-            	<Text styleClass="textInButtons" text="CERCA"/> 
-            </graphic> 
-        </Button>
+		<Button styleClass="greenButton" text="FILTRA" prefWidth="105" prefHeight="40" onAction="#filterClicked"/>
+      	<Button styleClass="greenButton" text="CERCA" prefWidth="105" prefHeight="40" onAction="#searchClicked"/>
     </HBox>
 
-    <Button fx:id="bookmarkedButton" styleClass="detailButton" prefWidth="220" prefHeight="40" onAction="#bookmarkClicked"> 
-        <graphic> 
-            <Text styleClass="textInButtons" text="PREFERITI"/> 
-        </graphic> 
-    </Button>
+    <Button fx:id="bookmarkedButton" styleClass="greenButton" text="PREFERITI" prefWidth="220" prefHeight="40" onAction="#bookmarkClicked"/>
 
-    <Button fx:id="reviewedButton" styleClass="detailButton" prefWidth="220" prefHeight="40" onAction="#reviewClicked"> 
-        <graphic> 
-            <Text styleClass="textInButtons" text="RECENSITI"/> 
-        </graphic> 
-    </Button>
+    <Button fx:id="reviewedButton" styleClass="greenButton" text="RECENSITI" prefWidth="220" prefHeight="40" onAction="#reviewClicked"/>
 </VBox>

@@ -1,6 +1,49 @@
+/* ----------------------------
+--------- FONT E LAYOUT ------- 
+-------------------------------*/
 @font-face
 {
   src: url("../font/Oswald-Bold.ttf");
+}
+
+#page
+{
+  -fx-background-color: #d3d3d3;
+  -fx-background-radius: 20px;
+  -fx-border-radius: 20px;
+}
+
+#toolbar
+{
+  -fx-background-color: #009900;
+  -fx-background-radius: 18px 18px 0 0; 
+}
+
+#mainArea
+{
+  -fx-background-color: #ffffff;
+  -fx-border-color: #000000;
+  -fx-padding: 5px;
+}
+
+#columnsArea
+{
+  -fx-background-color: #ffffff;
+  -fx-border-color: #000000;
+  -fx-padding: 10px;
+}
+
+/* ----------------------------
+-------- TEXT AND LABELS ------ 
+-------------------------------*/
+#welcomeText
+{
+  -fx-fill: #009900;
+  -fx-stroke: #000000;
+  -fx-strokeWidth: 1.8px;
+  -fx-font-family: "Oswald";
+  -fx-font-weight: bold;
+  -fx-font-size: 80px;
 }
 
 #title
@@ -23,21 +66,7 @@
   -fx-font-size: 30px;
 }
 
-#mainArea
-{
-  -fx-background-color: #ffffff;
-  -fx-border-color: #000000;
-  -fx-padding: 5px;
-}
-
-#row
-{
-  -fx-border-color: #009900;
-  -fx-border-width: 0 0 1 0;
-  -fx-padding: 15;
-}
-
-.lables
+.labels
 {
   -fx-font-family: 'Verdana';
   -fx-font-size: 18px;
@@ -50,6 +79,46 @@
   -fx-font-size: 16px;
 }
 
+#comment
+{
+  -fx-background-color: transparent;
+  -fx-font-family: 'Verdana';
+  -fx-font-size: 14px;
+}
+
+#comment .content
+{
+  -fx-background-color: transparent;
+}
+
+#comment:focused
+{
+  -fx-border-color: transparent;
+  -fx-border-width: 1px;
+  -fx-border-radius: 5px;
+  -fx-background-color: #ffffff;
+  -fx-background-radius: 5px;
+}
+
+#comment:focused .content
+{
+  -fx-background-color: #ffffff;
+}
+
+#comment .viewport
+{
+  -fx-background-color: transparent;
+}
+
+#answer
+{
+  -fx-font-family: 'Verdana';
+  -fx-font-size: 14px;
+}
+
+/* ----------------------------
+------------ BUTTONS ---------- 
+-------------------------------*/
 .greenButton
 {
   -fx-background-color: #ffffff;
@@ -86,7 +155,7 @@
   -fx-border-color: #990000;
 }
 
-#bookmarkButton
+.bookmarkButton
 {
   -fx-background-color: transparent;
   -fx-cursor: hand;
@@ -96,7 +165,7 @@
   -fx-background-size: 20px 20px;
 }
 
-#bookmarkedButton
+.bookmarkedButton
 {
   -fx-background-color: transparent;
   -fx-cursor: hand;
@@ -106,6 +175,70 @@
   -fx-background-size: 20px 20px;
 }
 
+.defaultRadioButton
+{
+  -fx-font-size: 16px;
+  -fx-focus-color: #009900;
+  -fx-accent: #009900;
+}
+
+/* ----------------------------
+----- CONTAINERS AND LISTS ---- 
+-------------------------------*/
+#row
+{
+  -fx-border-color: #009900;
+  -fx-border-width: 0 0 1 0;
+  -fx-padding: 15;
+}
+
+.popup
+{
+  -fx-border-color: #000000, #009900;
+  -fx-border-width: 1.5px, 1.5px;
+  -fx-border-insets: 0, 1.5px;
+  -fx-border-radius: 20px, 18px;
+  -fx-background-color: #ffffff;
+  -fx-background-radius: 20px;
+  -fx-background-insets: 2px;
+}
+
+.container
+{
+  -fx-border-color: #000000;
+  -fx-border-width: 1.5px;
+  -fx-border-radius: 5px;
+  -fx-background-color: #ffffff;
+  -fx-background-radius: 5px;
+}
+
+.separator .line
+{
+  -fx-border-color: #009900;
+  -fx-border-width: 1px 0 0 0;
+}
+
+#reviewContainer
+{
+  -fx-padding: 20px;
+}
+
+.answerCommentContainer
+{
+  -fx-padding: 10px;
+  -fx-border-radius: 2px;
+  -fx-border-color: #000000;
+}
+
+#listOfRestaurants
+{
+  -fx-background-color: #ffffff;
+  -fx-padding: 15;
+}
+
+/* ----------------------------
+---------- SCROLL BAR --------- 
+-------------------------------*/
 #listContainer
 {
   -fx-background-color: transparent;
@@ -152,26 +285,14 @@
 }
 
 #listContainer .scroll-bar:vertical .thumb:hover,
-#listContainer .scroll-bar:vertical .thumb:clicked
+#listContainer .scroll-bar:vertical .thumb:pressed
 {
   -fx-background-color: #009900;
 }
 
-.separator .line
-{
-  -fx-border-color: #009900;
-  -fx-border-width: 1px 0 0 0;
-}
-
-.container
-{
-  -fx-border-color: #000000;
-  -fx-border-width: 1.5px;
-  -fx-border-radius: 5px;
-  -fx-background-color: #ffffff;
-  -fx-background-radius: 5px;
-}
-
+/* ----------------------------
+----------- TEXT AREA --------- 
+-------------------------------*/
 .textArea
 {
   -fx-background-color: transparent;
@@ -209,29 +330,6 @@
   -fx-background-color: transparent;
 }
 
-.popup
-{
-  -fx-border-color: #000000, #009900;
-  -fx-border-width: 1.5px, 1.5px;
-  -fx-border-insets: 0, 1.5px;
-  -fx-border-radius: 20px, 18px;
-  -fx-background-color: #ffffff;
-  -fx-background-radius: 20px;
-  -fx-background-insets: 2px;
-}
-
-#reviewContainer
-{
-  -fx-padding: 20px;
-}
-
-.defaultRadioButton
-{
-  -fx-font-size: 16px;
-  -fx-focus-color: #009900;
-  -fx-accent: #009900;
-}
-
 .defaultTextField
 {
   -fx-font-family: "Verdana";
@@ -250,15 +348,11 @@
   -fx-border-width: 2px;
 }
 
-#columnsArea
-{
-  -fx-background-color: #ffffff;
-  -fx-border-color: #000000;
-  -fx-padding: 10px;
-}
-
+/* ----------------------------
+------- ERRORS AND DEBUG ------ 
+-------------------------------*/
 .errorInput
 {
-  -fx-border-color: red;
-  -fx-border-width: 2px;
+  -fx-border-color: red !important;
+  -fx-border-width: 2px !important;
 }

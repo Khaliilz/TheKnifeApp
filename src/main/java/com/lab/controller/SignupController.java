@@ -21,9 +21,9 @@ public class SignupController {
   @FXML private TextField domicilio_TF;
   @FXML private TextField username_TF;
   @FXML private PasswordField password_PF;
-  @FXML private ToggleGroup ruoloGroup;
-  @FXML private RadioButton cliente_RB;
-  @FXML private RadioButton ristoratore_RB;
+  @FXML private ToggleGroup roleGroup;
+  @FXML private RadioButton customer;
+  @FXML private RadioButton restaurateur;
   @FXML private Button signup_B;
 
   @FXML
@@ -51,7 +51,7 @@ public class SignupController {
     String domicilio = domicilio_TF.getText().trim();
     String username = username_TF.getText();
     String password = password_PF.getText();
-    String ruolo = cliente_RB.isSelected()? "Cliente" : "Ristoratore";
+    String ruolo = customer.isSelected()? "Cliente" : "Ristoratore";
 
     if(nome.isEmpty()){ 
       Lib.errorBorder(nome_TF);
@@ -80,6 +80,8 @@ public class SignupController {
 
     if(error) return;
     System.out.println("[" + Lib.GREEN + "ACTION" + Lib.RESET + "] Signup completed [" + username + ", " + password + ", " + ruolo + "]");
+    if(ruolo.equals("Cliente")) PageController.selectPage("userHome.fxml");
+    else PageController.selectPage("restaurateurHome.fxml");
   }
 
   public boolean checkDataNascita(String date)

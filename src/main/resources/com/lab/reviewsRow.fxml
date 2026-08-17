@@ -7,9 +7,9 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.image.Image?>
 
-<VBox fx:id="row" spacing="5" stylesheets="@css/restaurateurHomeStyle.css" xmlns="http://javafx.com/javafx/17.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.lab.controller.ReviewsRowController">
+<VBox fx:id="row" spacing="5" stylesheets="@css/theKnifeStyle.css" xmlns="http://javafx.com/javafx/17.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.lab.controller.ReviewsRowController">
   <HBox spacing="10">
-    <Text fx:id="name" styleClass="lables" text="Name"/>
+    <Text fx:id="name" styleClass="labels" text="Name"/>
     <Text fx:id="starsNum" styleClass="infos" text="stars number"/>
     <ImageView fitHeight="20" fitWidth="20" preserveRatio="true">
         <image>

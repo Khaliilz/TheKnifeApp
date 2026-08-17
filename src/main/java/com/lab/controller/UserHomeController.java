@@ -19,9 +19,9 @@ import javafx.scene.text.Text;
 public class UserHomeController {
   
   @FXML private StackPane rightMenuArea;
-  @FXML private Text titleText;
-  @FXML private VBox listOfRestaurants_VB;
-  @FXML private ScrollPane listContainer_SP;
+  @FXML private Text title;
+  @FXML private VBox listOfRestaurants;
+  @FXML private ScrollPane listContainer;
   @FXML private StackPane leftMenuArea;
   @FXML private Button bookmark;
 
@@ -50,8 +50,8 @@ public class UserHomeController {
 
   public void loadNearest()
   {
-    titleText.setText("Ristoranti nelle vicinanze");
-    listOfRestaurants_VB.getChildren().clear();
+    title.setText("Ristoranti nelle vicinanze");
+    listOfRestaurants.getChildren().clear();
 
     fillRestaurants();
   }
@@ -61,8 +61,8 @@ public class UserHomeController {
     closeDetails();
     closeComment();
 
-    titleText.setText("Ristoranti preferiti");
-    listOfRestaurants_VB.getChildren().clear();
+    title.setText("Ristoranti preferiti");
+    listOfRestaurants.getChildren().clear();
 
     fillRestaurants();
   }
@@ -72,8 +72,8 @@ public class UserHomeController {
     closeDetails();
     closeComment();
 
-    titleText.setText("Ristoranti recensiti");
-    listOfRestaurants_VB.getChildren().clear();
+    title.setText("Ristoranti recensiti");
+    listOfRestaurants.getChildren().clear();
 
     fillReviewed();
   }
@@ -81,7 +81,7 @@ public class UserHomeController {
   public void loadRightMenu(String newTitle, String fileName)
   {
     try{
-      titleText.setText(newTitle);
+      title.setText(newTitle);
       Parent selectedMenu = FXMLLoader.load(App.class.getResource(fileName));
       rightMenuArea.getChildren().setAll(selectedMenu);
     }catch(IOException e) {
@@ -95,8 +95,8 @@ public class UserHomeController {
     closeDetails();
     closeComment();
 
-    titleText.setText("Ristoranti a " + place);
-    listOfRestaurants_VB.getChildren().clear();
+    title.setText("Ristoranti a " + place);
+    listOfRestaurants.getChildren().clear();
 
     fillRestaurants();
   }
@@ -106,8 +106,8 @@ public class UserHomeController {
     closeDetails();
     closeComment();
     
-    titleText.setText("Ristoranti trovati");
-    listOfRestaurants_VB.getChildren().clear();
+    title.setText("Ristoranti trovati");
+    listOfRestaurants.getChildren().clear();
     
     fillRestaurants(); 
   }
@@ -118,7 +118,7 @@ public class UserHomeController {
     ArrayList<String[]> ristoranti = new ArrayList<>();
     for(int i=0; i<15; i++) ristoranti.add(ristorante1);
 
-    listOfRestaurants_VB.getChildren().clear();
+    listOfRestaurants.getChildren().clear();
 
     for(String[] r : ristoranti){
       try {
@@ -128,7 +128,7 @@ public class UserHomeController {
         UserRestaurantsRowController controller = loader.getController();
         controller.setRestaurantData(r);
 
-        listOfRestaurants_VB.getChildren().add(row);
+        listOfRestaurants.getChildren().add(row);
        }catch (IOException e){
         System.out.println("[" + Lib.RED + "ERROR" + Lib.RESET + "] Loading user restaurants");
         e.printStackTrace();
@@ -142,7 +142,7 @@ public class UserHomeController {
     ArrayList<String[]> ristoranti = new ArrayList<>();
     for(int i=0; i<15; i++) ristoranti.add(ristorante1);
 
-    listOfRestaurants_VB.getChildren().clear();
+    listOfRestaurants.getChildren().clear();
 
     for(String[] r : ristoranti){
       String[] comment = {"Ristorante 1", "Ottimo!", "Grazie!", "3"};
@@ -154,7 +154,7 @@ public class UserHomeController {
         RestaurantReviewsRowController controller = loader.getController();
         controller.setReview(r, comment);
 
-        listOfRestaurants_VB.getChildren().add(row);
+        listOfRestaurants.getChildren().add(row);
        }catch (IOException e){
         System.out.println("[" + Lib.RED + "ERROR" + Lib.RESET + "] Loading reviewed restaurants");
         e.printStackTrace();
@@ -171,7 +171,7 @@ public class UserHomeController {
       DetailsUserController controller = loader.getController();
       controller.setDetails(restaurant);
 
-      listContainer_SP.setVisible(false); 
+      listContainer.setVisible(false); 
       leftMenuArea.getChildren().add(detailsNode); 
 
     }catch(IOException e) {
@@ -187,7 +187,7 @@ public class UserHomeController {
       detailsNode = null;
     }
     
-    listContainer_SP.setVisible(true); 
+    listContainer.setVisible(true); 
   }
 
   public void viewComment(String[] comment)
@@ -199,7 +199,7 @@ public class UserHomeController {
       ViewCommentController controller = loader.getController();
       controller.setComment(comment);
 
-      listContainer_SP.setVisible(false); 
+      listContainer.setVisible(false); 
       leftMenuArea.getChildren().add(commentNode); 
 
     }catch(IOException e) {
@@ -215,7 +215,7 @@ public class UserHomeController {
       commentNode = null;
     }
     
-    listContainer_SP.setVisible(true); 
+    listContainer.setVisible(true); 
   }
 
   public void openWriteComment(String restaurantName)

@@ -6,9 +6,9 @@
 <?import javafx.scene.text.Text?>
 <?import javafx.scene.control.Label?>
 
-<HBox fx:id="row" alignment="CENTER_LEFT" stylesheets="@css/restaurateurHomeStyle.css" xmlns="http://javafx.com/javafx/17.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.lab.controller.YourReviewsController">
+<HBox fx:id="row" alignment="CENTER_LEFT" stylesheets="@css/theKnifeStyle.css" xmlns="http://javafx.com/javafx/17.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.lab.controller.YourReviewsController">
   <HBox alignment="CENTER_LEFT" spacing="15">
-    <Text fx:id="name" styleClass="lables" text="User name"/>
+    <Text fx:id="name" styleClass="labels" text="User name"/>
     <Label fx:id="comment" styleClass="infos" maxWidth="400" minWidth="400" text="Default comment"/>
   </HBox>
   
@@ -16,7 +16,7 @@
 
   <HBox alignment="CENTER_LEFT" spacing="15">
     <Text fx:id="starsNum" styleClass="infos" text="value"/>
-    <Text fx:id="stars" styleClass="lables" text="Stelle"/>
+    <Text fx:id="stars" styleClass="labels" text="Stelle"/>
   </HBox>
 
   <Pane HBox.hgrow="ALWAYS"/>

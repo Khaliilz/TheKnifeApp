@@ -9,10 +9,10 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.image.Image?>
 
-<HBox fx:id="row" alignment="CENTER_LEFT"  spacing="15" stylesheets="@css/restaurateurHomeStyle.css" xmlns="http://javafx.com/javafx/17.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.lab.controller.RestaurantReviewsRowController">
+<HBox fx:id="row" alignment="CENTER_LEFT"  spacing="15" stylesheets="@css/theKnifeStyle.css" xmlns="http://javafx.com/javafx/17.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.lab.controller.RestaurantReviewsRowController">
   <VBox spacing="5">
     <HBox alignment="CENTER_LEFT" spacing="15" maxWidth="450" minWidth="450" >
-      <Text fx:id="name" styleClass="lables" text="Default name"/>
+      <Text fx:id="name" styleClass="labels" text="Default name"/>
       <Label fx:id="address" styleClass="infos" text="Default address"/>
     </HBox>
     

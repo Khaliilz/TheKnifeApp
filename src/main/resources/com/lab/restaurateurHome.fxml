@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane prefWidth="1280" prefHeight="700" stylesheets="@css/restaurateurHomeStyle.css" xmlns="http://javafx.com/javafx/17.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.lab.controller.RestaurateurHomeController">
+<AnchorPane prefWidth="1280" prefHeight="700" stylesheets="@css/theKnifeStyle.css" xmlns="http://javafx.com/javafx/17.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.lab.controller.RestaurateurHomeController">
   <children>
     <StackPane alignment="CENTER" AnchorPane.topAnchor="50" AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0">
       <Text fx:id="title" text="Default title"/>

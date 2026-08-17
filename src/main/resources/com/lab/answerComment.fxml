@@ -6,10 +6,10 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane styleClass="popup" prefWidth="450" prefHeight="530" stylesheets="@css/restaurateurHomeStyle.css" xmlns="http://javafx.com/javafx/17.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.lab.controller.AnswerCommentController">
+<AnchorPane styleClass="popup" prefWidth="450" prefHeight="530" stylesheets="@css/theKnifeStyle.css" xmlns="http://javafx.com/javafx/17.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.lab.controller.AnswerCommentController">
   <children>
     <VBox fx:id="reviewContainer" alignment="CENTER" spacing="30" AnchorPane.topAnchor="5" AnchorPane.bottomAnchor="5" AnchorPane.rightAnchor="5" AnchorPane.leftAnchor="5">
-      <Text fx:id="name" styleClass="lables" text="User name"/>
+      <Text fx:id="name" styleClass="labels" text="User name"/>
 
       <TextArea fx:id="comment" styleClass="textArea" wrapText="true" prefRowCount="3" VBox.vgrow="ALWAYS" maxHeight="150"/>
 

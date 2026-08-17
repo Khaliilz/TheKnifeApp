@@ -9,23 +9,17 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane prefWidth="1280" prefHeight="700" xmlns="http://javafx.com/javafx/17.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.lab.controller.GuestController">
+<AnchorPane stylesheets="@css/theKnifeStyle.css" prefWidth="1280" prefHeight="700" xmlns="http://javafx.com/javafx/17.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.lab.controller.GuestController">
   <children>
-
     <VBox alignment="CENTER" spacing="25" AnchorPane.topAnchor="250" AnchorPane.leftAnchor="500" AnchorPane.rightAnchor="500">
       <VBox alignment="CENTER_LEFT" spacing="5">
-        <Label styleClass="theknifeLabel" text="Domicilio:"/>
-        <TextField fx:id="luogo_TF" styleClass="theknifeInput" prefWidth="230" prefHeight="70" alignment="CENTER"/>
+        <Label styleClass="labels" text="Domicilio:"/>
+        <TextField fx:id="luogo_TF" styleClass="defaultTextField" prefWidth="230" prefHeight="50" alignment="CENTER"/>
       </VBox>
 
-      <StackPane prefHeight="40"/> 
+      <StackPane prefHeight="30"/> 
 
-      <Button fx:id="cerca_B" styleClass="theknifeButton" prefWidth="230" prefHeight="70" onAction="#cercaClicked">
-        <graphic>
-          <Text styleClass="theknifeText" text="CERCA"/>
-        </graphic>
-      </Button>
+      <Button fx:id="cerca_B" styleClass="greenButton" text="CERCA" prefWidth="230" prefHeight="60" onAction="#cercaClicked"/>
     </VBox>
-    
   </children>
 </AnchorPane>

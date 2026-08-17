@@ -17,7 +17,7 @@ public class PageController {
   
   @FXML private StackPane contentArea;
   @FXML private StackPane pageTitle;
-  @FXML private Text textTitle;
+  @FXML private Text welcomeText;
 
   private static PageController instance;
 
@@ -36,8 +36,8 @@ public class PageController {
   }
 
   public static void setTitleText(String text) {
-      if (instance != null && instance.textTitle != null) {
-          instance.textTitle.setText(text);
+      if (instance != null && instance.welcomeText != null) {
+          instance.welcomeText.setText(text);
       }
   }
   
