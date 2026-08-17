@@ -21,7 +21,7 @@ public class App extends Application {
 	{
 		Parent root = null;
     try {
-      root = FXMLLoader.load(App.class.getResource("page.fxml"));
+      root = FXMLLoader.load(App.class.getResource("/com/lab/fxml/basic/page.fxml"));
     } catch(IOException e) {
       System.out.println("[" + Lib.RED + "ERROR" + Lib.RESET + "]" + " file page.fxml non trovato: ");
       e.printStackTrace();
@@ -33,7 +33,7 @@ public class App extends Application {
 		Scene scene = new Scene(root, 1280, 700);
 		scene.setFill(Color.TRANSPARENT);
 
-		Image icon = new Image(getClass().getResource("img/logo.png").toExternalForm());
+		Image icon = new Image(getClass().getResource("/com/lab/img/logo.png").toExternalForm());
 		stage.getIcons().add(icon);
 		
 		stage.setTitle("TheKnife");

@@ -17,7 +17,7 @@
   -fx-cursor: hand;
   -fx-background-radius: 14px;
   -fx-padding: 0;
-  -fx-background-image: url(../img/backIcon.png);
+  -fx-background-image: url(/com/lab/img/backIcon.png);
   -fx-background-repeat: no-repeat;
   -fx-background-position: center center;
 }
@@ -36,7 +36,7 @@
   -fx-cursor: hand;
   -fx-background-radius: 14px;
   -fx-padding: 0;
-  -fx-background-image: url(../img/exitIcon.png);
+  -fx-background-image: url(/com/lab/img/exitIcon.png);
   -fx-background-repeat: no-repeat;
   -fx-background-position: center center;
 }
@@ -55,7 +55,7 @@
   -fx-cursor: hand;
   -fx-background-radius: 14px;
   -fx-padding: 0;
-  -fx-background-image: url(../img/minimizeIcon.png);
+  -fx-background-image: url(/com/lab/img/minimizeIcon.png);
   -fx-background-repeat: no-repeat;
   -fx-background-position: center center;
 }

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Text?>
+<?import javafx.scene.control.Label?>
+
+<HBox fx:id="row" alignment="CENTER_LEFT" stylesheets="@/com/lab/css/theKnifeStyle.css" xmlns="http://javafx.com/javafx/17.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.lab.controller.restaurateur.YourReviewsController">
+  <HBox alignment="CENTER_LEFT" spacing="15">
+    <Text fx:id="name" styleClass="labels" text="User name"/>
+    <Label fx:id="comment" styleClass="infos" maxWidth="400" minWidth="400" text="Default comment"/>
+  </HBox>
+  
+  <Pane prefWidth="50"/>
+
+  <HBox alignment="CENTER_LEFT" spacing="15">
+    <Text fx:id="starsNum" styleClass="infos" text="value"/>
+    <Text fx:id="stars" styleClass="labels" text="Stelle"/>
+  </HBox>
+
+  <Pane HBox.hgrow="ALWAYS"/>
+
+  <Button fx:id="answer" styleClass="greenButton" text="RISPONDI" prefWidth="120" prefHeight="40" onAction="#answerClicked"/>
+</HBox>

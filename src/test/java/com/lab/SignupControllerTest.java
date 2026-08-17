@@ -8,7 +8,7 @@ import java.time.format.DateTimeFormatter;
 
 import org.junit.jupiter.api.Test;
 
-import com.lab.controller.SignupController;
+import com.lab.controller.access.SignupController;
 
 public class SignupControllerTest {
 
