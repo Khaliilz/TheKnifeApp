@@ -19,9 +19,7 @@ public class GuestController {
   {
     PageController.showTitle(true);
     ToolbarController.setupBackButton(true, "/com/lab/fxml/basic/home.fxml");
-    ToolbarController.showSigninButton(false);
-    ToolbarController.showSignupButton(false);
-    ToolbarController.showSignoutButton(false);
+    ToolbarController.showLeftSide(false, false, false);
     luogo_TF.setOnAction(this::cercaClicked);
     Lib.resetBorder(luogo_TF);
   }

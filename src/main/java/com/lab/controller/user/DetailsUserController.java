@@ -55,12 +55,6 @@ public class DetailsUserController {
     String[][] mockReviews = {
       {"Mario Rossi", "5", "Posto fantastico, la carne era cotta alla perfezione. Personale super gentile e accogliente. Consigliatissimo!"},
       {"Giulia Bianchi", "4", "Molto buono ma il dolce non mi ha convinto del tutto. Comunque il servizio è stato velocissimo."},
-      {"Luca Verdi", "5", "Tutto perfetto, torneremo sicuramente."},
-      {"Mario Rossi", "5", "Posto fantastico, la carne era cotta alla perfezione. Personale super gentile e accogliente. Consigliatissimo!"},
-      {"Giulia Bianchi", "4", "Molto buono ma il dolce non mi ha convinto del tutto. Comunque il servizio è stato velocissimo."},
-      {"Luca Verdi", "5", "Tutto perfetto, torneremo sicuramente."},
-      {"Mario Rossi", "5", "Posto fantastico, la carne era cotta alla perfezione. Personale super gentile e accogliente. Consigliatissimo!"},
-      {"Giulia Bianchi", "4", "Molto buono ma il dolce non mi ha convinto del tutto. Comunque il servizio è stato velocissimo."},
       {"Luca Verdi", "5", "Tutto perfetto, torneremo sicuramente."}
     };
 

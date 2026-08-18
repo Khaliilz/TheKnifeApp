@@ -56,25 +56,15 @@ public class ToolbarController {
     }
   }
 
-  public static void showSigninButton(boolean show) {
+  public static void showLeftSide(boolean signin, boolean signup, boolean signout)
+  {
     if(toolbarController != null){
-      toolbarController.signin_B.setVisible(show);
-      toolbarController.signin_B.setManaged(show);
-    } 
-
-  }
-
-  public static void showSignupButton(boolean show) {
-    if(toolbarController != null){
-      toolbarController.signup_B.setVisible(show);
-      toolbarController.signup_B.setManaged(show);
-    }
-  }
-
-  public static void showSignoutButton(boolean show) {
-    if(toolbarController != null){
-      toolbarController.signout_B.setVisible(show);
-      toolbarController.signout_B.setManaged(show);
+      toolbarController.signin_B.setVisible(signin);
+      toolbarController.signin_B.setManaged(signin);
+      toolbarController.signup_B.setVisible(signup);
+      toolbarController.signup_B.setManaged(signup);
+      toolbarController.signout_B.setVisible(signout);
+      toolbarController.signout_B.setManaged(signout);
     }
   }
 

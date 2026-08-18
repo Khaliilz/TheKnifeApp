@@ -17,9 +17,7 @@ public class HomeController {
   {
     PageController.showTitle(true);
     ToolbarController.showBackButton(false);
-    ToolbarController.showSigninButton(false);
-    ToolbarController.showSignupButton(false);
-    ToolbarController.showSignoutButton(false);
+    ToolbarController.showLeftSide(false, false, false);
   }
 
   @FXML

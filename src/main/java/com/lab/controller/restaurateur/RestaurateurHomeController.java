@@ -33,11 +33,9 @@ public class RestaurateurHomeController {
   {
     instance = this;
 
-    PageController.showTitle(false); 
+    PageController.showTitle(false);
     ToolbarController.showBackButton(false);
-    ToolbarController.showSigninButton(false);
-    ToolbarController.showSignupButton(false);
-    ToolbarController.showSignoutButton(true);
+    ToolbarController.showLeftSide(false, false, true);
 
     title.setText("I tuoi ristoranti");
     fillRestaurants();
@@ -57,7 +55,7 @@ public class RestaurateurHomeController {
   {
     String[] restaurant = {"Ristorante", "Via Roma, 12, Lazio", "5", "10"};
     ArrayList<String[]> lists = new ArrayList<>();
-    for(int i=0; i<10; i++) lists.add(restaurant);
+    for(int i=0; i<1; i++) lists.add(restaurant);
 
     for(String[] r : lists){
       try{

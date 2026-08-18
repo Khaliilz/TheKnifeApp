@@ -41,13 +41,9 @@ public class UserHomeController {
     PageController.showTitle(false);
     ToolbarController.showBackButton(false);
     if(isGuest){
-      ToolbarController.showSigninButton(true);
-      ToolbarController.showSignupButton(true);
-      ToolbarController.showSignoutButton(false);
+      ToolbarController.showLeftSide(true, true, false);
     }else{
-      ToolbarController.showSigninButton(false);
-      ToolbarController.showSignupButton(false);
-      ToolbarController.showSignoutButton(true);
+      ToolbarController.showLeftSide(false, false, true);
     }
     
     loadRightMenu("Ristoranti nelle vicinanze", "/com/lab/fxml/user/rightMenuSearch.fxml");
@@ -128,7 +124,7 @@ public class UserHomeController {
   {
     String[] ristorante1 = {"Ristorante 1", "via Trieste 12, Milano", "5", "10"};
     ArrayList<String[]> ristoranti = new ArrayList<>();
-    for(int i=0; i<15; i++) ristoranti.add(ristorante1);
+    for(int i=0; i<1; i++) ristoranti.add(ristorante1);
 
     listOfRestaurants.getChildren().clear();
 
@@ -152,7 +148,7 @@ public class UserHomeController {
   {
     String[] ristorante1 = {"Ristorante 1", "via Trieste 12, Milano", "5", "10"};
     ArrayList<String[]> ristoranti = new ArrayList<>();
-    for(int i=0; i<15; i++) ristoranti.add(ristorante1);
+    for(int i=0; i<1; i++) ristoranti.add(ristorante1);
 
     listOfRestaurants.getChildren().clear();
 

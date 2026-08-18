@@ -11,7 +11,6 @@ import com.lab.controller.basic.ToolbarController;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.control.Separator;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
@@ -24,9 +23,7 @@ public class DetailsRestaurateurController {
   {
     PageController.showTitle(false); 
     ToolbarController.showBackButton(false);
-    ToolbarController.showSigninButton(true);
-    ToolbarController.showSignupButton(true);
-    ToolbarController.showSignoutButton(false);
+    ToolbarController.showLeftSide(false, false, true);
     
     fillReviews();
   }
@@ -35,7 +32,7 @@ public class DetailsRestaurateurController {
   {
     String[] review = {"Carlo", "Ottimo!", "5", "Grazie!"};
     ArrayList<String[]> lists = new ArrayList<>();
-    for(int i=0; i<10; i++) lists.add(review);
+    for(int i=0; i<0; i++) lists.add(review);
 
     for(String[] r : lists){
       try{
@@ -44,11 +41,8 @@ public class DetailsRestaurateurController {
 
         YourReviewsController controller = loader.getController();
         controller.setReviewData(r);
-        
-        Separator separator = new Separator();
-        separator.getStyleClass().add("separator");
 
-        list.getChildren().addAll(row, separator);
+        list.getChildren().addAll(row);
       }catch(IOException e){
         System.out.println("[" + Lib.RED + "ERROR" + Lib.RESET + "] Filling your reviews list");
         e.printStackTrace();

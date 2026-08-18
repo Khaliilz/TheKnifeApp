@@ -78,7 +78,7 @@ public class NewRestaurantController {
       error = true;
     }else{
       double lat = Double.parseDouble(latitudeR);
-      if(lat<-90.0 || lat>90.0){
+      if(lat < -90.0 || lat > 90.0){
         Lib.errorBorder(latitude);
         error = true;
       }
@@ -89,7 +89,7 @@ public class NewRestaurantController {
       error = true;
     }else{
       double lon = Double.parseDouble(longitudeR);
-      if(lon<-180.0 || lon>180.0){
+      if(lon < -180.0 || lon > 180.0){
         Lib.errorBorder(longitude);
         error = true;
       }

@@ -20,6 +20,10 @@ public class UserRestaurantsRowController {
   
   public void setRestaurantData(String[] r)
   {
+    if(UserHomeController.isGuest){
+      bookmark.setVisible(false);
+      bookmark.setManaged(false);
+    }
     restaurantData = r;
     name.setText(r[0]);
     address.setText(r[1]);

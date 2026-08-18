@@ -3,6 +3,7 @@ package com.lab.controller.access;
 import com.lab.Lib;
 import com.lab.controller.basic.PageController;
 import com.lab.controller.basic.ToolbarController;
+import com.lab.controller.user.UserHomeController;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -21,9 +22,9 @@ public class SigninController {
   {
     PageController.showTitle(true);
     ToolbarController.setupBackButton(true, "/com/lab/fxml/basic/home.fxml");
-    ToolbarController.showSigninButton(false);
-    ToolbarController.showSignupButton(false);
-    ToolbarController.showSignoutButton(false);
+    ToolbarController.showLeftSide(false, false, false);
+    UserHomeController.isGuest = false;
+    
     password_PF.setOnAction(this::signinClicked);
     Lib.resetBorder(username_TF);
     Lib.resetBorder(password_PF);
@@ -42,7 +43,7 @@ public class SigninController {
       Lib.errorBorder(username_TF);
       error = true;
     }
-    if(password.isEmpty() || password.length() < 8){ 
+    if(password.isEmpty()){ 
       Lib.errorBorder(password_PF); 
       error = true; 
     }
