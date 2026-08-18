@@ -1,5 +1,32 @@
-@import "defaultStyle.css";
+/* ----------------------------
+--------- FONT E LAYOUT ------- 
+-------------------------------*/
+#leftSide
+{
+  -fx-padding: 2px;
+}
 
+#rightSide
+{
+  -fx-padding: 2px;
+}
+
+/* ----------------------------
+------------- TEXT ------------ 
+-------------------------------*/
+#logo
+{
+  -fx-fill: #dadada;
+  -fx-stroke: #000000;
+  -fx-stroke-width: 1.5px;
+  -fx-font-family: "Oswald";
+  -fx-font-weight: bold;
+  -fx-font-size: 30px;
+}
+
+/* ----------------------------
+------------ BUTTONS ---------- 
+-------------------------------*/
 #back_B
 {
   -fx-background-color: transparent;
@@ -9,7 +36,7 @@
   -fx-cursor: hand;
   -fx-background-radius: 14px;
   -fx-padding: 0;
-  -fx-background-image: url(../img/backIcon.png);
+  -fx-background-image: url(/com/lab/img/backIcon.png);
   -fx-background-repeat: no-repeat;
   -fx-background-position: center center;
 }
@@ -17,6 +44,31 @@
 #back_B:hover
 {
   -fx-background-color: #52bcfe;
+}
+
+.accessButtons
+{
+  -fx-font-family: 'Verdana';
+  -fx-font-size: 14px;
+  -fx-font-weight: bold;
+  -fx-background-color: transparent;
+  -fx-border-color: transparent;
+  -fx-focus-color: transparent;
+  -fx-faint-focus-color: transparent;
+  -fx-cursor: hand;
+}
+
+.accessButtons:hover,
+.accessButtons:pressed
+{
+  -fx-text-fill: #ffffff;
+}
+
+.accessButtons:hover .text,
+.accessButtons:pressed .text
+{
+  -fx-stroke: #000000;
+  -fx-stroke-width: 0.3px;
 }
 
 #exit_B
@@ -28,7 +80,7 @@
   -fx-cursor: hand;
   -fx-background-radius: 14px;
   -fx-padding: 0;
-  -fx-background-image: url(../img/exitIcon.png);
+  -fx-background-image: url(/com/lab/img/exitIcon.png);
   -fx-background-repeat: no-repeat;
   -fx-background-position: center center;
 }
@@ -47,7 +99,7 @@
   -fx-cursor: hand;
   -fx-background-radius: 14px;
   -fx-padding: 0;
-  -fx-background-image: url(../img/minimizeIcon.png);
+  -fx-background-image: url(/com/lab/img/minimizeIcon.png);
   -fx-background-repeat: no-repeat;
   -fx-background-position: center center;
 }

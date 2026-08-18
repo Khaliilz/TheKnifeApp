@@ -13,7 +13,7 @@
   -fx-font-size: 30px;
 }
 
-#textTitle
+#welcomeText
 {
   -fx-fill: #009900;
   -fx-stroke: #000000;
@@ -81,7 +81,6 @@
 {
   -fx-font-family: 'Verdana';
   -fx-font-size: 14px;
-  -fx-text-fill: #333333;
   -fx-font-weight: bold;
 }
 
