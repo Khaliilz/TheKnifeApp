@@ -16,6 +16,9 @@ public class DetailsUserController {
   @FXML private Text name_L;
   @FXML private Label address_L;
   @FXML private Label stats_L;
+  @FXML private Label delivery_L;
+  @FXML private Label booking_L;
+  @FXML private Label cuisine_L;
 	@FXML private VBox listOfComments;
   @FXML private Button reviewButton;
 

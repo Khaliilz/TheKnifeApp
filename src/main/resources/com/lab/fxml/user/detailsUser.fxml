@@ -18,11 +18,11 @@
         <VBox spacing="15" minWidth="320">
           <HBox spacing="5">
             <Label styleClass="labels" text="Indirizzo:"/>
-            <Label fx:id="address_L" styleClass="infos" text="Address"/>
+            <Label fx:id="address_L" styleClass="infos" text="Address" wrapText="true"/>
           </HBox>
           <HBox spacing="5">
             <Label styleClass="labels" text="Prezzo:"/>
-            <Label fx:id="price_L" styleClass="infos" text="Price"/>
+            <Label fx:id="price_L" styleClass="infos" text="Price" wrapText="true"/>
           </HBox>
           <HBox spacing="5">
             <Label styleClass="labels" text="Delivery:"/>
@@ -30,11 +30,11 @@
           </HBox>
           <HBox spacing="5">
             <Label styleClass="labels" text="Prenotazioni:"/>
-            <Label fx:id="booking_L" styleClass="infos" text="yes"/>
+            <Label fx:id="booking_L" styleClass="infos" text="www.link.com" wrapText="true"/>
           </HBox>
           <HBox spacing="5">
             <Label styleClass="labels" text="Tipo di cucina:"/>
-            <Label fx:id="cuisine_L" styleClass="infos" text="Type of cuisine"/>
+            <Label fx:id="cuisine_L" styleClass="infos" text="Type of cuisine" wrapText="true"/>
           </HBox>
         </VBox>
 

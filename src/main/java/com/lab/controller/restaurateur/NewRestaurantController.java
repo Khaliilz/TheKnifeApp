@@ -17,8 +17,8 @@ public class NewRestaurantController {
   @FXML private TextField latitude;
   @FXML private TextField longitude;
   @FXML private TextField cuisine;
+  @FXML private TextField websiteUrl;
   @FXML private ToggleGroup deliveryGroup;
-  @FXML private ToggleGroup bookingGroup;
   @FXML private ToggleGroup priceGroup;
 
   @FXML
@@ -31,6 +31,7 @@ public class NewRestaurantController {
     Lib.resetBorder(latitude);
     Lib.resetBorder(longitude);
     Lib.resetBorder(cuisine);
+    Lib.resetBorder(websiteUrl);
   }
 
   @FXML
@@ -47,7 +48,6 @@ public class NewRestaurantController {
     String longitudeR = longitude.getText().trim();
     String cuisineR = cuisine.getText().trim();
     String delivery = ((RadioButton) deliveryGroup.getSelectedToggle()).getText();
-    String booking = ((RadioButton) bookingGroup.getSelectedToggle()).getText();
     String price = ((RadioButton) priceGroup.getSelectedToggle()).getText();
 
     if(nameR.isEmpty()){
