@@ -2,8 +2,8 @@ package com.lab.controller.basic;
 
 import java.io.IOException;
 
-import com.lab.Lib;
 import com.lab.App;
+import com.lab.utility.Lib;
 
 import javafx.animation.FadeTransition;
 import javafx.fxml.FXML;

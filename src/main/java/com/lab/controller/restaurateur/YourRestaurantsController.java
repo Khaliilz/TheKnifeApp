@@ -1,6 +1,6 @@
 package com.lab.controller.restaurateur;
 
-import com.lab.Lib;
+import com.lab.utility.Lib;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;

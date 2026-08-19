@@ -2,6 +2,12 @@ package com.lab;
 
 import javafx.fxml.FXMLLoader;
 import java.io.IOException;
+import java.sql.Connection;
+
+import com.lab.database.Database;
+import com.lab.database.PopulateRestaurants;
+import com.lab.utility.Lib;
+
 import javafx.application.Application;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -13,6 +19,8 @@ import javafx.stage.StageStyle;
 public class App extends Application {
 
 	public static void main(String[] args) {
+		dbConnectionCheck();
+		//PopulateRestaurants.importRestaurants("/com/lab/data/dataset.csv");
 		launch(args);
 	}
 
@@ -40,6 +48,20 @@ public class App extends Application {
 		stage.initStyle(StageStyle.TRANSPARENT);
 		stage.setScene(scene);
 		stage.show();
+	}
+
+	private static void dbConnectionCheck()
+	{
+    Connection connection = Database.getConnection();
+    
+    if (connection != null) {
+        System.out.println("[" + Lib.BLUE + "INFO" + Lib.RESET + "] DataBase Connected");
+        try{
+            connection.close();
+        }catch (Exception e){ }
+    }else{
+      System.out.println("[" + Lib.RED + "ERROR" + Lib.RESET + "] Connection failed");
+    }
 	}
 
 }

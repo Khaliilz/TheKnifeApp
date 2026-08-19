@@ -1,7 +1,7 @@
 package com.lab.controller.basic;
 
-import com.lab.Lib;
 import com.lab.controller.user.UserHomeController;
+import com.lab.utility.Lib;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;

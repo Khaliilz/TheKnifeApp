@@ -2,7 +2,7 @@ package com.lab.controller.user;
 
 import java.io.IOException;
 
-import com.lab.Lib;
+import com.lab.utility.Lib;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -73,7 +73,7 @@ public class DetailsUserController {
 
         listOfComments.getChildren().add(row);
       }catch (IOException e){
-        System.out.println("[" + com.lab.Lib.RED + "ERROR" + com.lab.Lib.RESET + "] Loading review row");
+        System.out.println("[" + com.lab.utility.Lib.RED + "ERROR" + com.lab.utility.Lib.RESET + "] Loading review row");
         e.printStackTrace();
       }
     }

@@ -3,7 +3,7 @@ package com.lab.controller.restaurateur;
 import java.io.IOException;
 
 import com.lab.App;
-import com.lab.Lib;
+import com.lab.utility.Lib;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;

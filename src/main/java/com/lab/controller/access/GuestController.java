@@ -1,8 +1,8 @@
 package com.lab.controller.access;
 
-import com.lab.Lib;
 import com.lab.controller.basic.PageController;
 import com.lab.controller.basic.ToolbarController;
+import com.lab.utility.Lib;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
