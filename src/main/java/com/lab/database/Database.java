@@ -18,7 +18,7 @@ public class Database {
       Connection connection = DriverManager.getConnection(URL, USER, PASSWORD);
       return connection;
     }catch(SQLException e){
-      System.out.println("[" + Lib.RED + "ERROR" + Lib.RESET + "] Database connection failed");
+      System.out.println("[" + Lib.RED + "DATABASE" + Lib.RESET + "] Database connection failed");
       e.printStackTrace();
       return null;
     }

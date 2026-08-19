@@ -42,7 +42,7 @@ public class UserHomeController {
     ToolbarController.showBackButton(false);
     if(isGuest){
       ToolbarController.showLeftSide(true, true, false);
-    }else{
+    } else {
       ToolbarController.showLeftSide(false, false, true);
     }
     

@@ -20,65 +20,65 @@ public class PopulateRestaurants {
 		
 		try(InputStream is = PopulateRestaurants.class.getResourceAsStream(datasetPath)){
       if(is == null){
-        System.out.println("[" + Lib.RED + "ERROR" + Lib.RESET + "] Dataset not found");
+        System.out.println("[" + Lib.RED + "DATABASE" + Lib.RESET + "] Dataset not found");
         return;
       }
 
       try(InputStreamReader reader = new InputStreamReader(is, StandardCharsets.UTF_8);
-        CSVParser csvParser = new CSVParser(reader, CSVFormat.DEFAULT.builder().setHeader().setSkipHeaderRecord(true).build());
-        Connection connection = Database.getConnection();
+            CSVParser csvParser = new CSVParser(reader, CSVFormat.DEFAULT.builder().setHeader().setSkipHeaderRecord(true).build());
+            Connection connection = Database.getConnection();
+            PreparedStatement ps = connection.prepareStatement(sql)){
 
-        PreparedStatement ps = connection.prepareStatement(sql)){
-          connection.setAutoCommit(false);
-          int count = 0;
+        connection.setAutoCommit(false);
+        int count = 0;
 
-          for(CSVRecord record : csvParser) {
-            String name = record.get("Name");
-            String address = record.get("Address");
-            String location = record.get("Location");
+        for(CSVRecord record : csvParser) {
+          String name = record.get("Name");
+          String address = record.get("Address");
+          String location = record.get("Location");
 
-            String price = record.get("Price");
-						if(price != null){
-							price = price.replace("â‚¬", "€").replace("Â£", "£").replace("Â¥", "¥");
-							price = price.replaceAll("[^€$£¥]", "€");
-						}
+          String price = record.get("Price");
+					if(price != null){
+						price = price.replace("â‚¬", "€").replace("Â£", "£").replace("Â¥", "¥");
+						price = price.replaceAll("[^€$£¥]", "€");
+					}
 
-            String cuisine = record.get("Cuisine");
+          String cuisine = record.get("Cuisine");
             
-            double longitude = 0.0;
-            double latitude = 0.0;
-            try{
-              longitude = Double.parseDouble(record.get("Longitude"));
-              latitude = Double.parseDouble(record.get("Latitude"));
-            }catch(NumberFormatException ignored){ }
+          double longitude = 0.0;
+          double latitude = 0.0;
+          try{
+            longitude = Double.parseDouble(record.get("Longitude"));
+            latitude = Double.parseDouble(record.get("Latitude"));
+          }catch(NumberFormatException ignored){ }
 
-            String phone = record.isSet("PhoneNumber") ? record.get("PhoneNumber").trim() : "";
-            String website = record.isSet("WebsiteUrl") ? record.get("WebsiteUrl").trim() : "";
-            String award = record.isSet("Award") ? record.get("Award").trim() : "";
+          String phone = record.isSet("PhoneNumber") ? record.get("PhoneNumber").trim() : "";
+          String website = record.isSet("WebsiteUrl") ? record.get("WebsiteUrl").trim() : "";
+          String award = record.isSet("Award") ? record.get("Award").trim() : "";
 
-            ps.setString(1, name);
-            ps.setString(2, address);
-            ps.setString(3, location);
-            ps.setString(4, price);
-            ps.setString(5, cuisine);
-            ps.setDouble(6, latitude);
-            ps.setDouble(7, longitude);
-            ps.setString(8, phone);
-            ps.setString(9, website);
-            ps.setString(10, award);
+          ps.setString(1, name);
+          ps.setString(2, address);
+          ps.setString(3, location);
+          ps.setString(4, price);
+          ps.setString(5, cuisine);
+          ps.setDouble(6, latitude);
+          ps.setDouble(7, longitude);
+          ps.setString(8, phone);
+          ps.setString(9, website);
+          ps.setString(10, award);
 
-            ps.addBatch();
-            count++;
+          ps.addBatch();
+          count++;
 
-            if(count % 500 == 0)  ps.executeBatch();
-          }
-
-          ps.executeBatch();
-          connection.commit();
-          System.out.println("[" + Lib.PURPLE + "DATABASE" + Lib.RESET + "] imported " + count + " restaurants");
+          if(count % 500 == 0)  ps.executeBatch();
         }
+
+        ps.executeBatch();
+        connection.commit();
+        System.out.println("[" + Lib.PURPLE + "DATABASE" + Lib.RESET + "] imported " + count + " restaurants");
+      }
     }catch (Exception e){
-      System.out.println("[" + Lib.RED + "ERROR" + Lib.RESET + "] Failed restaurants import");
+      System.out.println("[" + Lib.RED + "DATABASE" + Lib.RESET + "] Failed restaurants import");
       e.printStackTrace();
     }
 	}

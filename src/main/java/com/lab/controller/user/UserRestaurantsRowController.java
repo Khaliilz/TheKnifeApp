@@ -42,7 +42,7 @@ public class UserRestaurantsRowController {
     if(isBookmarked){
       bookmark.getStyleClass().add("bookmarkButton");
       System.out.println("[" + Lib.GREEN + "ACTION" + Lib.RESET + "] Bookmarked [" + restaurantData[0] + "]");
-    }else{
+    } else {
       bookmark.getStyleClass().add("bookmarkedButton");
       System.out.println("[" + Lib.GREEN + "ACTION" + Lib.RESET + "] Unbookmarked [" + restaurantData[0] + "]");
     }

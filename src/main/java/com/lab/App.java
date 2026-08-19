@@ -59,7 +59,7 @@ public class App extends Application {
         try{
             connection.close();
         }catch (Exception e){ }
-    }else{
+    } else {
       System.out.println("[" + Lib.RED + "ERROR" + Lib.RESET + "] Connection failed");
     }
 	}

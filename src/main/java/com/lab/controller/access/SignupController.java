@@ -74,7 +74,7 @@ public class SignupController {
     if(date == null || !checkDataNascita(date)){
       Lib.errorBorder(birthDate);
       error = true;
-    }else{
+    } else {
       java.sql.Date sqlDate = java.sql.Date.valueOf(date);
     }
 

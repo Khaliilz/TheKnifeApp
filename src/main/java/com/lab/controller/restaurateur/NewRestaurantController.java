@@ -78,7 +78,7 @@ public class NewRestaurantController {
     if(latitudeR.isEmpty() || !latitudeR.matches(decimalRegex)){
       Lib.errorBorder(latitude);
       error = true;
-    }else{
+    } else {
       double lat = Double.parseDouble(latitudeR);
       if(lat < -90.0 || lat > 90.0){
         Lib.errorBorder(latitude);
@@ -89,7 +89,7 @@ public class NewRestaurantController {
     if(longitudeR.isEmpty() || !longitudeR.matches(decimalRegex)){
       Lib.errorBorder(longitude);
       error = true;
-    }else{
+    } else {
       double lon = Double.parseDouble(longitudeR);
       if(lon < -180.0 || lon > 180.0){
         Lib.errorBorder(longitude);
