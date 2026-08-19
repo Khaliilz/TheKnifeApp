@@ -18,7 +18,7 @@ public class NewRestaurantController {
   @FXML private TextField longitude;
   @FXML private TextField cuisine;
   @FXML private TextField websiteUrl;
-  @FXML private ToggleGroup deliveryGroup;
+  @FXML private TextField phoneNumber; 
   @FXML private ToggleGroup priceGroup;
 
   @FXML
@@ -32,6 +32,7 @@ public class NewRestaurantController {
     Lib.resetBorder(longitude);
     Lib.resetBorder(cuisine);
     Lib.resetBorder(websiteUrl);
+    Lib.resetBorder(phoneNumber);
   }
 
   @FXML
@@ -47,7 +48,8 @@ public class NewRestaurantController {
     String latitudeR = latitude.getText().trim();
     String longitudeR = longitude.getText().trim();
     String cuisineR = cuisine.getText().trim();
-    String delivery = ((RadioButton) deliveryGroup.getSelectedToggle()).getText();
+    String websiteUrlR = websiteUrl.getText().trim();
+    String phoneNumberR = phoneNumber.getText().trim();
     String price = ((RadioButton) priceGroup.getSelectedToggle()).getText();
 
     if(nameR.isEmpty()){
@@ -98,6 +100,12 @@ public class NewRestaurantController {
     String cuisineRegex = "^[\\p{L}\\s\\'\\-]+(,\\s*[\\p{L}\\s\\'\\-]+)*$";
     if(cuisineR.isEmpty() || !cuisineR.matches(cuisineRegex)){
       Lib.errorBorder(cuisine);
+      error = true;
+    }
+
+    String phoneRegex = "^\\+\\d{8,15}$";
+    if(!phoneNumberR.isEmpty() && !phoneNumberR.matches(phoneRegex)){
+      Lib.errorBorder(phoneNumber);
       error = true;
     }
 

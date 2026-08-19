@@ -51,17 +51,10 @@
       </VBox>
 
       <VBox fx:id="col2" spacing="25" alignment="CENTER" maxWidth="590" HBox.hgrow="ALWAYS">
-        <Pane minHeight="25"/>
-
-        <Text text="Delivery:" styleClass="labels"/>
-        <HBox alignment="CENTER" spacing="15">
-          <fx:define>
-            <ToggleGroup fx:id="deliveryGroup"/>
-          </fx:define>
-
-          <RadioButton fx:id="yesDelivery" styleClass="defaultRadioButton" text="Si" selected="true" toggleGroup="$deliveryGroup"/>
-          <RadioButton fx:id="noDelivery" styleClass="defaultRadioButton" text="No" toggleGroup="$deliveryGroup"/>
-        </HBox>
+        <VBox alignment="CENTER" spacing="15">
+          <Text text="Delivery (Facoltativo):" styleClass="labels"/>
+          <TextField fx:id="phoneNumber" styleClass="defaultTextField" promptText="+001234567890" maxWidth="350" alignment="CENTER"/>
+        </VBox>
 
         <VBox alignment="CENTER" spacing="15">
           <Text text="Prenotazioni (Facoltativo):" styleClass="labels"/>

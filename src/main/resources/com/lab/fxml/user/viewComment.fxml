@@ -42,7 +42,6 @@
         <RadioButton fx:id="starsOne" styleClass="defaultRadioButton" text="1" toggleGroup="$starsGroup"/>
         <RadioButton fx:id="starsTwo" styleClass="defaultRadioButton" text="2" toggleGroup="$starsGroup"/>
         <RadioButton fx:id="starsThree" styleClass="defaultRadioButton" text="3" toggleGroup="$starsGroup"/>
-        <RadioButton fx:id="starsFour" styleClass="defaultRadioButton" text="4" toggleGroup="$starsGroup"/>
       </HBox>
 
       <HBox alignment="CENTER_RIGHT" spacing="20">
