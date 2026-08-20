@@ -41,8 +41,8 @@
           </VBox>
         </VBox>
 
-        <VBox spacing="30">
-          <StackPane styleClass="container" maxHeight="250" HBox.hgrow="ALWAYS">
+        <VBox spacing="30" HBox.hgrow="ALWAYS">
+          <StackPane styleClass="container" minHeight="250" maxHeight="250" HBox.hgrow="ALWAYS">
             <ScrollPane fx:id="listContainer" fitToWidth="true" vbarPolicy="AS_NEEDED" pannable="true">
               <VBox fx:id="listOfComments"/>
             </ScrollPane>

@@ -1,9 +1,11 @@
 package com.lab.controller.user;
 
 import java.io.IOException;
+import java.util.List;
 
 import com.lab.database.model.Restaurant;
 import com.lab.database.model.Session;
+import com.lab.database.query.ReviewQ;
 import com.lab.utility.Lib;
 
 import javafx.event.ActionEvent;
@@ -24,9 +26,12 @@ public class DetailsUserController {
 	@FXML private VBox listOfComments;
   @FXML private Button reviewButton;
 
+  private Restaurant restaurant;
   
   public void setDetails(Restaurant r)
 	{
+    restaurant = r;
+
     name_L.setText(r.getName());
 
     String fullAddress = r.getAddress();
@@ -42,7 +47,7 @@ public class DetailsUserController {
     booking_L.setText((r.getBooking() == null || r.getBooking().isEmpty()) ? "No" : r.getBooking());
     cuisine_L.setText(r.getCuisine());
 
-		loadReviews();
+		loadReviews(r.getId());
 
     if(Session.getCurrentUser() == null) {
       reviewButton.setVisible(false);
@@ -63,22 +68,18 @@ public class DetailsUserController {
     System.out.println("[" + Lib.GREEN + "ACTION] " + Lib.RESET + "Review clicked");
 
     String name = name_L.getText();
-    UserHomeController.getInstance().openWriteComment(name);
+    UserHomeController.getInstance().openWriteComment(restaurant);
   }
 
-  private void loadReviews()
+  private void loadReviews(int restaurantId)
   {
     listOfComments.getChildren().clear();
 
-    String[][] mockReviews = {
-      {"Mario Rossi", "5", "Posto fantastico, la carne era cotta alla perfezione. Personale super gentile e accogliente. Consigliatissimo!"},
-      {"Giulia Bianchi", "4", "Molto buono ma il dolce non mi ha convinto del tutto. Comunque il servizio è stato velocissimo."},
-      {"Luca Verdi", "5", "Tutto perfetto, torneremo sicuramente."}
-    };
+    List<String[]> reviews = ReviewQ.getRestaurantReviews(restaurantId);
 
     listOfComments.getChildren().clear();
 
-    for(String[] r : mockReviews) {
+    for(String[] r : reviews) {
       try{
         javafx.fxml.FXMLLoader loader = new javafx.fxml.FXMLLoader(com.lab.App.class.getResource("/com/lab/fxml/user/reviewsRow.fxml"));
         VBox row = loader.load();

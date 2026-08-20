@@ -3,12 +3,16 @@ package com.lab.controller.user;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import javafx.concurrent.Task;
+import javafx.event.ActionEvent;
 
 import com.lab.App;
 import com.lab.controller.basic.PageController;
 import com.lab.controller.basic.ToolbarController;
 import com.lab.database.model.Restaurant;
+import com.lab.database.model.Session;
 import com.lab.database.query.RestaurantQ;
+import com.lab.database.query.ReviewQ;
 import com.lab.utility.Lib;
 
 import javafx.fxml.FXML;
@@ -29,12 +33,14 @@ public class UserHomeController {
   @FXML private ScrollPane listContainer;
   @FXML private StackPane leftMenuArea;
   @FXML private Button bookmark;
+  @FXML private Button loadMoreButton;
 
   private static UserHomeController instance;
   private javafx.scene.Node detailsNode;
   private javafx.scene.Node commentNode;
 
-  public static Boolean isGuest = false;
+  private String currentSearchPlace = "";
+  private int currentSearchOffset = 0;
 
   @FXML
   public void initialize()
@@ -43,7 +49,7 @@ public class UserHomeController {
     
     PageController.showTitle(false);
     ToolbarController.showBackButton(false);
-    if(isGuest) {
+    if(Session.getCurrentUser() == null) {
       ToolbarController.showLeftSide(true, true, false);
     } else {
       ToolbarController.showLeftSide(false, false, true);
@@ -61,6 +67,10 @@ public class UserHomeController {
 
   public void loadNearest()
   {
+    if(loadMoreButton != null) {
+      loadMoreButton.setVisible(false);
+      loadMoreButton.setManaged(false);
+    }
     title.setText("Ristoranti nelle vicinanze");
     listOfRestaurants.getChildren().clear();
 
@@ -70,6 +80,10 @@ public class UserHomeController {
 
   public void loadBookmarked()
   {
+    if(loadMoreButton != null) {
+      loadMoreButton.setVisible(false);
+      loadMoreButton.setManaged(false);
+    }
     closeDetails();
     closeComment();
 
@@ -82,13 +96,18 @@ public class UserHomeController {
 
   public void loadReviews()
   {
+    if(loadMoreButton != null) {
+      loadMoreButton.setVisible(false);
+      loadMoreButton.setManaged(false);
+    }
     closeDetails();
     closeComment();
 
     title.setText("Ristoranti recensiti");
     listOfRestaurants.getChildren().clear();
 
-    fillReviewed();
+    List<Restaurant> reviewed = RestaurantQ.getReviewedRestaurants();
+    fillReviewed(reviewed);
   }
 
   public void loadRightMenu(String newTitle, String fileName)
@@ -108,10 +127,35 @@ public class UserHomeController {
     closeDetails();
     closeComment();
 
+    currentSearchPlace = place;
+    currentSearchOffset = 0;
+
     title.setText("Ristoranti a " + place);
     listOfRestaurants.getChildren().clear();
+    loadMoreButton.setVisible(false);
+    loadMoreButton.setManaged(false);
 
-    //fillRestaurants();
+    List<Restaurant> searchResults = RestaurantQ.searchRestaurantsByPlace(currentSearchPlace, currentSearchOffset);
+    fillRestaurants(searchResults); 
+
+    if(searchResults.size() == 10) {
+      loadMoreButton.setVisible(true);
+      loadMoreButton.setManaged(true);
+    }
+  }
+
+  @FXML
+  public void loadMoreClicked(ActionEvent e)
+  {
+    currentSearchOffset += 10; 
+    
+    List<Restaurant> nextResults = RestaurantQ.searchRestaurantsByPlace(currentSearchPlace, currentSearchOffset);
+    fillRestaurants(nextResults);
+
+    if(nextResults.size() < 10) {
+      loadMoreButton.setVisible(false);
+      loadMoreButton.setManaged(false);
+    }
   }
 
   public void applyFilters()
@@ -127,8 +171,6 @@ public class UserHomeController {
 
   private void fillRestaurants(List<Restaurant> restaurants) 
   {
-    listOfRestaurants.getChildren().clear();
-
     for(Restaurant r : restaurants) {
       try {
         FXMLLoader loader = new FXMLLoader(App.class.getResource("/com/lab/fxml/user/userRestaurantsRow.fxml"));
@@ -145,23 +187,26 @@ public class UserHomeController {
     }
   }
 
-  private void fillReviewed()
+  private void fillReviewed(List<Restaurant> restaurants)
   {
-    String[] ristorante1 = {"Ristorante 1", "via Trieste 12, Milano", "5", "10"};
-    ArrayList<String[]> ristoranti = new ArrayList<>();
-    for(int i=0; i<1; i++) ristoranti.add(ristorante1);
-
     listOfRestaurants.getChildren().clear();
+    
+    if (Session.getCurrentUser() == null) return;
+    int userId = Session.getCurrentUser().getId();
 
-    for(String[] r : ristoranti) {
-      String[] comment = {"Ristorante 1", "Ottimo!", "Grazie!", "3"};
+    for(Restaurant r : restaurants) {
+      String[] restaurantData = {r.getName(), r.getAddress(), String.format("%.1f", r.getAverageStars()), String.valueOf(r.getReviewsNum()), String.valueOf(r.getId())};
+      String[] myReview = ReviewQ.getUserReview(userId, r.getId());
+      
+      String answer = (myReview[2] != null) ? myReview[2] : "";
+      String[] reviewData = {myReview[0], myReview[1], answer};
 
       try {
         FXMLLoader loader = new FXMLLoader(App.class.getResource("/com/lab/fxml/user/restaurantReviewsRow.fxml"));
         HBox row = loader.load();
 
         RestaurantReviewsRowController controller = loader.getController();
-        controller.setReview(r, comment);
+        controller.setReview(restaurantData, reviewData);
 
         listOfRestaurants.getChildren().add(row);
        }catch (IOException e) {
@@ -227,14 +272,14 @@ public class UserHomeController {
     listContainer.setVisible(true); 
   }
 
-  public void openWriteComment(String restaurantName)
+  public void openWriteComment(Restaurant restaurant)
   {
     try {
       FXMLLoader loader = new FXMLLoader(App.class.getResource("/com/lab/fxml/user/writeComment.fxml"));
       commentNode = loader.load();
 
       WriteCommentController controller = loader.getController();
-      controller.setRestaurantName(restaurantName);
+      controller.setRestaurantReview(restaurant);
 
       if (detailsNode != null) detailsNode.setVisible(false);
       leftMenuArea.getChildren().add(commentNode); 

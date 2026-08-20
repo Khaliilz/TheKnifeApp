@@ -38,7 +38,6 @@ public class SignupController {
     PageController.showTitle(true);
     ToolbarController.setupBackButton(true, "/com/lab/fxml/basic/home.fxml");
     ToolbarController.showLeftSide(false, false, false);
-    UserHomeController.isGuest = false;
     
     password_PF.setOnAction(this::signupClicked);
     Lib.resetBorder(name_TF);

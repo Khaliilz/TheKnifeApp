@@ -1,5 +1,7 @@
 package com.lab.controller.user;
 
+import com.lab.database.model.Session;
+import com.lab.database.query.ReviewQ;
 import com.lab.utility.Lib;
 
 import javafx.event.ActionEvent;
@@ -16,19 +18,34 @@ public class ViewCommentController {
   @FXML private RadioButton starsOne;
   @FXML private RadioButton starsTwo;
   @FXML private RadioButton starsThree;
-  @FXML private RadioButton starsFour;
+
+  private int currentRestaurantId;
 
   @FXML
   public void saveClicked(ActionEvent e)
   {
-    System.out.println("[" + Lib.GREEN + "ACTION] " + Lib.RESET + "Save clicked");
+    int stars = 1;
+    if(starsTwo.isSelected()) stars = 2;
+    else if(starsThree.isSelected()) stars = 3;
+
+    int userId = Session.getCurrentUser().getId();
+    boolean success = ReviewQ.updateReview(userId, currentRestaurantId, stars, comment.getText());
+
+    if(success) System.out.println("[" + Lib.GREEN + "ACTION" + Lib.RESET + "Review updated successfully");
+    else System.out.println("[" + Lib.RED + "ERROR" + Lib.RESET + "Failed to update review.");
+
     UserHomeController.getInstance().closeComment();
     UserHomeController.getInstance().loadReviews();
   }
 
   @FXML void removeClicked(ActionEvent e)
   {
-    System.out.println("[" + Lib.GREEN + "ACTION] " + Lib.RESET + "Remove clicked");
+    int userId = Session.getCurrentUser().getId();
+    boolean success = ReviewQ.removeReview(userId, currentRestaurantId);
+    
+    if(success) System.out.println("[" + Lib.GREEN + "ACTION" + Lib.RESET + "] Review removed successfully");
+    else System.out.println("[" + Lib.RED + "ERROR" + Lib.RESET + "] Failed to remove review");
+
     UserHomeController.getInstance().closeComment();
     UserHomeController.getInstance().loadReviews();
   }
@@ -38,9 +55,10 @@ public class ViewCommentController {
     name_R.setText(c[0]);
     comment.setText(c[1]);
     answer.setText(c[2]);
+    
+    currentRestaurantId = Integer.parseInt(c[4]);
 
     int stars = Integer.parseInt(c[3]);
-
     switch(stars) {
       case 1:
         starsOne.setSelected(true);
@@ -50,9 +68,6 @@ public class ViewCommentController {
         break;
       case 3:
         starsThree.setSelected(true);
-        break;
-      case 4: 
-        starsFour.setSelected(true);
         break;
       default:
         starsOne.setSelected(true);

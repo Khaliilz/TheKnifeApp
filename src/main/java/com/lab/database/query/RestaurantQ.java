@@ -30,7 +30,8 @@ public class RestaurantQ {
     double userLon = user.getLongitude();
 
     String sql = "SELECT restaurants.id, restaurants.name, restaurants.address, restaurants.cuisine, restaurants.price, restaurants.delivery, restaurants.booking, " + haversineFormula() + " AS distance, " + "COALESCE(AVG(reviews.stars), 0) AS avg_stars, " + "COUNT(reviews.id) AS total_reviews " +
-                 "FROM restaurants " + "LEFT JOIN reviews ON restaurants.id = reviews.restaurant_id " +
+                 "FROM restaurants " +
+                 "LEFT JOIN reviews ON restaurants.id = reviews.restaurant_id " +
                  "GROUP BY restaurants.id, restaurants.name, restaurants.address, restaurants.cuisine, restaurants.price, restaurants.delivery, restaurants.booking, restaurants.latitude, restaurants.longitude " +
                  "ORDER BY distance ASC " +
                  "LIMIT 10";
@@ -75,7 +76,8 @@ public class RestaurantQ {
     int userId = user.getId();
 
     String sql = "SELECT restaurants.id, restaurants.name, restaurants.address, restaurants.cuisine, restaurants.price, restaurants.delivery, restaurants.booking, " + haversineFormula() + " AS distance, " + "COALESCE(AVG(reviews.stars), 0) AS avg_stars, " + "COUNT(reviews.id) AS total_reviews " +
-                 "FROM restaurants " + "INNER JOIN bookmarks ON restaurants.id = bookmarks.restaurant_id " + "LEFT JOIN reviews ON restaurants.id = reviews.restaurant_id " +
+                 "FROM restaurants " +
+                 "INNER JOIN bookmarks ON restaurants.id = bookmarks.restaurant_id LEFT JOIN reviews ON restaurants.id = reviews.restaurant_id " +
                  "WHERE bookmarks.user_id = ? " +
                  "GROUP BY restaurants.id, restaurants.name, restaurants.address, restaurants.cuisine, restaurants.price, restaurants.delivery, restaurants.booking, restaurants.latitude, restaurants.longitude " +
                  "ORDER BY distance ASC";
@@ -86,6 +88,108 @@ public class RestaurantQ {
       ps.setDouble(2, userLon);
       ps.setDouble(3, userLat);
       ps.setInt(4, userId);
+      
+      ResultSet rs = ps.executeQuery();
+
+      while(rs.next()) {
+        Restaurant r = new Restaurant(
+          rs.getInt("id"),
+          rs.getString("name"),
+          rs.getString("address"),
+          rs.getString("cuisine"),
+          rs.getString("price"),
+          rs.getDouble("distance"),
+          rs.getString("delivery"),
+          rs.getString("booking"),
+          rs.getDouble("avg_stars"),
+          rs.getInt("total_reviews")
+        );
+        list.add(r);
+      }
+    }catch(Exception e) { e.printStackTrace(); }
+
+    return list;
+  }
+
+  public static List<Restaurant> getReviewedRestaurants()
+  {
+    List<Restaurant> list = new ArrayList<>();
+
+    User user = Session.getCurrentUser();
+    if(user == null) return list;
+
+    double userLat = user.getLatitude();
+    double userLon = user.getLongitude();
+    int userId = user.getId();
+
+    String sql = "SELECT restaurants.id, restaurants.name, restaurants.address, restaurants.cuisine, restaurants.price, restaurants.delivery, restaurants.booking, " + haversineFormula() + " AS distance, COALESCE(AVG(reviews.stars), 0) AS avg_stars, COUNT(reviews.id) AS total_reviews " +
+                 "FROM restaurants " +
+                 "INNER JOIN reviews my_rev ON restaurants.id = my_rev.restaurant_id LEFT JOIN reviews ON restaurants.id = reviews.restaurant_id " +        // <-- Per la media totale
+                 "WHERE my_rev.user_id = ? " +
+                 "GROUP BY restaurants.id, restaurants.name, restaurants.address, restaurants.cuisine, restaurants.price, restaurants.delivery, restaurants.booking, restaurants.latitude, restaurants.longitude " +
+                 "ORDER BY distance ASC";
+  
+    try(Connection connection = Database.getConnection(); PreparedStatement ps = connection.prepareStatement(sql)) {
+
+      ps.setDouble(1, userLat);
+      ps.setDouble(2, userLon);
+      ps.setDouble(3, userLat);
+      ps.setInt(4, userId);
+      
+      ResultSet rs = ps.executeQuery();
+
+      while(rs.next()) {
+        Restaurant r = new Restaurant(
+          rs.getInt("id"),
+          rs.getString("name"),
+          rs.getString("address"),
+          rs.getString("cuisine"),
+          rs.getString("price"),
+          rs.getDouble("distance"),
+          rs.getString("delivery"),
+          rs.getString("booking"),
+          rs.getDouble("avg_stars"),
+          rs.getInt("total_reviews")
+        );
+        list.add(r);
+      }
+    }catch(Exception e) { e.printStackTrace(); }
+
+    return list;
+  }
+
+  public static List<Restaurant> searchRestaurantsByPlace(String place, int offset)
+  {
+    List<Restaurant> list = new ArrayList<>();
+
+    User user = Session.getCurrentUser();
+    if(user == null) return list;
+
+    double userLat = user.getLatitude();
+    double userLon = user.getLongitude();
+
+    String sql = "SELECT restaurants.id, restaurants.name, restaurants.address, restaurants.cuisine, restaurants.price, restaurants.delivery, restaurants.booking, " + haversineFormula() + " AS distance, COALESCE(AVG(reviews.stars), 0) AS avg_stars, COUNT(reviews.id) AS total_reviews " +
+                 "FROM restaurants " +
+                 "LEFT JOIN reviews ON restaurants.id = reviews.restaurant_id " +
+                 "WHERE restaurants.address ILIKE ? " +
+                 "GROUP BY restaurants.id, restaurants.name, restaurants.address, restaurants.cuisine, restaurants.price, restaurants.delivery, restaurants.booking, restaurants.latitude, restaurants.longitude " +
+                 "ORDER BY " +
+                 "  CASE " +
+                 "    WHEN restaurants.address ILIKE ? OR restaurants.address ILIKE ? THEN 1 " +
+                 "    ELSE 2 " +
+                 "  END ASC, " +
+                 "distance ASC " +
+                 "LIMIT 10 OFFSET ?";
+  
+    try(Connection connection = Database.getConnection(); PreparedStatement ps = connection.prepareStatement(sql)) {
+
+      ps.setDouble(1, userLat);
+      ps.setDouble(2, userLon);
+      ps.setDouble(3, userLat);
+      ps.setString(4, "%,%" + place + "%");
+      ps.setString(5, "%,%" + place);
+      ps.setString(6, "%,%" + place + ",%");
+      ps.setInt(7, offset);
       
       ResultSet rs = ps.executeQuery();
 

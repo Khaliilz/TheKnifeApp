@@ -2,6 +2,7 @@ package com.lab.controller.user;
 
 import java.io.IOException;
 
+import com.lab.database.model.Session;
 import com.lab.utility.Lib;
 
 import javafx.event.ActionEvent;
@@ -28,7 +29,7 @@ public class RightMenuSearchController {
     luogo_TF.setOnAction(this::searchClicked);
     Lib.resetBorder(luogo_TF);
 
-    if(UserHomeController.isGuest) {
+    if(Session.getCurrentUser() == null) {
       bookmarkedButton.setVisible(false);
       bookmarkedButton.setManaged(false);
       reviewedButton.setVisible(false);
