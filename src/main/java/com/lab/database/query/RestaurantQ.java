@@ -22,12 +22,14 @@ public class RestaurantQ {
   public static List<Restaurant> getNearestRestaurants()
   {
     List<Restaurant> list = new ArrayList<>();
+    double userLat = 0.0;
+    double userLon = 0.0;
 
     User user = Session.getCurrentUser();
-    if(user == null) return list;
-
-    double userLat = user.getLatitude();
-    double userLon = user.getLongitude();
+    if(user != null) {
+      userLat = user.getLatitude();
+      userLon = user.getLongitude();
+    }
 
     String sql = "SELECT restaurants.id, restaurants.name, restaurants.address, restaurants.cuisine, restaurants.price, restaurants.delivery, restaurants.booking, " + haversineFormula() + " AS distance, " + "COALESCE(AVG(reviews.stars), 0) AS avg_stars, " + "COUNT(reviews.id) AS total_reviews " +
                  "FROM restaurants " +
@@ -161,11 +163,15 @@ public class RestaurantQ {
   public static List<Restaurant> getSerachedRestaurants(String place, String cuisine, String price, String delivery, String booking, String stars, int offset)
   {
     List<Restaurant> list = new ArrayList<>();
-    com.lab.database.model.User user = Session.getCurrentUser();
-    if(user == null) return list;
+    double userLat = 0.0;
+    double userLon = 0.0;
 
-    double userLat = user.getLatitude();
-    double userLon = user.getLongitude();
+    User user = Session.getCurrentUser();
+    if(user != null) {
+      userLat = user.getLatitude();
+      userLon = user.getLongitude();
+    }
+
 
     StringBuilder sql = new StringBuilder(
       "SELECT restaurants.id, restaurants.name, restaurants.address, restaurants.cuisine, restaurants.price, restaurants.delivery, restaurants.booking, " + haversineFormula() + " AS distance, COALESCE(AVG(reviews.stars), 0) AS avg_stars, COUNT(reviews.id) AS total_reviews " +
@@ -180,8 +186,13 @@ public class RestaurantQ {
     params.add(userLat);
 
     if(place != null && !place.trim().isEmpty()) {
-      sql.append("AND restaurants.address ILIKE ? ");
-      params.add("%,%" + place + "%");
+      sql.append("AND (restaurants.address ILIKE ? OR restaurants.address ILIKE ? OR restaurants.address ILIKE ? OR restaurants.address ILIKE ? OR restaurants.address ILIKE ?) ");
+      String p = place.trim();
+      params.add(p);               
+      params.add("%, " + p);
+      params.add("%," + p); 
+      params.add("%, " + p + ",%");
+      params.add("%," + p + ",%");
     }
 
     if(cuisine != null) {
@@ -221,13 +232,7 @@ public class RestaurantQ {
       params.add(starsLimit);
     }
 
-    sql.append("ORDER BY ");
-    if(place != null && !place.trim().isEmpty()) {
-        sql.append("CASE WHEN restaurants.address ILIKE ? OR restaurants.address ILIKE ? THEN 1 ELSE 2 END ASC, ");
-        params.add("%,%" + place);
-        params.add("%,%" + place + ",%");
-    }
-    sql.append("distance ASC LIMIT 10 OFFSET ?");
+    sql.append("ORDER BY distance ASC LIMIT 10 OFFSET ?");
     params.add(offset);
 
     try(java.sql.Connection connection = Database.getConnection(); java.sql.PreparedStatement ps = connection.prepareStatement(sql.toString())) {

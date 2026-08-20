@@ -14,12 +14,12 @@
     <VBox alignment="CENTER" spacing="25" AnchorPane.topAnchor="250" AnchorPane.leftAnchor="500" AnchorPane.rightAnchor="500">
       <VBox alignment="CENTER_LEFT" spacing="5">
         <Label styleClass="labels" text="Domicilio:"/>
-        <TextField fx:id="luogo_TF" styleClass="defaultTextField" prefWidth="230" prefHeight="50" alignment="CENTER"/>
+        <TextField fx:id="place_TF" styleClass="defaultTextField" promptText="Legnano" prefWidth="230" prefHeight="50" alignment="CENTER"/>
       </VBox>
 
       <StackPane prefHeight="30"/> 
 
-      <Button fx:id="cerca_B" styleClass="greenButton" text="CERCA" prefWidth="230" prefHeight="60" onAction="#cercaClicked"/>
+      <Button fx:id="searchButton" styleClass="greenButton" text="CERCA" prefWidth="230" prefHeight="60" onAction="#searchClicked"/>
     </VBox>
   </children>
 </AnchorPane>

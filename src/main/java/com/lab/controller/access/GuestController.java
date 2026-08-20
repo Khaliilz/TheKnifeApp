@@ -2,6 +2,7 @@ package com.lab.controller.access;
 
 import com.lab.controller.basic.PageController;
 import com.lab.controller.basic.ToolbarController;
+import com.lab.controller.user.UserHomeController;
 import com.lab.utility.Lib;
 
 import javafx.event.ActionEvent;
@@ -11,8 +12,8 @@ import javafx.scene.control.TextField;
 
 public class GuestController {
   
-  @FXML private TextField luogo_TF;
-  @FXML private Button cerca_B;
+  @FXML private TextField place_TF;
+  @FXML private Button searchButton;
 
   @FXML
   public void initialize()
@@ -20,23 +21,23 @@ public class GuestController {
     PageController.showTitle(true);
     ToolbarController.setupBackButton(true, "/com/lab/fxml/basic/home.fxml");
     ToolbarController.showLeftSide(false, false, false);
-    luogo_TF.setOnAction(this::cercaClicked);
-    Lib.resetBorder(luogo_TF);
+    place_TF.setOnAction(this::searchClicked);
+    Lib.resetBorder(place_TF);
   }
 
   @FXML
-  public void cercaClicked(ActionEvent event)
+  public void searchClicked(ActionEvent event)
   {
     boolean error = false;
 
-    String luogo = luogo_TF.getText().trim();
-    if(luogo.isEmpty()) {
-      Lib.errorBorder(luogo_TF);
+    String place = place_TF.getText().trim();
+    if(place.isEmpty()) {
+      Lib.errorBorder(place_TF);
       error = true;
     }
 
     if(error) return;
-    System.out.println("[" + Lib.GREEN + "ACTION" + Lib.RESET + "] Guest serching [" + luogo + "]");
+    UserHomeController.guestSearchPlace = place;
     PageController.selectPage("/com/lab/fxml/user/userHome.fxml");
   }
 }

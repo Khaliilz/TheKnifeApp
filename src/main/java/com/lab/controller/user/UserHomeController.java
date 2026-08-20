@@ -47,6 +47,8 @@ public class UserHomeController {
   private String filterStars;
   private int currentSearchOffset = 0;
 
+  public static String guestSearchPlace = null;
+
   @FXML
   public void initialize()
   {
@@ -62,7 +64,11 @@ public class UserHomeController {
     
     loadRightMenu("Ristoranti nelle vicinanze", "/com/lab/fxml/user/rightMenuSearch.fxml");
     
-    loadNearest();
+    if(guestSearchPlace != null && !guestSearchPlace.isEmpty()) {
+      String placeToSearch = guestSearchPlace;
+      guestSearchPlace = null;
+      searchByPlace(placeToSearch);
+    } else loadNearest();
   }
 
   public static UserHomeController getInstance()
