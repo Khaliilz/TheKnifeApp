@@ -40,6 +40,11 @@ public class UserHomeController {
   private javafx.scene.Node commentNode;
 
   private String currentSearchPlace = "";
+  private String filterCuisine;
+  private String filterPrice;
+  private String filterDelivery;
+  private String filterBooking;
+  private String filterStars;
   private int currentSearchOffset = 0;
 
   @FXML
@@ -127,6 +132,11 @@ public class UserHomeController {
     closeDetails();
     closeComment();
 
+    filterCuisine = null;
+    filterPrice = null;
+    filterDelivery = null;
+    filterBooking = null;
+    filterStars = null;
     currentSearchPlace = place;
     currentSearchOffset = 0;
 
@@ -135,7 +145,7 @@ public class UserHomeController {
     loadMoreButton.setVisible(false);
     loadMoreButton.setManaged(false);
 
-    List<Restaurant> searchResults = RestaurantQ.searchRestaurantsByPlace(currentSearchPlace, currentSearchOffset);
+    List<Restaurant> searchResults = RestaurantQ.getSerachedRestaurants(currentSearchPlace, filterCuisine, filterPrice, filterDelivery, filterBooking, filterStars, currentSearchOffset);
     fillRestaurants(searchResults); 
 
     if(searchResults.size() == 10) {
@@ -144,29 +154,46 @@ public class UserHomeController {
     }
   }
 
+  public void applyFilters(String cuisine, String price, String delivery, String booking, String stars)
+  {
+    closeDetails();
+    closeComment();
+    
+    filterCuisine = cuisine;
+    filterPrice = price;
+    filterDelivery = delivery;
+    filterBooking = booking;
+    filterStars = stars;
+    currentSearchOffset = 0;
+
+    if (currentSearchPlace != null && !currentSearchPlace.isEmpty()) title.setText("Ristoranti filtrati a " + currentSearchPlace);
+    else  title.setText("Ristoranti filtrati");
+    listOfRestaurants.getChildren().clear();
+    loadMoreButton.setVisible(false);
+    loadMoreButton.setManaged(false);
+    
+    List<Restaurant> searchResults = RestaurantQ.getSerachedRestaurants(currentSearchPlace, filterCuisine, filterPrice, filterDelivery, filterBooking, filterStars, currentSearchOffset);
+    fillRestaurants(searchResults);
+    
+    if(searchResults.size() == 10) {
+      loadMoreButton.setVisible(true);
+      loadMoreButton.setManaged(true);
+    }
+    
+  }
+
   @FXML
   public void loadMoreClicked(ActionEvent e)
   {
     currentSearchOffset += 10; 
     
-    List<Restaurant> nextResults = RestaurantQ.searchRestaurantsByPlace(currentSearchPlace, currentSearchOffset);
+    List<Restaurant> nextResults = RestaurantQ.getSerachedRestaurants(currentSearchPlace, filterCuisine, filterPrice, filterDelivery, filterBooking, filterStars, currentSearchOffset);
     fillRestaurants(nextResults);
 
     if(nextResults.size() < 10) {
       loadMoreButton.setVisible(false);
       loadMoreButton.setManaged(false);
     }
-  }
-
-  public void applyFilters()
-  {
-    closeDetails();
-    closeComment();
-    
-    title.setText("Ristoranti trovati");
-    listOfRestaurants.getChildren().clear();
-    
-    //fillRestaurants(); 
   }
 
   private void fillRestaurants(List<Restaurant> restaurants) 
