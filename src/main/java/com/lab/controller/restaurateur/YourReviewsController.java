@@ -56,7 +56,7 @@ public class YourReviewsController {
       scene.setFill(javafx.scene.paint.Color.TRANSPARENT);
       popupStage.setScene(scene);
       popupStage.show();
-    }catch (IOException ex){
+    }catch (IOException ex) {
       System.out.println("[" + Lib.RED + "ERROR" + Lib.RESET + "] Loading answer popup");
       ex.printStackTrace();
     }

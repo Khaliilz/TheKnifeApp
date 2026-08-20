@@ -38,7 +38,6 @@ public class NewRestaurantController {
   @FXML
   public void saveClicked(ActionEvent e)
   {
-    initialize();
     boolean error = false;
 
     String nameR = name.getText().trim();
@@ -52,59 +51,59 @@ public class NewRestaurantController {
     String phoneNumberR = phoneNumber.getText().trim();
     String price = ((RadioButton) priceGroup.getSelectedToggle()).getText();
 
-    if(nameR.isEmpty()){
+    if(nameR.isEmpty()) {
       Lib.errorBorder(name);
       error = true;
     }
 
     String addressRegex = "^.+?,\\s*\\d+[a-zA-Z]?$";
-    if(addressR.isEmpty() || !addressR.matches(addressRegex)){
+    if(addressR.isEmpty() || !addressR.matches(addressRegex)) {
       Lib.errorBorder(address);
       error = true;
     }
 
     String nameRegex = "^[\\p{L}\\s\\'\\-\\.]+$";
-    if(cityR.isEmpty() || !cityR.matches(nameRegex)){
+    if(cityR.isEmpty() || !cityR.matches(nameRegex)) {
       Lib.errorBorder(city);
       error = true;
     }
 
-    if(countryR.isEmpty() || !countryR.matches(nameRegex)){
+    if(countryR.isEmpty() || !countryR.matches(nameRegex)) {
       Lib.errorBorder(country);
       error = true;
     }
 
     String decimalRegex = "^-?\\d+(\\.\\d+)?$";
-    if(latitudeR.isEmpty() || !latitudeR.matches(decimalRegex)){
+    if(latitudeR.isEmpty() || !latitudeR.matches(decimalRegex)) {
       Lib.errorBorder(latitude);
       error = true;
     } else {
       double lat = Double.parseDouble(latitudeR);
-      if(lat < -90.0 || lat > 90.0){
+      if(lat < -90.0 || lat > 90.0) {
         Lib.errorBorder(latitude);
         error = true;
       }
     }
 
-    if(longitudeR.isEmpty() || !longitudeR.matches(decimalRegex)){
+    if(longitudeR.isEmpty() || !longitudeR.matches(decimalRegex)) {
       Lib.errorBorder(longitude);
       error = true;
     } else {
       double lon = Double.parseDouble(longitudeR);
-      if(lon < -180.0 || lon > 180.0){
+      if(lon < -180.0 || lon > 180.0) {
         Lib.errorBorder(longitude);
         error = true;
       }
     }
 
     String cuisineRegex = "^[\\p{L}\\s\\'\\-]+(,\\s*[\\p{L}\\s\\'\\-]+)*$";
-    if(cuisineR.isEmpty() || !cuisineR.matches(cuisineRegex)){
+    if(cuisineR.isEmpty() || !cuisineR.matches(cuisineRegex)) {
       Lib.errorBorder(cuisine);
       error = true;
     }
 
     String phoneRegex = "^\\+\\d{8,15}$";
-    if(!phoneNumberR.isEmpty() && !phoneNumberR.matches(phoneRegex)){
+    if(!phoneNumberR.isEmpty() && !phoneNumberR.matches(phoneRegex)) {
       Lib.errorBorder(phoneNumber);
       error = true;
     }

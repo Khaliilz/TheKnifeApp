@@ -36,34 +36,32 @@ public class SigninController {
   @FXML
   public void signinClicked(ActionEvent event)
   {
-    initialize();
     boolean error = false;
     
     String username = username_TF.getText();
     String password = password_PF.getText();
 
-    if(username.isEmpty()){
+    if(username.isEmpty()) {
       Lib.errorBorder(username_TF);
       error = true;
     }
 
-    if(password.isEmpty()){ 
+    if(password.isEmpty()) { 
       Lib.errorBorder(password_PF); 
       error = true; 
     }
 
     if(error) return;
 
-    User user = UserQ.login(username, password);
+    User user = UserQ.signin(username, password);
 
-    if(user == null){
+    if(user == null) {
       Lib.errorBorder(username_TF);
       Lib.errorBorder(password_PF);
-      System.out.println("[" + Lib.RED + "ERROR" + Lib.RESET + "] Wrong credentials");
     } else {
       System.out.println("[" + Lib.PURPLE + "DATABASE" + Lib.RESET + "] Singin completed [" + user.getUsername() + "]");
       Session.setCurrentUser(user);
-      
+
       if(user.getRole().equals("CLIENTE")) PageController.selectPage("/com/lab/fxml/user/userHome.fxml");
       else if(user.getRole().equals("RISTORATORE")) PageController.selectPage("/com/lab/fxml/restaurateur/restaurateurHome.fxml");
     }

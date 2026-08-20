@@ -2,10 +2,13 @@ package com.lab.controller.user;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 import com.lab.App;
 import com.lab.controller.basic.PageController;
 import com.lab.controller.basic.ToolbarController;
+import com.lab.database.model.Restaurant;
+import com.lab.database.query.RestaurantQ;
 import com.lab.utility.Lib;
 
 import javafx.fxml.FXML;
@@ -40,7 +43,7 @@ public class UserHomeController {
     
     PageController.showTitle(false);
     ToolbarController.showBackButton(false);
-    if(isGuest){
+    if(isGuest) {
       ToolbarController.showLeftSide(true, true, false);
     } else {
       ToolbarController.showLeftSide(false, false, true);
@@ -61,7 +64,8 @@ public class UserHomeController {
     title.setText("Ristoranti nelle vicinanze");
     listOfRestaurants.getChildren().clear();
 
-    fillRestaurants();
+    List<Restaurant> nearest = RestaurantQ.getNearestRestaurants();
+    fillRestaurants(nearest);
   }
 
   public void loadBookmarked()
@@ -72,7 +76,8 @@ public class UserHomeController {
     title.setText("Ristoranti preferiti");
     listOfRestaurants.getChildren().clear();
 
-    fillRestaurants();
+    List<Restaurant> bookmarked = RestaurantQ.getBookmarkedRestaurants();
+    fillRestaurants(bookmarked);
   }
 
   public void loadReviews()
@@ -106,7 +111,7 @@ public class UserHomeController {
     title.setText("Ristoranti a " + place);
     listOfRestaurants.getChildren().clear();
 
-    fillRestaurants();
+    //fillRestaurants();
   }
 
   public void applyFilters()
@@ -117,27 +122,23 @@ public class UserHomeController {
     title.setText("Ristoranti trovati");
     listOfRestaurants.getChildren().clear();
     
-    fillRestaurants(); 
+    //fillRestaurants(); 
   }
 
-  private void fillRestaurants() 
+  private void fillRestaurants(List<Restaurant> restaurants) 
   {
-    String[] ristorante1 = {"Ristorante 1", "via Trieste 12, Milano", "5", "10"};
-    ArrayList<String[]> ristoranti = new ArrayList<>();
-    for(int i=0; i<1; i++) ristoranti.add(ristorante1);
-
     listOfRestaurants.getChildren().clear();
 
-    for(String[] r : ristoranti){
+    for(Restaurant r : restaurants) {
       try {
         FXMLLoader loader = new FXMLLoader(App.class.getResource("/com/lab/fxml/user/userRestaurantsRow.fxml"));
         HBox row = loader.load();
 
         UserRestaurantsRowController controller = loader.getController();
-        controller.setRestaurantData(r);
+        controller.setRestaurant(r);
 
         listOfRestaurants.getChildren().add(row);
-       }catch (IOException e){
+       }catch (IOException e) {
         System.out.println("[" + Lib.RED + "ERROR" + Lib.RESET + "] Loading user restaurants");
         e.printStackTrace();
        }
@@ -152,7 +153,7 @@ public class UserHomeController {
 
     listOfRestaurants.getChildren().clear();
 
-    for(String[] r : ristoranti){
+    for(String[] r : ristoranti) {
       String[] comment = {"Ristorante 1", "Ottimo!", "Grazie!", "3"};
 
       try {
@@ -163,14 +164,14 @@ public class UserHomeController {
         controller.setReview(r, comment);
 
         listOfRestaurants.getChildren().add(row);
-       }catch (IOException e){
+       }catch (IOException e) {
         System.out.println("[" + Lib.RED + "ERROR" + Lib.RESET + "] Loading reviewed restaurants");
         e.printStackTrace();
        }
     }
   }
 
-  public void openDetails(String[] restaurant)
+  public void openDetails(Restaurant restaurant)
   {
     try {
       FXMLLoader loader = new FXMLLoader(App.class.getResource("/com/lab/fxml/user/detailsUser.fxml"));
@@ -190,7 +191,7 @@ public class UserHomeController {
 
   public void closeDetails()
   {
-    if(detailsNode != null){
+    if(detailsNode != null) {
       leftMenuArea.getChildren().remove(detailsNode);
       detailsNode = null;
     }
@@ -218,7 +219,7 @@ public class UserHomeController {
 
   public void closeComment()
   {
-    if(commentNode != null){
+    if(commentNode != null) {
       leftMenuArea.getChildren().remove(commentNode);
       commentNode = null;
     }
@@ -238,7 +239,7 @@ public class UserHomeController {
       if (detailsNode != null) detailsNode.setVisible(false);
       leftMenuArea.getChildren().add(commentNode); 
 
-    }catch(IOException e){
+    }catch(IOException e) {
       System.out.println("[" + Lib.RED + "ERROR" + Lib.RESET + "] Loading write comment page");
       e.printStackTrace();
     }
@@ -246,7 +247,7 @@ public class UserHomeController {
 
   public void closeWriteComment()
   {
-    if(commentNode != null){
+    if(commentNode != null) {
       leftMenuArea.getChildren().remove(commentNode);
       commentNode = null;
     }

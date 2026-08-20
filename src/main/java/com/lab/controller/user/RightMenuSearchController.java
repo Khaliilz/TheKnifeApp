@@ -28,7 +28,7 @@ public class RightMenuSearchController {
     luogo_TF.setOnAction(this::searchClicked);
     Lib.resetBorder(luogo_TF);
 
-    if(UserHomeController.isGuest){
+    if(UserHomeController.isGuest) {
       bookmarkedButton.setVisible(false);
       bookmarkedButton.setManaged(false);
       reviewedButton.setVisible(false);
@@ -39,11 +39,10 @@ public class RightMenuSearchController {
   @FXML
   public void searchClicked(ActionEvent event)
   {
-    initialize();
     boolean error = false;
     String place = luogo_TF.getText();
     
-    if(place.isEmpty()){
+    if(place.isEmpty()) {
       Lib.errorBorder(luogo_TF);
       error = true;
     }
@@ -74,7 +73,7 @@ public class RightMenuSearchController {
       popupStage.setScene(scene);
       popupStage.show();
       System.out.println("[" + Lib.GREEN + "ACTION" + Lib.RESET + "] Filter button clicked");
-    }catch(IOException e){
+    }catch(IOException e) {
       System.out.println("[" + Lib.RED + "ERROR" + Lib.RESET + "] Filter page loading");
       e.printStackTrace();
     }

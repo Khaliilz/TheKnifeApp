@@ -13,7 +13,7 @@ public class PasswordHashing {
   {
     try{
       return BCrypt.checkpw(password, hashedPassword);
-    }catch(IllegalArgumentException e){
+    }catch(IllegalArgumentException e) {
       return false;
     }
   }

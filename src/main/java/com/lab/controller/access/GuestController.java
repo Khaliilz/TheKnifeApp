@@ -27,11 +27,10 @@ public class GuestController {
   @FXML
   public void cercaClicked(ActionEvent event)
   {
-    initialize();
     boolean error = false;
 
     String luogo = luogo_TF.getText().trim();
-    if(luogo.isEmpty()){
+    if(luogo.isEmpty()) {
       Lib.errorBorder(luogo_TF);
       error = true;
     }

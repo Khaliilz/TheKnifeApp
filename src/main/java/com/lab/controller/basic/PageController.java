@@ -62,7 +62,7 @@ public class PageController {
         }
       });
       fadeIn.play();
-    }catch(IOException e){
+    }catch(IOException e) {
       System.out.print("[" + Lib.RED + "ERROR" + Lib.RESET + "]" + " Loading page: " + fileName);
       e.printStackTrace();
     }

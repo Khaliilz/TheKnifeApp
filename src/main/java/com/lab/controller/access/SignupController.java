@@ -6,6 +6,9 @@ import java.time.format.DateTimeFormatter;
 import com.lab.controller.basic.PageController;
 import com.lab.controller.basic.ToolbarController;
 import com.lab.controller.user.UserHomeController;
+import com.lab.database.model.Session;
+import com.lab.database.model.User;
+import com.lab.database.query.UserQ;
 import com.lab.utility.Lib;
 
 import javafx.event.ActionEvent;
@@ -25,7 +28,6 @@ public class SignupController {
   @FXML private TextField address_TF;
   @FXML private TextField username_TF;
   @FXML private PasswordField password_PF;
-  @FXML private ToggleGroup roleGroup;
   @FXML private RadioButton customer;
   @FXML private RadioButton restaurateur;
   @FXML private Button signup_B;
@@ -50,64 +52,85 @@ public class SignupController {
   @FXML
   public void signupClicked(ActionEvent event)
   {
-    initialize();
     boolean error = false;
 
     String name = name_TF.getText().trim();
     String surname = surname_TF.getText().trim();
+
     LocalDate date = birthDate.getValue();
-    String address = address_TF.getText().trim();
+    if(date == null && !birthDate.getEditor().getText().trim().isEmpty()) {
+      try{
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        date = LocalDate.parse(birthDate.getEditor().getText().trim(), formatter);
+        birthDate.setValue(date);
+      }catch(Exception e) {
+        date = null;
+      }
+    }
+    
+    String address = address_TF.getText().trim().toLowerCase();
     String username = username_TF.getText();
     String password = password_PF.getText();
-    String role = customer.isSelected()? "Cliente" : "Ristoratore";
+    String role = customer.isSelected()? "CLIENTE" : "RISTORATORE";
 
-    if(name.isEmpty()){ 
+    if(name.isEmpty()) { 
       Lib.errorBorder(name_TF);
       error = true;
     }
 
-    if(surname.isEmpty()){
+    if(surname.isEmpty()) {
       Lib.errorBorder(surname_TF);
       error = true;
     }
 
-    if(date == null || !checkDataNascita(date)){
+    java.sql.Date sqlDate = null;
+    if(date == null || !checkBirthDate(date)) {
       Lib.errorBorder(birthDate);
       error = true;
     } else {
-      java.sql.Date sqlDate = java.sql.Date.valueOf(date);
+      sqlDate = java.sql.Date.valueOf(date);
     }
 
     String addressRegex = "^[\\p{L}\\s\\'\\-\\.]+\\s*,\\s*[\\p{L}\\s\\'\\-\\.]+$";
-    if(address.isEmpty() || !address.matches(addressRegex)){
+    if(address.isEmpty() || !address.matches(addressRegex)) {
       Lib.errorBorder(address_TF);
       error = true;
     }
 
-    if(username.isEmpty()){
+    if(username.isEmpty()) {
       Lib.errorBorder(username_TF);
       error = true;
     }
 
-    if(password.isEmpty() || password.length() < 8){ 
+    if(password.isEmpty() || password.length() < 8) { 
       Lib.errorBorder(password_PF); 
       error = true; 
     }
 
     if(error) return;
-    System.out.println("[" + Lib.GREEN + "ACTION" + Lib.RESET + "] Signup completed [" + username + ", " + password + ", " + role + "]");
-    if(role.equals("Cliente")) PageController.selectPage("/com/lab/fxml/user/userHome.fxml");
-    else PageController.selectPage("/com/lab/fxml/restaurateur/restaurateurHome.fxml");
+
+    boolean signup = UserQ.signup(name, surname, sqlDate, address, username, password, role);
+    if(signup) {
+      System.out.println("[" + Lib.PURPLE + "DATABASE" + Lib.RESET + "] Signup completed");
+      User loggedUser = UserQ.signin(username, password);
+      if(loggedUser != null){
+        Session.setCurrentUser(loggedUser);
+        if(loggedUser.getRole().equals("CLIENTE")) PageController.selectPage("/com/lab/fxml/user/userHome.fxml");
+        else if(loggedUser.getRole().equals("RISTORATORE")) PageController.selectPage("/com/lab/fxml/restaurateur/restaurateurHome.fxml");
+      }
+      
+    } else {
+      Lib.errorBorder(username_TF);
+    }
   }
 
-  public boolean checkDataNascita(LocalDate d)
+  public boolean checkBirthDate(LocalDate d)
   {
-    try{
-      LocalDate today = LocalDate.now();
-      long betweenDates = java.time.temporal.ChronoUnit.YEARS.between(d, today);
-      if(d.isAfter(today)) return false;
-      if(betweenDates >= 90 || betweenDates <= 16) return false;
-    }catch(java.time.format.DateTimeParseException e) { return false; }
+    LocalDate today = LocalDate.now();
+    long age = java.time.temporal.ChronoUnit.YEARS.between(d, today);
+
+    if(d.isAfter(today)) return false;
+    if(age > 90 || age < 16) return false;
 
     return true;
   }

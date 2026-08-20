@@ -18,8 +18,8 @@ public class PopulateRestaurants {
 	{
 		String sql = "INSERT INTO restaurants (name, address, location, price, cuisine, latitude, longitude, delivery, booking, award) " + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 		
-		try(InputStream is = PopulateRestaurants.class.getResourceAsStream(datasetPath)){
-      if(is == null){
+		try(InputStream is = PopulateRestaurants.class.getResourceAsStream(datasetPath)) {
+      if(is == null) {
         System.out.println("[" + Lib.RED + "DATABASE" + Lib.RESET + "] Dataset not found");
         return;
       }
@@ -27,9 +27,8 @@ public class PopulateRestaurants {
       try(InputStreamReader reader = new InputStreamReader(is, StandardCharsets.UTF_8);
             CSVParser csvParser = new CSVParser(reader, CSVFormat.DEFAULT.builder().setHeader().setSkipHeaderRecord(true).build());
             Connection connection = Database.getConnection();
-            PreparedStatement ps = connection.prepareStatement(sql)){
+            PreparedStatement ps = connection.prepareStatement(sql)) {
 
-        connection.setAutoCommit(false);
         int count = 0;
 
         for(CSVRecord record : csvParser) {
@@ -38,7 +37,7 @@ public class PopulateRestaurants {
           String location = record.get("Location");
 
           String price = record.get("Price");
-					if(price != null){
+					if(price != null) {
 						price = price.replace("â‚¬", "€").replace("Â£", "£").replace("Â¥", "¥");
 						price = price.replaceAll("[^€$£¥]", "€");
 					}
@@ -50,7 +49,7 @@ public class PopulateRestaurants {
           try{
             longitude = Double.parseDouble(record.get("Longitude"));
             latitude = Double.parseDouble(record.get("Latitude"));
-          }catch(NumberFormatException ignored){ }
+          }catch(NumberFormatException ignored) { }
 
           String phone = record.isSet("PhoneNumber") ? record.get("PhoneNumber").trim() : "";
           String website = record.isSet("WebsiteUrl") ? record.get("WebsiteUrl").trim() : "";
@@ -75,9 +74,9 @@ public class PopulateRestaurants {
 
         ps.executeBatch();
         connection.commit();
-        System.out.println("[" + Lib.PURPLE + "DATABASE" + Lib.RESET + "] imported " + count + " restaurants");
+        System.out.println("[" + Lib.PURPLE + "DATABASE" + Lib.RESET + "] Imported " + count + " restaurants");
       }
-    }catch (Exception e){
+    }catch (Exception e) {
       System.out.println("[" + Lib.RED + "DATABASE" + Lib.RESET + "] Failed restaurants import");
       e.printStackTrace();
     }

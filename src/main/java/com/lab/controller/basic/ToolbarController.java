@@ -45,7 +45,7 @@ public class ToolbarController {
 
   public static void showBackButton(boolean show)
   {
-    if(toolbarController != null){
+    if(toolbarController != null) {
       toolbarController.back_B.setVisible(show);
       toolbarController.back_B.setManaged(show);
     }
@@ -62,7 +62,7 @@ public class ToolbarController {
 
   public static void showLeftSide(boolean signin, boolean signup, boolean signout)
   {
-    if(toolbarController != null){
+    if(toolbarController != null) {
       toolbarController.signin_B.setVisible(signin);
       toolbarController.signin_B.setManaged(signin);
       toolbarController.signup_B.setVisible(signup);

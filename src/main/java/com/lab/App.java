@@ -55,10 +55,10 @@ public class App extends Application {
     Connection connection = Database.getConnection();
     
     if (connection != null) {
-        System.out.println("[" + Lib.BLUE + "INFO" + Lib.RESET + "] DataBase Connected");
+        System.out.println("[" + Lib.PURPLE + "DATABASE" + Lib.RESET + "] DataBase is up");
         try{
             connection.close();
-        }catch (Exception e){ }
+        }catch (Exception e) { }
     } else {
       System.out.println("[" + Lib.RED + "ERROR" + Lib.RESET + "] Connection failed");
     }

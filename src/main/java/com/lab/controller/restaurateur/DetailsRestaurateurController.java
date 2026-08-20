@@ -34,7 +34,7 @@ public class DetailsRestaurateurController {
     ArrayList<String[]> lists = new ArrayList<>();
     for(int i=0; i<0; i++) lists.add(review);
 
-    for(String[] r : lists){
+    for(String[] r : lists) {
       try{
         FXMLLoader loader = new FXMLLoader(App.class.getResource("/com/lab/fxml/restaurateur/yourReviews.fxml"));
         HBox row = loader.load();
@@ -43,7 +43,7 @@ public class DetailsRestaurateurController {
         controller.setReviewData(r);
 
         list.getChildren().addAll(row);
-      }catch(IOException e){
+      }catch(IOException e) {
         System.out.println("[" + Lib.RED + "ERROR" + Lib.RESET + "] Filling your reviews list");
         e.printStackTrace();
       }

@@ -41,7 +41,7 @@ public class ViewCommentController {
 
     int stars = Integer.parseInt(c[3]);
 
-    switch(stars){
+    switch(stars) {
       case 1:
         starsOne.setSelected(true);
         break;

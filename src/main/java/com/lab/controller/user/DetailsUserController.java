@@ -2,6 +2,8 @@ package com.lab.controller.user;
 
 import java.io.IOException;
 
+import com.lab.database.model.Restaurant;
+import com.lab.database.model.Session;
 import com.lab.utility.Lib;
 
 import javafx.event.ActionEvent;
@@ -15,7 +17,7 @@ public class DetailsUserController {
 
   @FXML private Text name_L;
   @FXML private Label address_L;
-  @FXML private Label stats_L;
+  @FXML private Label price_L;
   @FXML private Label delivery_L;
   @FXML private Label booking_L;
   @FXML private Label cuisine_L;
@@ -23,13 +25,26 @@ public class DetailsUserController {
   @FXML private Button reviewButton;
 
   
-  public void setDetails(String[] r)
+  public void setDetails(Restaurant r)
 	{
-    name_L.setText(r[0]);
-    address_L.setText(r[1]);
+    name_L.setText(r.getName());
+
+    String fullAddress = r.getAddress();
+    String shortAddress = fullAddress;
+    if(fullAddress.contains(",")){
+      String[] split = fullAddress.split(",");
+      if(split.length >= 2) shortAddress = split[0] + ", " + split[1]; 
+    }
+    address_L.setText(shortAddress);
+
+    price_L.setText((r.getPrice() == null || r.getPrice().isEmpty()) ? "..." : r.getPrice());
+    delivery_L.setText((r.getDelivery() == null || r.getDelivery().isEmpty()) ? "No" : r.getDelivery());
+    booking_L.setText((r.getBooking() == null || r.getBooking().isEmpty()) ? "No" : r.getBooking());
+    cuisine_L.setText(r.getCuisine());
+
 		loadReviews();
 
-    if(UserHomeController.isGuest){
+    if(Session.getCurrentUser() == null) {
       reviewButton.setVisible(false);
       reviewButton.setManaged(false);
     }
@@ -63,7 +78,7 @@ public class DetailsUserController {
 
     listOfComments.getChildren().clear();
 
-    for(String[] r : mockReviews){
+    for(String[] r : mockReviews) {
       try{
         javafx.fxml.FXMLLoader loader = new javafx.fxml.FXMLLoader(com.lab.App.class.getResource("/com/lab/fxml/user/reviewsRow.fxml"));
         VBox row = loader.load();
@@ -72,7 +87,7 @@ public class DetailsUserController {
         controller.setReview(r);
 
         listOfComments.getChildren().add(row);
-      }catch (IOException e){
+      }catch (IOException e) {
         System.out.println("[" + com.lab.utility.Lib.RED + "ERROR" + com.lab.utility.Lib.RESET + "] Loading review row");
         e.printStackTrace();
       }

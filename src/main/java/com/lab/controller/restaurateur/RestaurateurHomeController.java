@@ -57,7 +57,7 @@ public class RestaurateurHomeController {
     ArrayList<String[]> lists = new ArrayList<>();
     for(int i=0; i<1; i++) lists.add(restaurant);
 
-    for(String[] r : lists){
+    for(String[] r : lists) {
       try{
         FXMLLoader loader = new FXMLLoader(App.class.getResource("/com/lab/fxml/restaurateur/yourRestaurants.fxml"));
         HBox row = loader.load();
@@ -66,7 +66,7 @@ public class RestaurateurHomeController {
         controller.setRestaurantData(r);
 
         list.getChildren().add(row);
-      }catch(IOException e){
+      }catch(IOException e) {
         System.out.println("[" + Lib.RED + "ERROR" + Lib.RESET + "] Filling your restaurants list");
         e.printStackTrace();
       }
@@ -85,7 +85,7 @@ public class RestaurateurHomeController {
       contentArea.getChildren().add(detailsNode);
 
       System.out.println("[" + Lib.GREEN + "ACTION" + Lib.RESET + "] Restaurant Reviews opended");
-    }catch(IOException e){
+    }catch(IOException e) {
       System.out.println("[" + Lib.RED + "ERROR" + Lib.RESET + "] Loading details view");
       e.printStackTrace();
     }
@@ -93,7 +93,7 @@ public class RestaurateurHomeController {
 
   public void closeDetails()
   {
-    if(detailsNode != null){
+    if(detailsNode != null) {
       contentArea.getChildren().remove(detailsNode);
       detailsNode = null;
     }
@@ -127,7 +127,7 @@ public class RestaurateurHomeController {
 
   public void closeNewRestaurant()
   {
-    if(newRestaurantNode != null){
+    if(newRestaurantNode != null) {
       contentArea.getChildren().remove(newRestaurantNode);
       newRestaurantNode = null;
     }

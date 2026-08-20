@@ -22,7 +22,7 @@ public class Lib {
     double width = root.getPrefWidth();
     double height = root.getPrefHeight();
 
-    for(int i=0; i<width; i+=40){
+    for(int i=0; i<width; i+=40) {
       Line lineV = new Line(i, 0, i, height);
       lineV.setStroke(Color.RED);
       lineV.setStrokeWidth(1);
@@ -30,7 +30,7 @@ public class Lib {
       root.getChildren().add(lineV);
     }
 
-    for(int i=0; i<height; i+=50){
+    for(int i=0; i<height; i+=50) {
       Line lineH = new Line(0, i, width, i);
       lineH.setStroke(Color.RED);
       lineH.setStrokeWidth(1);
