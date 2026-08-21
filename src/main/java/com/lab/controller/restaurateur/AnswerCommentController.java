@@ -1,6 +1,8 @@
 package com.lab.controller.restaurateur;
 
-import com.lab.database.query.ReviewQ;
+import java.rmi.RemoteException;
+
+import com.lab.server.ServerConnection;
 import com.lab.utility.Lib;
 
 import javafx.event.ActionEvent;
@@ -40,12 +42,17 @@ public class AnswerCommentController {
     int restaurantId = Integer.parseInt(reviewData[5]);
     String answerText = answer.getText().trim();
 
-    boolean success = ReviewQ.saveReviewAnswer(userId, restaurantId, answerText);
+    try{
+      boolean success = ServerConnection.getServer().saveReviewAnswer(userId, restaurantId, answerText);
+      
+      if(success) System.out.println("[" + Lib.GREEN + "ACTION" + Lib.RESET + "] Answer saved");
+      else System.out.println("[" + Lib.RED + "ERROR" + Lib.RESET + "] Failed to save answer");
 
-    if(success) System.out.println("[" + Lib.GREEN + "ACTION" + Lib.RESET + "] Answer saved");
-    else System.out.println("[" + Lib.RED + "ERROR" + Lib.RESET + "] Failed to save answer");
-
-    Stage stage = (Stage) ((Node) e.getSource()).getScene().getWindow();
-    stage.close();
+      Stage stage = (Stage) ((Node) e.getSource()).getScene().getWindow();
+      stage.close();
+    } catch (RemoteException ex) {
+      ex.printStackTrace();
+      System.out.println("[" + Lib.RED + "ERROR" + Lib.RESET + "] Server comunication");
+    }
   }
 }

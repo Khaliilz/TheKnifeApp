@@ -6,6 +6,8 @@ import java.sql.Connection;
 import java.util.Scanner;
 
 import com.lab.database.Database;
+import com.lab.database.PopulateRestaurants;
+import com.lab.database.query.RestaurantQ;
 import com.lab.utility.Lib;
 
 public class ServerMain {
@@ -30,6 +32,12 @@ public class ServerMain {
 
     try(Connection connection = Database.getConnection()) {
       System.out.println("[" + Lib.PURPLE + "DATABASE" + Lib.RESET + "] Connesso");
+
+      if(RestaurantQ.isDatabaseEmpty()) {
+        System.out.println("[" + Lib.PURPLE + "DATABASE" + Lib.RESET + "] Database vuoto. Importazione dei ristoranti...");
+        PopulateRestaurants.importRestaurants("/com/lab/data/dataset.csv");
+        System.out.println("[" + Lib.PURPLE + "DATABASE" + Lib.RESET + "] Database popolato con successo");
+      } else System.out.println("[" + Lib.PURPLE + "DATABASE" + Lib.RESET + "] Database gia' popolato");
 
       ServerImpl server = new ServerImpl();
       Registry registry = LocateRegistry.createRegistry(1099);

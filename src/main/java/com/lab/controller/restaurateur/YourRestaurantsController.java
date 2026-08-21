@@ -1,7 +1,7 @@
 package com.lab.controller.restaurateur;
 
 import com.lab.database.model.Restaurant;
-import com.lab.database.query.RestaurantQ;
+import com.lab.server.ServerConnection;
 import com.lab.utility.Lib;
 
 import javafx.event.ActionEvent;
@@ -46,12 +46,17 @@ public class YourRestaurantsController {
   {
     System.out.println("[" + Lib.GREEN + "ACTION" + Lib.RESET + "] Remove button clicked");
     if(currentRestaurant != null) {
-      boolean success = RestaurantQ.removeRestaurant(currentRestaurant.getId());
-        
-      if(success) {
-        System.out.println("[" + Lib.GREEN + "ACTION" + Lib.RESET + "] Restaurant removed successfully!");
-        RestaurateurHomeController.getInstance().fillRestaurants();
-      } else System.out.println("[" + Lib.RED + "ERROR" + Lib.RESET + "] Failed to remove restaurant.");
+      try {
+        boolean success = ServerConnection.getServer().removeRestaurant(currentRestaurant.getId());
+        if(success) {
+          System.out.println("[" + Lib.GREEN + "ACTION" + Lib.RESET + "] Restaurant removed successfully!");
+          RestaurateurHomeController.getInstance().fillRestaurants();
+        } else System.out.println("[" + Lib.RED + "ERROR" + Lib.RESET + "] Failed to remove restaurant.");
+
+      } catch (Exception ex) {
+        ex.printStackTrace();
+        System.out.println("[" + Lib.RED + "ERROR" + Lib.RESET + "] Server comunication");
+      }
     }
   }
 }

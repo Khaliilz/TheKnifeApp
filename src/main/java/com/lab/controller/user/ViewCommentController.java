@@ -1,7 +1,9 @@
 package com.lab.controller.user;
 
+import java.rmi.RemoteException;
+
 import com.lab.database.model.Session;
-import com.lab.database.query.ReviewQ;
+import com.lab.server.ServerConnection;
 import com.lab.utility.Lib;
 
 import javafx.event.ActionEvent;
@@ -28,26 +30,36 @@ public class ViewCommentController {
     if(starsTwo.isSelected()) stars = 2;
     else if(starsThree.isSelected()) stars = 3;
 
-    int userId = Session.getCurrentUser().getId();
-    boolean success = ReviewQ.updateReview(userId, currentRestaurantId, stars, comment.getText());
+    try{
+      int userId = Session.getCurrentUser().getId();
+      boolean success = ServerConnection.getServer().updateReview(userId, currentRestaurantId, stars, comment.getText());
+      
+      if(success) System.out.println("[" + Lib.GREEN + "ACTION" + Lib.RESET + "Review updated successfully");
+      else System.out.println("[" + Lib.RED + "ERROR" + Lib.RESET + "Failed to update review.");
 
-    if(success) System.out.println("[" + Lib.GREEN + "ACTION" + Lib.RESET + "Review updated successfully");
-    else System.out.println("[" + Lib.RED + "ERROR" + Lib.RESET + "Failed to update review.");
-
-    UserHomeController.getInstance().closeComment();
-    UserHomeController.getInstance().loadReviews();
+      UserHomeController.getInstance().closeComment();
+      UserHomeController.getInstance().loadReviews();
+    } catch (RemoteException ex) {
+      ex.printStackTrace();
+      System.out.println("[" + Lib.RED + "ERROR" + Lib.RESET + "] Server comunication");
+    }
   }
 
   @FXML void removeClicked(ActionEvent e)
   {
-    int userId = Session.getCurrentUser().getId();
-    boolean success = ReviewQ.removeReview(userId, currentRestaurantId);
-    
-    if(success) System.out.println("[" + Lib.GREEN + "ACTION" + Lib.RESET + "] Review removed successfully");
-    else System.out.println("[" + Lib.RED + "ERROR" + Lib.RESET + "] Failed to remove review");
+    try{
+      int userId = Session.getCurrentUser().getId();
+      boolean success = ServerConnection.getServer().removeReview(userId, currentRestaurantId);
+      
+      if(success) System.out.println("[" + Lib.GREEN + "ACTION" + Lib.RESET + "] Review removed successfully");
+      else System.out.println("[" + Lib.RED + "ERROR" + Lib.RESET + "] Failed to remove review");
 
-    UserHomeController.getInstance().closeComment();
-    UserHomeController.getInstance().loadReviews();
+      UserHomeController.getInstance().closeComment();
+      UserHomeController.getInstance().loadReviews();
+    } catch (RemoteException ex) {
+      ex.printStackTrace();
+      System.out.println("[" + Lib.RED + "ERROR" + Lib.RESET + "] Server comunication");
+    }
   }
   
   public void setComment(String[] c)

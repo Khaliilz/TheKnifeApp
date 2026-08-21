@@ -5,8 +5,6 @@ import com.lab.utility.PriceConverter;
 
 import com.lab.database.Database;
 import com.lab.database.model.Restaurant;
-import com.lab.database.model.Session;
-import com.lab.database.model.User;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -20,6 +18,23 @@ public class RestaurantQ {
     return "( 6371 * acos( cos( radians(?) ) * cos( radians( latitude ) ) * " +
            "cos( radians( longitude ) - radians(?) ) + sin( radians(?) ) * " +
            "sin( radians( latitude ) ) ) )";
+  }
+
+  public static boolean isDatabaseEmpty() {
+    String sql = "SELECT COUNT(*) AS total FROM restaurants";
+    
+    try(Connection connection = Database.getConnection(); PreparedStatement ps = connection.prepareStatement(sql)) {
+      ResultSet rs = ps.executeQuery();
+         
+      if(rs.next()) {
+        int count = rs.getInt("total");
+        return count == 0;
+      }
+    } catch (Exception e) {
+      e.printStackTrace();
+      System.out.println("[" + Lib.RED + "ERROR" + Lib.RESET + "] Impossibile verificare lo stato del DB");
+    }
+    return true;
   }
 
   public static List<Restaurant> getNearestRestaurants(double lat, double lon)

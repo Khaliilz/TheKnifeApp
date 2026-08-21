@@ -2,12 +2,15 @@ package com.lab.server;
 
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
+import java.sql.Date;
 import java.util.List;
 
 import com.lab.database.model.Restaurant;
+import com.lab.database.model.User;
 import com.lab.database.query.BookmarkQ;
 import com.lab.database.query.RestaurantQ;
 import com.lab.database.query.ReviewQ;
+import com.lab.database.query.UserQ;
 import com.lab.interfaces.ServerInterface;
 
 public class ServerImpl extends UnicastRemoteObject implements ServerInterface {
@@ -16,6 +19,19 @@ public class ServerImpl extends UnicastRemoteObject implements ServerInterface {
   {
     super();
   }
+
+  @Override
+  public User signin(String username, String password) throws RemoteException
+  {
+    return UserQ.signin(username, password);
+  }
+
+  @Override
+  public boolean signup(String name, String surname, Date birthDate, String address, String username, String plainPassword, String role) throws RemoteException
+  {
+    return UserQ.signup(name, surname, birthDate, address, username, plainPassword, role);
+  }
+
 
   @Override
   public List<Restaurant> getNearestRestaurants(double lat, double lon) throws RemoteException

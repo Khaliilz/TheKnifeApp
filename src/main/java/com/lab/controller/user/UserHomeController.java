@@ -1,9 +1,8 @@
 package com.lab.controller.user;
 
 import java.io.IOException;
-import java.util.ArrayList;
+import java.rmi.RemoteException;
 import java.util.List;
-import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 
 import com.lab.App;
@@ -11,8 +10,8 @@ import com.lab.controller.basic.PageController;
 import com.lab.controller.basic.ToolbarController;
 import com.lab.database.model.Restaurant;
 import com.lab.database.model.Session;
-import com.lab.database.query.RestaurantQ;
-import com.lab.database.query.ReviewQ;
+import com.lab.database.model.User;
+import com.lab.server.ServerConnection;
 import com.lab.utility.Lib;
 
 import javafx.fxml.FXML;
@@ -86,9 +85,20 @@ public class UserHomeController {
     }
     title.setText("Ristoranti nelle vicinanze");
     listOfRestaurants.getChildren().clear();
+    
+    User user = Session.getCurrentUser();
 
-    List<Restaurant> nearest = RestaurantQ.getNearestRestaurants();
-    fillRestaurants(nearest);
+    try{
+      double lat = user.getLatitude();
+      double lon = user.getLongitude();
+
+      List<Restaurant> nearest = ServerConnection.getServer().getNearestRestaurants(lat, lon);
+      
+      fillRestaurants(nearest);
+    } catch (RemoteException e) {
+      e.printStackTrace();
+      System.out.println("[" + Lib.RED + "ERROR" + Lib.RESET + "] Server comunication");
+    }
   }
 
   public void loadBookmarked()
@@ -103,8 +113,18 @@ public class UserHomeController {
     title.setText("Ristoranti preferiti");
     listOfRestaurants.getChildren().clear();
 
-    List<Restaurant> bookmarked = RestaurantQ.getBookmarkedRestaurants();
-    fillRestaurants(bookmarked);
+    User user = Session.getCurrentUser();
+
+    try{
+      double lat = user.getLatitude();
+      double lon = user.getLongitude();
+
+      List<Restaurant> bookmarked = ServerConnection.getServer().getBookmarkedRestaurants(user.getId(), lat, lon);
+      fillRestaurants(bookmarked);
+    } catch (RemoteException e) {
+      e.printStackTrace();
+      System.out.println("[" + Lib.RED + "ERROR" + Lib.RESET + "] Server comunication");
+    }
   }
 
   public void loadReviews()
@@ -119,8 +139,18 @@ public class UserHomeController {
     title.setText("Ristoranti recensiti");
     listOfRestaurants.getChildren().clear();
 
-    List<Restaurant> reviewed = RestaurantQ.getReviewedRestaurants();
-    fillReviewed(reviewed);
+    User user = Session.getCurrentUser();
+
+    try{
+      double lat = user.getLatitude();
+      double lon = user.getLongitude();
+
+      List<Restaurant> reviewed = ServerConnection.getServer().getReviewedRestaurants(user.getId(), lat, lon);
+      fillReviewed(reviewed);
+    } catch (RemoteException e) {
+      e.printStackTrace();
+      System.out.println("[" + Lib.RED + "ERROR" + Lib.RESET + "] Server comunication");
+    }
   }
 
   public void loadRightMenu(String newTitle, String fileName)
@@ -153,12 +183,22 @@ public class UserHomeController {
     loadMoreButton.setVisible(false);
     loadMoreButton.setManaged(false);
 
-    List<Restaurant> searchResults = RestaurantQ.getSerachedRestaurants(currentSearchPlace, filterCuisine, filterPrice, filterDelivery, filterBooking, filterStars, currentSearchOffset);
-    fillRestaurants(searchResults); 
+    User user = Session.getCurrentUser();
 
-    if(searchResults.size() == 10) {
-      loadMoreButton.setVisible(true);
-      loadMoreButton.setManaged(true);
+    try{
+      double lat = user.getLatitude();
+      double lon = user.getLongitude();
+
+      List<Restaurant> searchResults = ServerConnection.getServer().getSerachedRestaurants(currentSearchPlace, filterCuisine, filterPrice, filterDelivery, filterBooking, filterStars, currentSearchOffset, lat, lon);
+      fillRestaurants(searchResults);
+
+      if(searchResults.size() == 10) {
+        loadMoreButton.setVisible(true);
+        loadMoreButton.setManaged(true);
+      }
+    } catch (RemoteException e) {
+      e.printStackTrace();
+      System.out.println("[" + Lib.RED + "ERROR" + Lib.RESET + "] Server comunication");
     }
   }
 
@@ -180,14 +220,23 @@ public class UserHomeController {
     loadMoreButton.setVisible(false);
     loadMoreButton.setManaged(false);
     
-    List<Restaurant> searchResults = RestaurantQ.getSerachedRestaurants(currentSearchPlace, filterCuisine, filterPrice, filterDelivery, filterBooking, filterStars, currentSearchOffset);
-    fillRestaurants(searchResults);
-    
-    if(searchResults.size() == 10) {
-      loadMoreButton.setVisible(true);
-      loadMoreButton.setManaged(true);
+    User user = Session.getCurrentUser();
+
+    try{
+      double lat = user.getLatitude();
+      double lon = user.getLongitude();
+
+      List<Restaurant> searchResults = ServerConnection.getServer().getSerachedRestaurants(currentSearchPlace, filterCuisine, filterPrice, filterDelivery, filterBooking, filterStars, currentSearchOffset, lat, lon);
+      fillRestaurants(searchResults);
+
+      if(searchResults.size() == 10) {
+        loadMoreButton.setVisible(true);
+        loadMoreButton.setManaged(true);
+      }
+    } catch (RemoteException e) {
+      e.printStackTrace();
+      System.out.println("[" + Lib.RED + "ERROR" + Lib.RESET + "] Server comunication");
     }
-    
   }
 
   @FXML
@@ -195,12 +244,22 @@ public class UserHomeController {
   {
     currentSearchOffset += 10; 
     
-    List<Restaurant> nextResults = RestaurantQ.getSerachedRestaurants(currentSearchPlace, filterCuisine, filterPrice, filterDelivery, filterBooking, filterStars, currentSearchOffset);
-    fillRestaurants(nextResults);
+    User user = Session.getCurrentUser();
 
-    if(nextResults.size() < 10) {
-      loadMoreButton.setVisible(false);
-      loadMoreButton.setManaged(false);
+    try{
+      double lat = user.getLatitude();
+      double lon = user.getLongitude();
+
+      List<Restaurant> nextResults = ServerConnection.getServer().getSerachedRestaurants(currentSearchPlace, filterCuisine, filterPrice, filterDelivery, filterBooking, filterStars, currentSearchOffset, lat, lon);
+      fillRestaurants(nextResults);
+
+      if(nextResults.size() < 10) {
+        loadMoreButton.setVisible(false);
+        loadMoreButton.setManaged(false);
+      }
+    } catch (RemoteException ex) {
+      ex.printStackTrace();
+      System.out.println("[" + Lib.RED + "ERROR" + Lib.RESET + "] Server comunication");
     }
   }
 
@@ -244,7 +303,15 @@ public class UserHomeController {
 
     for(Restaurant r : restaurants) {
       String[] restaurantData = {r.getName(), r.getAddress(), String.format("%.1f", r.getAverageStars()), String.valueOf(r.getReviewsNum()), String.valueOf(r.getId())};
-      String[] myReview = ReviewQ.getUserReview(userId, r.getId());
+      
+      String[] myReview = null;
+      try {
+          myReview = ServerConnection.getServer().getUserReview(userId, r.getId());
+      } catch (RemoteException ex) {
+        ex.printStackTrace();
+        System.out.println("[" + Lib.RED + "ERROR" + Lib.RESET + "] Server comunication");
+        continue;
+      }
       
       String answer = (myReview[2] != null) ? myReview[2] : "";
       String[] reviewData = {myReview[0], myReview[1], answer};
@@ -257,10 +324,10 @@ public class UserHomeController {
         controller.setReview(restaurantData, reviewData);
 
         listOfRestaurants.getChildren().add(row);
-       }catch (IOException e) {
+      }catch (IOException e) {
         System.out.println("[" + Lib.RED + "ERROR" + Lib.RESET + "] Loading reviewed restaurants");
         e.printStackTrace();
-       }
+      }
     }
   }
 

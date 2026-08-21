@@ -6,6 +6,7 @@ import java.sql.Connection;
 
 import com.lab.database.Database;
 import com.lab.database.PopulateRestaurants;
+import com.lab.server.ServerConnection;
 import com.lab.utility.Lib;
 
 import javafx.application.Application;
@@ -19,9 +20,12 @@ import javafx.stage.StageStyle;
 public class App extends Application {
 
 	public static void main(String[] args) {
-		dbConnectionCheck();
-		//PopulateRestaurants.importRestaurants("/com/lab/data/dataset.csv");
-		launch(args);
+		boolean connected = ServerConnection.connect("localhost");
+		if(connected) launch(args);
+		else {
+			System.out.println("[" + Lib.RED + "ERROR" + Lib.RESET + "]" + " Impossibile avviare il client, controllare la conessione con il server");
+			System.exit(1);
+		}
 	}
 
 	@Override
@@ -49,19 +53,4 @@ public class App extends Application {
 		stage.setScene(scene);
 		stage.show();
 	}
-
-	private static void dbConnectionCheck()
-	{
-    Connection connection = Database.getConnection();
-    
-    if (connection != null) {
-        System.out.println("[" + Lib.PURPLE + "DATABASE" + Lib.RESET + "] DataBase is up");
-        try{
-            connection.close();
-        }catch (Exception e) { }
-    } else {
-      System.out.println("[" + Lib.RED + "ERROR" + Lib.RESET + "] Connection failed");
-    }
-	}
-
 }

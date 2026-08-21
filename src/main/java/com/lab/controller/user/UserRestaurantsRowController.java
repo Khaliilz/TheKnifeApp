@@ -1,10 +1,12 @@
 package com.lab.controller.user;
 
 import com.lab.utility.Lib;
+
+import java.rmi.RemoteException;
+
 import com.lab.database.model.Restaurant;
 import com.lab.database.model.Session;
-import com.lab.database.query.BookmarkQ;
-import com.lab.database.query.RestaurantQ;
+import com.lab.server.ServerConnection;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -40,9 +42,14 @@ public class UserRestaurantsRowController {
     reviewsNum.setText(String.valueOf(r.getReviewsNum()));
 
     if(Session.getCurrentUser() != null) {
-      int userId = Session.getCurrentUser().getId();
-      isBookmarked = BookmarkQ.isBookmarked(userId, r.getId());
-      updateBookmark();
+      try{
+        int userId = Session.getCurrentUser().getId();
+        isBookmarked = ServerConnection.getServer().isBookmarked(userId, r.getId());
+        updateBookmark();
+      } catch (RemoteException e) {
+        e.printStackTrace();
+        System.out.println("[" + Lib.RED + "ERROR" + Lib.RESET + "] Server comunication");
+      }
     } else {
       bookmark.setVisible(false); 
     }
@@ -62,17 +69,20 @@ public class UserRestaurantsRowController {
     int restId = restaurant.getId();
 
     if(isBookmarked) {
-      if(BookmarkQ.removeBookmark(userId, restId)) {
-            isBookmarked = false;
-            System.out.println("[" + Lib.GREEN + "ACTION" + Lib.RESET + "] Unbookmarked [" + restaurant.getName() + "]");
-        }
-      } else {
-      if(BookmarkQ.addBookmark(userId, restId)) {
-        isBookmarked = true;
-        System.out.println("[" + Lib.GREEN + "ACTION" + Lib.RESET + "] Bookmarked [" + restaurant.getName() + "]");
+      try{
+        if(ServerConnection.getServer().removeBookmark(userId, restId)) isBookmarked = false;
+      } catch(RemoteException ex) {
+        ex.printStackTrace();
+        System.out.println("[" + Lib.RED + "ERROR" + Lib.RESET + "] Server comunication");
+      }
+    } else {
+      try{
+        if(ServerConnection.getServer().addBookmark(userId, restId)) isBookmarked = true;
+      } catch(RemoteException ex) {
+        ex.printStackTrace();
+        System.out.println("[" + Lib.RED + "ERROR" + Lib.RESET + "] Server comunication");
       }
     }
-
     updateBookmark();
   }
 

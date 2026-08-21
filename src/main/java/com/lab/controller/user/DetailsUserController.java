@@ -1,15 +1,17 @@
 package com.lab.controller.user;
 
 import java.io.IOException;
+import java.rmi.RemoteException;
 import java.util.List;
 
 import com.lab.database.model.Restaurant;
 import com.lab.database.model.Session;
-import com.lab.database.query.ReviewQ;
+import com.lab.server.ServerConnection;
 import com.lab.utility.Lib;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
@@ -78,29 +80,32 @@ public class DetailsUserController {
   {
     listOfComments.getChildren().clear();
 
-    List<String[]> reviews = ReviewQ.getRestaurantReviews(restaurantId);
+    try{
+      List<String[]> reviews = ServerConnection.getServer().getRestaurantReviews(restaurantId);
+      
+      boolean isEmpty = reviews.isEmpty();
+      emptyLabel.setVisible(isEmpty);
+      emptyLabel.setManaged(isEmpty);
+      listContainer.setVisible(!isEmpty);
+      if(isEmpty) return;
 
-    listOfComments.getChildren().clear();
+      for(String[] r : reviews) {
+        try{
+          FXMLLoader loader = new FXMLLoader(com.lab.App.class.getResource("/com/lab/fxml/user/reviewsRow.fxml"));
+          VBox row = loader.load();
 
-    boolean isEmpty = reviews.isEmpty();
-    emptyLabel.setVisible(isEmpty);
-    emptyLabel.setManaged(isEmpty);
-    listContainer.setVisible(!isEmpty);
-    if(isEmpty) return;
+          ReviewsRowController controller = loader.getController();
+          controller.setReview(r);
 
-    for(String[] r : reviews) {
-      try{
-        javafx.fxml.FXMLLoader loader = new javafx.fxml.FXMLLoader(com.lab.App.class.getResource("/com/lab/fxml/user/reviewsRow.fxml"));
-        VBox row = loader.load();
-
-        ReviewsRowController controller = loader.getController();
-        controller.setReview(r);
-
-        listOfComments.getChildren().add(row);
-      }catch (IOException e) {
-        System.out.println("[" + Lib.RED + "ERROR" + Lib.RESET + "] Loading review row");
-        e.printStackTrace();
+          listOfComments.getChildren().add(row);
+        }catch (IOException e) {
+          System.out.println("[" + Lib.RED + "ERROR" + Lib.RESET + "] Loading review row");
+          e.printStackTrace();
+        }
       }
+    } catch (RemoteException e) {
+      e.printStackTrace();
+      System.out.println("[" + Lib.RED + "ERROR" + Lib.RESET + "] Server comunication");
     }
   }
 }

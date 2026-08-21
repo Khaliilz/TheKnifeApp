@@ -1,8 +1,10 @@
 package com.lab.controller.user;
 
+import java.rmi.RemoteException;
+
 import com.lab.database.model.Restaurant;
 import com.lab.database.model.Session;
-import com.lab.database.query.ReviewQ;
+import com.lab.server.ServerConnection;
 import com.lab.utility.Lib;
 
 import javafx.event.ActionEvent;
@@ -30,7 +32,15 @@ public class WriteCommentController {
 
     int userId = Session.getCurrentUser().getId();
     int restaurantId = currentRestaurant.getId();
-    String[] existingReview = ReviewQ.getUserReview(userId, restaurantId);
+
+    String[] existingReview = null;
+    try {
+      existingReview = ServerConnection.getServer().getUserReview(userId, restaurantId);
+    }catch(RemoteException e) {
+      e.printStackTrace();
+      System.out.println("[" + Lib.RED + "ERROR" + Lib.RESET + "] Server comunication");
+    }
+
     if(existingReview != null) {
       exists = true;
       comment.setText(existingReview[1] != null ? existingReview[1] : "");
@@ -56,18 +66,27 @@ public class WriteCommentController {
 
     int userId = Session.getCurrentUser().getId();
     int restaurantId = currentRestaurant.getId();
-    boolean reviewed;
+    boolean reviewed = false;
     
     if(exists) {
-      reviewed = ReviewQ.updateReview(userId, restaurantId, stars, text);
-      System.out.println("[" + Lib.PURPLE + "DATABASE" + Lib.RESET + "] Review updated");
+      try{
+        reviewed = ServerConnection.getServer().updateReview(userId, restaurantId, stars, text);
+        System.out.println("[" + Lib.PURPLE + "DATABASE" + Lib.RESET + "] Review updated");
+      } catch (RemoteException ex) {
+        ex.printStackTrace();
+        System.out.println("[" + Lib.RED + "ERROR" + Lib.RESET + "] Server comunication");
+      }
     } else {
-      reviewed = ReviewQ.addReview(userId, restaurantId, stars, text);
-      System.out.println("[" + Lib.PURPLE + "DATABASE" + Lib.RESET + "] Review saved");
+      try{
+        reviewed = ServerConnection.getServer().addReview(userId, restaurantId, stars, text);
+        System.out.println("[" + Lib.PURPLE + "DATABASE" + Lib.RESET + "] Review saved");
+      } catch (RemoteException ex) {
+        ex.printStackTrace();
+        System.out.println("[" + Lib.RED + "ERROR" + Lib.RESET + "] Server comunication");
+      }
     }
 
     if(!reviewed) System.out.println("[" + Lib.PURPLE + "DATABASE" + Lib.RESET + "] Failed saving review");
-
     UserHomeController.getInstance().closeWriteComment();
   }
 }

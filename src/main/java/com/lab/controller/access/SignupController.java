@@ -1,5 +1,6 @@
 package com.lab.controller.access;
 
+import java.rmi.RemoteException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
@@ -9,6 +10,7 @@ import com.lab.controller.user.UserHomeController;
 import com.lab.database.model.Session;
 import com.lab.database.model.User;
 import com.lab.database.query.UserQ;
+import com.lab.server.ServerConnection;
 import com.lab.utility.Lib;
 
 import javafx.event.ActionEvent;
@@ -108,18 +110,25 @@ public class SignupController {
 
     if(error) return;
 
-    boolean signup = UserQ.signup(name, surname, sqlDate, address, username, password, role);
-    if(signup) {
-      System.out.println("[" + Lib.PURPLE + "DATABASE" + Lib.RESET + "] Signup completed");
-      User loggedUser = UserQ.signin(username, password);
-      if(loggedUser != null){
-        Session.setCurrentUser(loggedUser);
-        if(loggedUser.getRole().equals("CLIENTE")) PageController.selectPage("/com/lab/fxml/user/userHome.fxml");
-        else if(loggedUser.getRole().equals("RISTORATORE")) PageController.selectPage("/com/lab/fxml/restaurateur/restaurateurHome.fxml");
-      }
-      
-    } else {
-      Lib.errorBorder(username_TF);
+    try {
+      boolean signup = ServerConnection.getServer().signup(name, surname, sqlDate, address, username, password, role);
+        
+      if(signup) {
+        System.out.println("[" + Lib.PURPLE + "DATABASE" + Lib.RESET + "] Signup completed");
+          
+        
+        User loggedUser = ServerConnection.getServer().signin(username, password);
+          
+        if(loggedUser != null){
+          Session.setCurrentUser(loggedUser);
+          if(loggedUser.getRole().equals("CLIENTE")) PageController.selectPage("/com/lab/fxml/user/userHome.fxml");
+          else if(loggedUser.getRole().equals("RISTORATORE")) PageController.selectPage("/com/lab/fxml/restaurateur/restaurateurHome.fxml");
+        }
+          
+      } else Lib.errorBorder(username_TF);
+    } catch(RemoteException e) {
+      e.printStackTrace();
+      System.out.println("[" + Lib.RED + "ERROR" + Lib.RESET + "] Server comunication");
     }
   }
 

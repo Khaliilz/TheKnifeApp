@@ -10,6 +10,9 @@ import com.lab.database.model.User;
 
 public interface ServerInterface extends Remote {
   
+  public User signin(String username, String password) throws RemoteException;
+  public boolean signup(String name, String surname, Date birthDate, String address, String username, String plainPassword, String role) throws RemoteException;
+
   public List<Restaurant> getNearestRestaurants(double lat, double lon) throws RemoteException;
   public List<Restaurant> getBookmarkedRestaurants(int userId, double lat, double lon) throws RemoteException;
   public List<Restaurant> getReviewedRestaurants(int userId, double lat, double lon) throws RemoteException;

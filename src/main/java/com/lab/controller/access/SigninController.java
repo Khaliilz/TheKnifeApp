@@ -1,11 +1,14 @@
 package com.lab.controller.access;
 
+import java.rmi.RemoteException;
+
 import com.lab.controller.basic.PageController;
 import com.lab.controller.basic.ToolbarController;
 import com.lab.controller.user.UserHomeController;
 import com.lab.database.model.Session;
 import com.lab.database.model.User;
 import com.lab.database.query.UserQ;
+import com.lab.server.ServerConnection;
 import com.lab.utility.Lib;
 
 import javafx.event.ActionEvent;
@@ -52,17 +55,22 @@ public class SigninController {
 
     if(error) return;
 
-    User user = UserQ.signin(username, password);
+    try {
+      User user = ServerConnection.getServer().signin(username, password);
 
-    if(user == null) {
-      Lib.errorBorder(username_TF);
-      Lib.errorBorder(password_PF);
-    } else {
-      System.out.println("[" + Lib.PURPLE + "DATABASE" + Lib.RESET + "] Singin completed [" + user.getUsername() + "]");
-      Session.setCurrentUser(user);
+      if(user == null) {
+        Lib.errorBorder(username_TF);
+        Lib.errorBorder(password_PF);
+      } else {
+        System.out.println("[" + Lib.PURPLE + "DATABASE" + Lib.RESET + "] Singin completed [" + user.getUsername() + "]");
+        Session.setCurrentUser(user);
 
-      if(user.getRole().equals("CLIENTE")) PageController.selectPage("/com/lab/fxml/user/userHome.fxml");
-      else if(user.getRole().equals("RISTORATORE")) PageController.selectPage("/com/lab/fxml/restaurateur/restaurateurHome.fxml");
+        if(user.getRole().equals("CLIENTE")) PageController.selectPage("/com/lab/fxml/user/userHome.fxml");
+        else if(user.getRole().equals("RISTORATORE")) PageController.selectPage("/com/lab/fxml/restaurateur/restaurateurHome.fxml");
+      }
+    } catch(RemoteException e) {
+      e.printStackTrace();
+      System.out.println("[" + Lib.RED + "ERROR" + Lib.RESET + "] Server comunication");
     }
   }
 }

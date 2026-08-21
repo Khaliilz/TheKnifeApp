@@ -1,14 +1,14 @@
 package com.lab.controller.restaurateur;
 
 import java.io.IOException;
-import java.util.ArrayList;
+import java.rmi.RemoteException;
 import java.util.List;
 
 import com.lab.App;
 import com.lab.controller.basic.PageController;
 import com.lab.controller.basic.ToolbarController;
 import com.lab.database.model.Session;
-import com.lab.database.query.RestaurantQ;
+import com.lab.server.ServerConnection;
 import com.lab.database.model.Restaurant;
 import com.lab.utility.Lib;
 
@@ -66,27 +66,32 @@ public class RestaurateurHomeController {
     if (Session.getCurrentUser() == null) return;
     int ownerId = Session.getCurrentUser().getId();
 
-    List<Restaurant> restaurants = RestaurantQ.getRestaurantsByOwner(ownerId);
+    try{
+      List<Restaurant> restaurants = ServerConnection.getServer().getRestaurantsByOwner(ownerId);
+      
+      boolean isEmpty = restaurants.isEmpty();
+      emptyLabel.setVisible(isEmpty);
+      emptyLabel.setManaged(isEmpty);
+      listContainer.setVisible(!isEmpty);
+      if(isEmpty) return;
 
-    boolean isEmpty = restaurants.isEmpty();
-    emptyLabel.setVisible(isEmpty);
-    emptyLabel.setManaged(isEmpty);
-    listContainer.setVisible(!isEmpty);
-    if(isEmpty) return;
+      for(Restaurant r : restaurants) {
+        try{
+          FXMLLoader loader = new FXMLLoader(App.class.getResource("/com/lab/fxml/restaurateur/yourRestaurants.fxml"));
+          HBox row = loader.load();
 
-    for(Restaurant r : restaurants) {
-      try{
-        FXMLLoader loader = new FXMLLoader(App.class.getResource("/com/lab/fxml/restaurateur/yourRestaurants.fxml"));
-        HBox row = loader.load();
+          YourRestaurantsController controller = loader.getController();
+          controller.setRestaurantData(r);
 
-        YourRestaurantsController controller = loader.getController();
-        controller.setRestaurantData(r);
-
-        list.getChildren().add(row);
-      }catch(IOException e) {
-        System.out.println("[" + Lib.RED + "ERROR" + Lib.RESET + "] Filling your restaurants list");
-        e.printStackTrace();
+          list.getChildren().add(row);
+        }catch(IOException e) {
+          System.out.println("[" + Lib.RED + "ERROR" + Lib.RESET + "] Filling your restaurants list");
+          e.printStackTrace();
+        }
       }
+    } catch (RemoteException e) {
+        e.printStackTrace();
+        System.out.println("[" + Lib.RED + "ERROR" + Lib.RESET + "] Server comunication");
     }
   }
 

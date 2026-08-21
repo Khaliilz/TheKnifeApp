@@ -1,7 +1,9 @@
 package com.lab.controller.restaurateur;
 
+import java.rmi.RemoteException;
+
 import com.lab.database.model.Session;
-import com.lab.database.query.RestaurantQ;
+import com.lab.server.ServerConnection;
 import com.lab.utility.Lib;
 
 import javafx.event.ActionEvent;
@@ -116,14 +118,19 @@ public class NewRestaurantController {
     String fullAddress = addressR + ", " + cityR + ", " + countryR;
     int ownerId = Session.getCurrentUser().getId();
     
-    boolean success = RestaurantQ.addRestaurant(nameR, fullAddress, cuisineR, price, phoneNumberR, websiteUrlR, Double.parseDouble(latitudeR), Double.parseDouble(longitudeR), ownerId);
-    
-    if(success) {
+    try{
+      boolean success = ServerConnection.getServer().addRestaurant(nameR, fullAddress, cuisineR, price, phoneNumberR, websiteUrlR, Double.parseDouble(latitudeR), Double.parseDouble(longitudeR), ownerId);
+      
+      if(success) {
         System.out.println("[" + Lib.PURPLE + "DATABASE" + Lib.RESET + "] Restaurant correctly saved");
         RestaurateurHomeController.getInstance().fillRestaurants(); 
-    } else  System.out.println("[" + Lib.RED + "ERROR" + Lib.RESET + "] Failed saving restaurant");
+      } else  System.out.println("[" + Lib.RED + "ERROR" + Lib.RESET + "] Failed saving restaurant");
 
-    RestaurateurHomeController.getInstance().closeNewRestaurant();
+      RestaurateurHomeController.getInstance().closeNewRestaurant();
+    } catch (RemoteException ex) {
+        ex.printStackTrace();
+        System.out.println("[" + Lib.RED + "ERROR" + Lib.RESET + "] Server comunication");
+    }
   }
 
   @FXML
