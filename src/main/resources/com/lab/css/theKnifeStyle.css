@@ -116,6 +116,15 @@
   -fx-font-size: 14px;
 }
 
+#emptyLabel
+{
+  -fx-font-size: 18px;
+  -fx-text-fill: #7f8c8d;
+  -fx-padding: 50px 0 0 0;
+  -fx-text-alignment: center;
+  -fx-alignment: center;
+}
+
 /* ----------------------------
 ------------ BUTTONS ---------- 
 -------------------------------*/
@@ -170,6 +179,16 @@
   -fx-background-color: transparent;
   -fx-cursor: hand;
   -fx-background-image: url("../img/bookmarkedIcon.png");
+  -fx-background-repeat: no-repeat;
+  -fx-background-position: center center;
+  -fx-background-size: 20px 20px;
+}
+
+.removeButton
+{
+  -fx-background-color: transparent;
+  -fx-cursor: hand;
+  -fx-background-image: url("../img/trashCanIcon.png");
   -fx-background-repeat: no-repeat;
   -fx-background-position: center center;
   -fx-background-size: 20px 20px;

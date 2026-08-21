@@ -12,6 +12,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 
@@ -23,8 +24,10 @@ public class DetailsUserController {
   @FXML private Label delivery_L;
   @FXML private Label booking_L;
   @FXML private Label cuisine_L;
+  @FXML private ScrollPane listContainer;
 	@FXML private VBox listOfComments;
   @FXML private Button reviewButton;
+  @FXML private Label emptyLabel;
 
   private Restaurant restaurant;
   
@@ -79,6 +82,12 @@ public class DetailsUserController {
 
     listOfComments.getChildren().clear();
 
+    boolean isEmpty = reviews.isEmpty();
+    emptyLabel.setVisible(isEmpty);
+    emptyLabel.setManaged(isEmpty);
+    listContainer.setVisible(!isEmpty);
+    if(isEmpty) return;
+
     for(String[] r : reviews) {
       try{
         javafx.fxml.FXMLLoader loader = new javafx.fxml.FXMLLoader(com.lab.App.class.getResource("/com/lab/fxml/user/reviewsRow.fxml"));
@@ -89,7 +98,7 @@ public class DetailsUserController {
 
         listOfComments.getChildren().add(row);
       }catch (IOException e) {
-        System.out.println("[" + com.lab.utility.Lib.RED + "ERROR" + com.lab.utility.Lib.RESET + "] Loading review row");
+        System.out.println("[" + Lib.RED + "ERROR" + Lib.RESET + "] Loading review row");
         e.printStackTrace();
       }
     }

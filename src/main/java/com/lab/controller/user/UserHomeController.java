@@ -19,6 +19,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
@@ -34,6 +35,7 @@ public class UserHomeController {
   @FXML private StackPane leftMenuArea;
   @FXML private Button bookmark;
   @FXML private Button loadMoreButton;
+  @FXML private Label emptyLabel;
 
   private static UserHomeController instance;
   private javafx.scene.Node detailsNode;
@@ -204,6 +206,12 @@ public class UserHomeController {
 
   private void fillRestaurants(List<Restaurant> restaurants) 
   {
+    boolean isEmpty = restaurants.isEmpty();
+    emptyLabel.setVisible(isEmpty);
+    emptyLabel.setManaged(isEmpty);
+    listOfRestaurants.setVisible(!isEmpty);
+    if(isEmpty) return;
+
     for(Restaurant r : restaurants) {
       try {
         FXMLLoader loader = new FXMLLoader(App.class.getResource("/com/lab/fxml/user/userRestaurantsRow.fxml"));
@@ -226,6 +234,13 @@ public class UserHomeController {
     
     if (Session.getCurrentUser() == null) return;
     int userId = Session.getCurrentUser().getId();
+
+    boolean isEmpty = restaurants.isEmpty();
+    emptyLabel.setVisible(isEmpty);
+    emptyLabel.setManaged(isEmpty);
+    listOfRestaurants.setVisible(!isEmpty);
+    if(isEmpty) return;
+
 
     for(Restaurant r : restaurants) {
       String[] restaurantData = {r.getName(), r.getAddress(), String.format("%.1f", r.getAverageStars()), String.valueOf(r.getReviewsNum()), String.valueOf(r.getId())};

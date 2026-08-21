@@ -1,5 +1,7 @@
 package com.lab.controller.restaurateur;
 
+import com.lab.database.model.Session;
+import com.lab.database.query.RestaurantQ;
 import com.lab.utility.Lib;
 
 import javafx.event.ActionEvent;
@@ -56,19 +58,20 @@ public class NewRestaurantController {
       error = true;
     }
 
-    String addressRegex = "^.+?,\\s*\\d+[a-zA-Z]?$";
+    String addressRegex = "^[^,]+?\\s+\\d+[a-zA-Z]?$";
     if(addressR.isEmpty() || !addressR.matches(addressRegex)) {
       Lib.errorBorder(address);
       error = true;
     }
 
-    String nameRegex = "^[\\p{L}\\s\\'\\-\\.]+$";
-    if(cityR.isEmpty() || !cityR.matches(nameRegex)) {
+    String cityRegex = "^[\\p{L}\\s\\'\\-]+,\\s*[\\p{L}\\s\\'\\-]+$";
+    if(cityR.isEmpty() || !cityR.matches(cityRegex)) {
       Lib.errorBorder(city);
       error = true;
     }
 
-    if(countryR.isEmpty() || !countryR.matches(nameRegex)) {
+    String countryRegex = "^[\\p{L}\\s\\'\\-\\.]+$";
+    if(countryR.isEmpty() || !countryR.matches(countryRegex)) {
       Lib.errorBorder(country);
       error = true;
     }
@@ -110,7 +113,16 @@ public class NewRestaurantController {
 
     if(error) return;
 
-    System.out.println("[" + Lib.GREEN + "ACTION" + Lib.RESET + "] Save button clicked");
+    String fullAddress = addressR + ", " + cityR + ", " + countryR;
+    int ownerId = Session.getCurrentUser().getId();
+    
+    boolean success = RestaurantQ.addRestaurant(nameR, fullAddress, cuisineR, price, phoneNumberR, websiteUrlR, Double.parseDouble(latitudeR), Double.parseDouble(longitudeR), ownerId);
+    
+    if(success) {
+        System.out.println("[" + Lib.PURPLE + "DATABASE" + Lib.RESET + "] Restaurant correctly saved");
+        RestaurateurHomeController.getInstance().fillRestaurants(); 
+    } else  System.out.println("[" + Lib.RED + "ERROR" + Lib.RESET + "] Failed saving restaurant");
+
     RestaurateurHomeController.getInstance().closeNewRestaurant();
   }
 

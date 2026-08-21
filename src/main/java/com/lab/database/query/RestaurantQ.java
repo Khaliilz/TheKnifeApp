@@ -1,5 +1,8 @@
 package com.lab.database.query;
 
+import com.lab.utility.Lib;
+import com.lab.utility.PriceConverter;
+
 import com.lab.database.Database;
 import com.lab.database.model.Restaurant;
 import com.lab.database.model.Session;
@@ -52,7 +55,7 @@ public class RestaurantQ {
           rs.getString("name"),
           rs.getString("address"),
           rs.getString("cuisine"),
-          rs.getString("price"),
+          PriceConverter.symbolsToPrice(rs.getString("price")),
           rs.getDouble("distance"),
           rs.getString("delivery"),
           rs.getString("booking"),
@@ -99,7 +102,7 @@ public class RestaurantQ {
           rs.getString("name"),
           rs.getString("address"),
           rs.getString("cuisine"),
-          rs.getString("price"),
+          PriceConverter.symbolsToPrice(rs.getString("price")),
           rs.getDouble("distance"),
           rs.getString("delivery"),
           rs.getString("booking"),
@@ -146,7 +149,7 @@ public class RestaurantQ {
           rs.getString("name"),
           rs.getString("address"),
           rs.getString("cuisine"),
-          rs.getString("price"),
+          PriceConverter.symbolsToPrice(rs.getString("price")),
           rs.getDouble("distance"),
           rs.getString("delivery"),
           rs.getString("booking"),
@@ -202,7 +205,7 @@ public class RestaurantQ {
 
     if(price != null) {
       sql.append("AND restaurants.price = ? ");
-      params.add(price);
+      params.add(PriceConverter.priceToSymbols(price));
     }
 
     if(delivery != null) {
@@ -247,7 +250,7 @@ public class RestaurantQ {
           rs.getString("name"),
           rs.getString("address"),
           rs.getString("cuisine"),
-          rs.getString("price"),
+          PriceConverter.symbolsToPrice(rs.getString("price")),
           rs.getDouble("distance"),
           rs.getString("delivery"),
           rs.getString("booking"),
@@ -262,5 +265,79 @@ public class RestaurantQ {
     }
 
     return list;
+  }
+
+  public static List<Restaurant> getRestaurantsByOwner(int ownerId)
+  {
+    List<Restaurant> list = new ArrayList<>();
+    String sql = "SELECT restaurants.id, restaurants.name, restaurants.address, restaurants.cuisine, restaurants.price, restaurants.delivery, restaurants.booking, 0.0 AS distance, COALESCE(AVG(reviews.stars), 0) AS avg_stars, COUNT(reviews.id) AS total_reviews " +
+                 "FROM restaurants " +
+                 "LEFT JOIN reviews ON restaurants.id = reviews.restaurant_id " +
+                 "WHERE restaurants.owner_id = ? " +
+                 "GROUP BY restaurants.id, restaurants.name, restaurants.address, restaurants.cuisine, restaurants.price, restaurants.delivery, restaurants.booking, restaurants.latitude, restaurants.longitude " +
+                 "ORDER BY restaurants.id DESC";
+  
+    try(Connection connection = Database.getConnection(); PreparedStatement ps = connection.prepareStatement(sql)) {
+      ps.setInt(1, ownerId);
+      
+      ResultSet rs = ps.executeQuery();
+      
+      while(rs.next()) {
+        list.add(new Restaurant(
+          rs.getInt("id"),
+          rs.getString("name"),
+          rs.getString("address"),
+          rs.getString("cuisine"),
+          PriceConverter.symbolsToPrice(rs.getString("price")),
+          rs.getDouble("distance"),
+          rs.getString("delivery"),
+          rs.getString("booking"),
+          rs.getDouble("avg_stars"),
+          rs.getInt("total_reviews")
+        ));
+      }
+    }catch(Exception e) {
+      e.printStackTrace();
+    }
+
+    return list;
+  }
+
+  public static boolean addRestaurant(String name, String address, String cuisine, String price, String delivery, String booking, double lat, double lon, int ownerId)
+  {
+    String sql = "INSERT INTO restaurants (name, address, cuisine, price, delivery, booking, latitude, longitude, owner_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+    
+    try(Connection connection = Database.getConnection(); PreparedStatement ps = connection.prepareStatement(sql)) {
+      ps.setString(1, name);
+      ps.setString(2, address);
+      ps.setString(3, cuisine);
+      ps.setString(4, PriceConverter.priceToSymbols(price));
+      ps.setString(5, delivery);
+      ps.setString(6, booking);
+      ps.setDouble(7, lat);
+      ps.setDouble(8, lon);
+      ps.setInt(9, ownerId);
+      
+      return ps.executeUpdate() > 0;
+    }catch(Exception e) {
+      e.printStackTrace();
+      System.out.println("[" + Lib.RED + "ERROR" + Lib.RESET + "] Failed adding restaurant");
+      return false;
+    }
+  }
+
+  public static boolean removeRestaurant(int restaurantId)
+  {
+    String sql = "DELETE FROM restaurants WHERE id = ?";
+    
+    try(Connection connection = Database.getConnection(); PreparedStatement ps = connection.prepareStatement(sql)) {
+      ps.setInt(1, restaurantId);
+      
+      return ps.executeUpdate() > 0;
+    }catch(Exception e) {
+      e.printStackTrace();
+      System.out.println("[" + Lib.RED + "ERROR" + Lib.RESET + "] Failed removing restaurant");
+      return false;
+    }
   }
 }

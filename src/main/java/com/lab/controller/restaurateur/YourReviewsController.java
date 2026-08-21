@@ -29,8 +29,8 @@ public class YourReviewsController {
   {
     reviewData = c;
     name.setText(c[0]);
-    comment.setText(c[1]);
-    starsNum.setText(c[2]);
+    comment.setText(c[2]);
+    starsNum.setText(c[1]);
   }
 
   @FXML public void answerClicked(ActionEvent e)
@@ -55,7 +55,7 @@ public class YourReviewsController {
       Scene scene = new Scene(root, 450, 530);
       scene.setFill(javafx.scene.paint.Color.TRANSPARENT);
       popupStage.setScene(scene);
-      popupStage.show();
+      popupStage.showAndWait();
     }catch (IOException ex) {
       System.out.println("[" + Lib.RED + "ERROR" + Lib.RESET + "] Loading answer popup");
       ex.printStackTrace();

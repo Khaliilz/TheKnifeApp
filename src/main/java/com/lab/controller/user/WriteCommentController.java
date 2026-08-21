@@ -41,6 +41,12 @@ public class WriteCommentController {
     }
   }
 
+  @FXML void backClicked(ActionEvent e)
+  {
+    System.out.println("[" + Lib.GREEN + "ACTION" + Lib.RESET + "] Review view closed");
+    UserHomeController.getInstance().closeWriteComment();
+  }
+
   @FXML
   public void saveClicked(ActionEvent e)
   {

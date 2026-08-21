@@ -60,9 +60,9 @@ public class ReviewQ {
       }
 
       return null;
-    }
+  }
 
-    public static boolean addReview(int userId, int restaurantId, int stars, String comment)
+  public static boolean addReview(int userId, int restaurantId, int stars, String comment)
   {
     String sql = "INSERT INTO reviews (user_id, restaurant_id, stars, comment) VALUES (?, ?, ?, ?)";
 
@@ -81,26 +81,26 @@ public class ReviewQ {
     }
   }
 
-    public static boolean updateReview(int userId, int restaurantId, int stars, String comment)
-    {
-      String sql = "UPDATE reviews SET stars = ?, comment = ? WHERE user_id = ? AND restaurant_id = ?";
+  public static boolean updateReview(int userId, int restaurantId, int stars, String comment)
+  {
+    String sql = "UPDATE reviews SET stars = ?, comment = ? WHERE user_id = ? AND restaurant_id = ?";
       
-      try(Connection connection = Database.getConnection(); PreparedStatement ps = connection.prepareStatement(sql)) {
+    try(Connection connection = Database.getConnection(); PreparedStatement ps = connection.prepareStatement(sql)) {
             
-        ps.setInt(1, stars);
-        ps.setString(2, comment);
-        ps.setInt(3, userId);
-        ps.setInt(4, restaurantId);
+      ps.setInt(1, stars);
+      ps.setString(2, comment);
+      ps.setInt(3, userId);
+      ps.setInt(4, restaurantId);
             
-        return ps.executeUpdate() > 0;
-      }catch(Exception e) {
-        e.printStackTrace();
-        System.out.println("[" + Lib.RED + "DATABASE" + Lib.RESET + "] Updating review failed");
-        return false;
-      }
+      return ps.executeUpdate() > 0;
+    }catch(Exception e) {
+      e.printStackTrace();
+      System.out.println("[" + Lib.RED + "DATABASE" + Lib.RESET + "] Updating review failed");
+      return false;
     }
+  }
 
-    public static boolean removeReview(int userId, int restaurantId)
+  public static boolean removeReview(int userId, int restaurantId)
   {
     String sql = "DELETE FROM reviews WHERE user_id = ? AND restaurant_id = ?";
 
@@ -116,4 +116,51 @@ public class ReviewQ {
       return false;
     }
   }
+
+  public static List<String[]> getRestaurateurReviews(int restaurantId)
+  {
+    List<String[]> list = new ArrayList<>();
+
+    String sql = "SELECT users.name, reviews.stars, reviews.comment, reviews.answer, reviews.user_id " +
+                 "FROM reviews " +
+                 "JOIN users ON reviews.user_id = users.id " +
+                 "WHERE reviews.restaurant_id = ?";
+
+    try(Connection connection = Database.getConnection(); PreparedStatement ps = connection.prepareStatement(sql)) {
+      ps.setInt(1, restaurantId);
+      
+      ResultSet rs = ps.executeQuery();
+
+      while(rs.next()) {
+        String[] reviewData = new String[5];
+        reviewData[0] = rs.getString("name");
+        reviewData[1] = String.valueOf(rs.getInt("stars"));
+        reviewData[2] = rs.getString("comment");
+        reviewData[3] = rs.getString("answer");
+        reviewData[4] = String.valueOf(rs.getInt("user_id"));
+
+        list.add(reviewData);
+      }
+    } catch(Exception e) {
+      e.printStackTrace();
+    }
+    return list;
+  }
+
+  public static boolean saveReviewAnswer(int userId, int restaurantId, String answer)
+  {
+    String sql = "UPDATE reviews SET answer = ? WHERE user_id = ? AND restaurant_id = ?";
+    
+    try(Connection connection = Database.getConnection(); PreparedStatement ps = connection.prepareStatement(sql)) {
+      ps.setString(1, answer);
+      ps.setInt(2, userId);
+      ps.setInt(3, restaurantId);
+      
+      return ps.executeUpdate() > 0;
+    } catch(Exception e) {
+      e.printStackTrace();
+      return false;
+    }
+  }
+
 }

@@ -43,13 +43,14 @@
 
         <VBox spacing="30" HBox.hgrow="ALWAYS">
           <StackPane styleClass="container" minHeight="250" maxHeight="250" HBox.hgrow="ALWAYS">
+            <Label fx:id="emptyLabel" text="Nessuna recensione presente per questo ristorante" visible="false" managed="false"/>
             <ScrollPane fx:id="listContainer" fitToWidth="true" vbarPolicy="AS_NEEDED" pannable="true">
               <VBox fx:id="listOfComments"/>
             </ScrollPane>
           </StackPane>
           <HBox alignment="CENTER_RIGHT" spacing="20">
-            <Button fx:id="reviewButton" styleClass="greenButton" text="RECENSISCI" prefWidth="120" prefHeight="50" onAction="#reviewClicked"/>
             <Button styleClass="greenButton" text="INDIETRO" prefWidth="120" prefHeight="50" onAction="#backClicked"/>
+            <Button fx:id="reviewButton" styleClass="greenButton" text="RECENSISCI" prefWidth="120" prefHeight="50" onAction="#reviewClicked"/>
           </HBox>
         </VBox>
       </HBox>

@@ -21,11 +21,11 @@
         <HBox alignment="CENTER_LEFT" spacing="15">
           <VBox alignment="CENTER_LEFT" spacing="15" HBox.hgrow="ALWAYS">
             <Text text="Indirizzo:" styleClass="labels"/>
-            <TextField fx:id="address" styleClass="defaultTextField" promptText="Via Roma, 12" alignment="CENTER"/>
+            <TextField fx:id="address" styleClass="defaultTextField" promptText="Via Roma 12" alignment="CENTER"/>
           </VBox>
           <VBox alignment="CENTER_LEFT" spacing="15" HBox.hgrow="ALWAYS">
             <Text text="Citta':" styleClass="labels"/>
-            <TextField fx:id="city" styleClass="defaultTextField" promptText="Lazio" alignment="CENTER"/>
+            <TextField fx:id="city" styleClass="defaultTextField" promptText="Legnano, Milano" alignment="CENTER"/>
           </VBox>
           <VBox alignment="CENTER_LEFT" spacing="15" HBox.hgrow="ALWAYS">
             <Text text="Nazione:" styleClass="labels"/>
