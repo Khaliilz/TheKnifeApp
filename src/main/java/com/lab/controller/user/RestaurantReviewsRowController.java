@@ -1,6 +1,6 @@
 package com.lab.controller.user;
 
-import com.lab.Lib;
+import com.lab.utility.Lib;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -14,14 +14,24 @@ public class RestaurantReviewsRowController {
   @FXML private Text starsNum;
   @FXML private Text comment;
 
+  private String restaurantName;
+  private String restaurantId;
   private String[] review;
 
   public void setReview(String[] r, String[] c)
   {
+    restaurantName = r[0];
+    restaurantId = r[4];
     review = c;
     name.setText(r[0]);
-    address.setText(r[1]);
-    starsNum.setText(c[3]);
+    String fullAddress = r[1];
+    String shortAddress = fullAddress;
+    if(fullAddress.contains(",")){
+      String[] split = fullAddress.split(",");
+      if(split.length >= 2) shortAddress = split[0] + ", " + split[1]; 
+    }
+    address.setText(shortAddress);
+    starsNum.setText(c[0]);
     comment.setText(c[1]);
   }
 
@@ -29,6 +39,7 @@ public class RestaurantReviewsRowController {
   public void viewClicked(ActionEvent e)
   {
     System.out.println("[" + Lib.GREEN + "ACTION" + Lib.RESET + "] View button clicked");
-    UserHomeController.getInstance().viewComment(review);
+    String[] completedReview = {restaurantName, review[1], review[2], review[0], restaurantId};
+    UserHomeController.getInstance().viewComment(completedReview);
   }
 }

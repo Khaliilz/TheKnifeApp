@@ -1,13 +1,18 @@
 package com.lab.controller.user;
 
 import java.io.IOException;
+import java.util.List;
 
-import com.lab.Lib;
+import com.lab.database.model.Restaurant;
+import com.lab.database.model.Session;
+import com.lab.database.query.ReviewQ;
+import com.lab.utility.Lib;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 
@@ -15,21 +20,39 @@ public class DetailsUserController {
 
   @FXML private Text name_L;
   @FXML private Label address_L;
-  @FXML private Label stats_L;
+  @FXML private Label price_L;
   @FXML private Label delivery_L;
   @FXML private Label booking_L;
   @FXML private Label cuisine_L;
+  @FXML private ScrollPane listContainer;
 	@FXML private VBox listOfComments;
   @FXML private Button reviewButton;
+  @FXML private Label emptyLabel;
 
+  private Restaurant restaurant;
   
-  public void setDetails(String[] r)
+  public void setDetails(Restaurant r)
 	{
-    name_L.setText(r[0]);
-    address_L.setText(r[1]);
-		loadReviews();
+    restaurant = r;
 
-    if(UserHomeController.isGuest){
+    name_L.setText(r.getName());
+
+    String fullAddress = r.getAddress();
+    String shortAddress = fullAddress;
+    if(fullAddress.contains(",")){
+      String[] split = fullAddress.split(",");
+      if(split.length >= 2) shortAddress = split[0] + ", " + split[1]; 
+    }
+    address_L.setText(shortAddress);
+
+    price_L.setText((r.getPrice() == null || r.getPrice().isEmpty()) ? "..." : r.getPrice());
+    delivery_L.setText((r.getDelivery() == null || r.getDelivery().isEmpty()) ? "No" : r.getDelivery());
+    booking_L.setText((r.getBooking() == null || r.getBooking().isEmpty()) ? "No" : r.getBooking());
+    cuisine_L.setText(r.getCuisine());
+
+		loadReviews(r.getId());
+
+    if(Session.getCurrentUser() == null) {
       reviewButton.setVisible(false);
       reviewButton.setManaged(false);
     }
@@ -48,22 +71,24 @@ public class DetailsUserController {
     System.out.println("[" + Lib.GREEN + "ACTION] " + Lib.RESET + "Review clicked");
 
     String name = name_L.getText();
-    UserHomeController.getInstance().openWriteComment(name);
+    UserHomeController.getInstance().openWriteComment(restaurant);
   }
 
-  private void loadReviews()
+  private void loadReviews(int restaurantId)
   {
     listOfComments.getChildren().clear();
 
-    String[][] mockReviews = {
-      {"Mario Rossi", "5", "Posto fantastico, la carne era cotta alla perfezione. Personale super gentile e accogliente. Consigliatissimo!"},
-      {"Giulia Bianchi", "4", "Molto buono ma il dolce non mi ha convinto del tutto. Comunque il servizio è stato velocissimo."},
-      {"Luca Verdi", "5", "Tutto perfetto, torneremo sicuramente."}
-    };
+    List<String[]> reviews = ReviewQ.getRestaurantReviews(restaurantId);
 
     listOfComments.getChildren().clear();
 
-    for(String[] r : mockReviews){
+    boolean isEmpty = reviews.isEmpty();
+    emptyLabel.setVisible(isEmpty);
+    emptyLabel.setManaged(isEmpty);
+    listContainer.setVisible(!isEmpty);
+    if(isEmpty) return;
+
+    for(String[] r : reviews) {
       try{
         javafx.fxml.FXMLLoader loader = new javafx.fxml.FXMLLoader(com.lab.App.class.getResource("/com/lab/fxml/user/reviewsRow.fxml"));
         VBox row = loader.load();
@@ -72,8 +97,8 @@ public class DetailsUserController {
         controller.setReview(r);
 
         listOfComments.getChildren().add(row);
-      }catch (IOException e){
-        System.out.println("[" + com.lab.Lib.RED + "ERROR" + com.lab.Lib.RESET + "] Loading review row");
+      }catch (IOException e) {
+        System.out.println("[" + Lib.RED + "ERROR" + Lib.RESET + "] Loading review row");
         e.printStackTrace();
       }
     }

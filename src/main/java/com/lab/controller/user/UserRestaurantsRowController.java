@@ -1,6 +1,10 @@
 package com.lab.controller.user;
 
-import com.lab.Lib;
+import com.lab.utility.Lib;
+import com.lab.database.model.Restaurant;
+import com.lab.database.model.Session;
+import com.lab.database.query.BookmarkQ;
+import com.lab.database.query.RestaurantQ;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -15,36 +19,69 @@ public class UserRestaurantsRowController {
   @FXML private Text reviewsNum;
   @FXML private Button bookmark;
 
-  private String[] restaurantData;
-  private boolean isBookmarked;
+  private Restaurant restaurant;
+  private boolean isBookmarked = false;
   
-  public void setRestaurantData(String[] r)
+  public void setRestaurant(Restaurant r)
   {
-    if(UserHomeController.isGuest){
-      bookmark.setVisible(false);
-      bookmark.setManaged(false);
+    restaurant = r;
+
+    name.setText(r.getName());
+
+    String fullAddress = r.getAddress();
+    String shortAddress = fullAddress;
+    if(fullAddress.contains(",")){
+      String[] split = fullAddress.split(",");
+      if(split.length >= 2) shortAddress = split[0] + ", " + split[1]; 
     }
-    restaurantData = r;
-    name.setText(r[0]);
-    address.setText(r[1]);
-    starsNum.setText(r[2]);
-    reviewsNum.setText(r[3]);
+    address.setText(shortAddress);
+
+    starsNum.setText(String.format("%.1f", r.getAverageStars()));
+    reviewsNum.setText(String.valueOf(r.getReviewsNum()));
+
+    if(Session.getCurrentUser() != null) {
+      int userId = Session.getCurrentUser().getId();
+      isBookmarked = BookmarkQ.isBookmarked(userId, r.getId());
+      updateBookmark();
+    } else {
+      bookmark.setVisible(false); 
+    }
   }
 
   @FXML public void detailClicked(ActionEvent e)
   {
     System.out.println("[" + Lib.GREEN + "ACTION" + Lib.RESET + "] Detail button clicked");
-    UserHomeController.getInstance().openDetails(restaurantData);
+    UserHomeController.getInstance().openDetails(restaurant);
   }
 
   @FXML void bookmarkClicked(ActionEvent e)
-  { 
-    if(isBookmarked){
-      bookmark.getStyleClass().add("bookmarkButton");
-      System.out.println("[" + Lib.GREEN + "ACTION" + Lib.RESET + "] Bookmarked [" + restaurantData[0] + "]");
-    }else{
-      bookmark.getStyleClass().add("bookmarkedButton");
-      System.out.println("[" + Lib.GREEN + "ACTION" + Lib.RESET + "] Unbookmarked [" + restaurantData[0] + "]");
+  {
+    if (Session.getCurrentUser() == null) return;
+
+    int userId = Session.getCurrentUser().getId();
+    int restId = restaurant.getId();
+
+    if(isBookmarked) {
+      if(BookmarkQ.removeBookmark(userId, restId)) {
+            isBookmarked = false;
+            System.out.println("[" + Lib.GREEN + "ACTION" + Lib.RESET + "] Unbookmarked [" + restaurant.getName() + "]");
+        }
+      } else {
+      if(BookmarkQ.addBookmark(userId, restId)) {
+        isBookmarked = true;
+        System.out.println("[" + Lib.GREEN + "ACTION" + Lib.RESET + "] Bookmarked [" + restaurant.getName() + "]");
+      }
     }
+
+    updateBookmark();
+  }
+
+  private void updateBookmark()
+  {
+    bookmark.getStyleClass().remove("bookmarkButton");
+    bookmark.getStyleClass().remove("bookmarkedButton");
+
+    if (isBookmarked) bookmark.getStyleClass().add("bookmarkedButton");
+    else bookmark.getStyleClass().add("bookmarkButton");
   }
 }

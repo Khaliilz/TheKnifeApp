@@ -1,9 +1,12 @@
 package com.lab.controller.access;
 
-import com.lab.Lib;
 import com.lab.controller.basic.PageController;
 import com.lab.controller.basic.ToolbarController;
 import com.lab.controller.user.UserHomeController;
+import com.lab.database.model.Session;
+import com.lab.database.model.User;
+import com.lab.database.query.UserQ;
+import com.lab.utility.Lib;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -23,7 +26,6 @@ public class SigninController {
     PageController.showTitle(true);
     ToolbarController.setupBackButton(true, "/com/lab/fxml/basic/home.fxml");
     ToolbarController.showLeftSide(false, false, false);
-    UserHomeController.isGuest = false;
     
     password_PF.setOnAction(this::signinClicked);
     Lib.resetBorder(username_TF);
@@ -33,23 +35,34 @@ public class SigninController {
   @FXML
   public void signinClicked(ActionEvent event)
   {
-    initialize();
     boolean error = false;
     
     String username = username_TF.getText();
     String password = password_PF.getText();
 
-    if(username.isEmpty()){
+    if(username.isEmpty()) {
       Lib.errorBorder(username_TF);
       error = true;
     }
-    if(password.isEmpty()){ 
+
+    if(password.isEmpty()) { 
       Lib.errorBorder(password_PF); 
       error = true; 
     }
 
     if(error) return;
-    System.out.println("[" + Lib.GREEN + "ACTION" + Lib.RESET + "] Signin completed [" + username + ", " + password + "]");
-    PageController.selectPage("/com/lab/fxml/user/userHome.fxml");
+
+    User user = UserQ.signin(username, password);
+
+    if(user == null) {
+      Lib.errorBorder(username_TF);
+      Lib.errorBorder(password_PF);
+    } else {
+      System.out.println("[" + Lib.PURPLE + "DATABASE" + Lib.RESET + "] Singin completed [" + user.getUsername() + "]");
+      Session.setCurrentUser(user);
+
+      if(user.getRole().equals("CLIENTE")) PageController.selectPage("/com/lab/fxml/user/userHome.fxml");
+      else if(user.getRole().equals("RISTORATORE")) PageController.selectPage("/com/lab/fxml/restaurateur/restaurateurHome.fxml");
+    }
   }
 }

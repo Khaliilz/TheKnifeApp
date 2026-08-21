@@ -2,7 +2,8 @@ package com.lab.controller.user;
 
 import java.io.IOException;
 
-import com.lab.Lib;
+import com.lab.database.model.Session;
+import com.lab.utility.Lib;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -28,7 +29,7 @@ public class RightMenuSearchController {
     luogo_TF.setOnAction(this::searchClicked);
     Lib.resetBorder(luogo_TF);
 
-    if(UserHomeController.isGuest){
+    if(Session.getCurrentUser() == null) {
       bookmarkedButton.setVisible(false);
       bookmarkedButton.setManaged(false);
       reviewedButton.setVisible(false);
@@ -39,11 +40,10 @@ public class RightMenuSearchController {
   @FXML
   public void searchClicked(ActionEvent event)
   {
-    initialize();
     boolean error = false;
     String place = luogo_TF.getText();
     
-    if(place.isEmpty()){
+    if(place.isEmpty()) {
       Lib.errorBorder(luogo_TF);
       error = true;
     }
@@ -74,7 +74,7 @@ public class RightMenuSearchController {
       popupStage.setScene(scene);
       popupStage.show();
       System.out.println("[" + Lib.GREEN + "ACTION" + Lib.RESET + "] Filter button clicked");
-    }catch(IOException e){
+    }catch(IOException e) {
       System.out.println("[" + Lib.RED + "ERROR" + Lib.RESET + "] Filter page loading");
       e.printStackTrace();
     }

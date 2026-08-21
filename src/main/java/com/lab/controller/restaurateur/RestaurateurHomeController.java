@@ -2,15 +2,21 @@ package com.lab.controller.restaurateur;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 import com.lab.App;
-import com.lab.Lib;
 import com.lab.controller.basic.PageController;
 import com.lab.controller.basic.ToolbarController;
+import com.lab.database.model.Session;
+import com.lab.database.query.RestaurantQ;
+import com.lab.database.model.Restaurant;
+import com.lab.utility.Lib;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
@@ -21,6 +27,8 @@ public class RestaurateurHomeController {
   @FXML private Text title;
   @FXML private VBox list;
   @FXML private StackPane contentArea;
+  @FXML private ScrollPane listContainer;
+  @FXML private Label emptyLabel;
   @FXML private VBox mainArea;
 
   private javafx.scene.Node detailsNode;
@@ -53,11 +61,20 @@ public class RestaurateurHomeController {
 
   public void fillRestaurants()
   {
-    String[] restaurant = {"Ristorante", "Via Roma, 12, Lazio", "5", "10"};
-    ArrayList<String[]> lists = new ArrayList<>();
-    for(int i=0; i<1; i++) lists.add(restaurant);
+    list.getChildren().clear();
 
-    for(String[] r : lists){
+    if (Session.getCurrentUser() == null) return;
+    int ownerId = Session.getCurrentUser().getId();
+
+    List<Restaurant> restaurants = RestaurantQ.getRestaurantsByOwner(ownerId);
+
+    boolean isEmpty = restaurants.isEmpty();
+    emptyLabel.setVisible(isEmpty);
+    emptyLabel.setManaged(isEmpty);
+    listContainer.setVisible(!isEmpty);
+    if(isEmpty) return;
+
+    for(Restaurant r : restaurants) {
       try{
         FXMLLoader loader = new FXMLLoader(App.class.getResource("/com/lab/fxml/restaurateur/yourRestaurants.fxml"));
         HBox row = loader.load();
@@ -66,26 +83,29 @@ public class RestaurateurHomeController {
         controller.setRestaurantData(r);
 
         list.getChildren().add(row);
-      }catch(IOException e){
+      }catch(IOException e) {
         System.out.println("[" + Lib.RED + "ERROR" + Lib.RESET + "] Filling your restaurants list");
         e.printStackTrace();
       }
     }
   }
 
-  public void openDetails(String r)
+  public void openDetails(Restaurant r)
   {
     try{
       FXMLLoader loader = new FXMLLoader(App.class.getResource("/com/lab/fxml/restaurateur/detailsRestaurateur.fxml"));
       detailsNode = loader.load();
 
-      setTitle(r);
+      setTitle(r.getName());
+      
+      DetailsRestaurateurController controller = loader.getController();
+      controller.setRestaurant(r);
 
       mainArea.setVisible(false);
       contentArea.getChildren().add(detailsNode);
 
       System.out.println("[" + Lib.GREEN + "ACTION" + Lib.RESET + "] Restaurant Reviews opended");
-    }catch(IOException e){
+    }catch(IOException e) {
       System.out.println("[" + Lib.RED + "ERROR" + Lib.RESET + "] Loading details view");
       e.printStackTrace();
     }
@@ -93,7 +113,7 @@ public class RestaurateurHomeController {
 
   public void closeDetails()
   {
-    if(detailsNode != null){
+    if(detailsNode != null) {
       contentArea.getChildren().remove(detailsNode);
       detailsNode = null;
     }
@@ -127,7 +147,7 @@ public class RestaurateurHomeController {
 
   public void closeNewRestaurant()
   {
-    if(newRestaurantNode != null){
+    if(newRestaurantNode != null) {
       contentArea.getChildren().remove(newRestaurantNode);
       newRestaurantNode = null;
     }

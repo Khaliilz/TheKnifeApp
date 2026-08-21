@@ -32,6 +32,26 @@
             <version>5.9.2</version>
             <scope>test</scope>
         </dependency>
+				<dependency>
+					<groupId>org.apache.commons</groupId>
+					<artifactId>commons-csv</artifactId>
+					<version>1.10.0</version>
+				</dependency>
+        <dependency>
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+            <version>42.7.2</version>
+        </dependency>
+        <dependency>
+            <groupId>org.mindrot</groupId>
+            <artifactId>jbcrypt</artifactId>
+            <version>0.4</version>
+        </dependency>
+        <dependency>
+            <groupId>org.json</groupId>
+            <artifactId>json</artifactId>
+            <version>20231013</version>
+        </dependency>
     </dependencies>
     <build>
         <plugins>

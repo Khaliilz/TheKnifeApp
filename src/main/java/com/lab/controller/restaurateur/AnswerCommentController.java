@@ -1,6 +1,7 @@
 package com.lab.controller.restaurateur;
 
-import com.lab.Lib;
+import com.lab.database.query.ReviewQ;
+import com.lab.utility.Lib;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -22,10 +23,12 @@ public class AnswerCommentController {
     reviewData = data;
     
     name.setText(data[0]);
-    comment.setText(data[1]);
+
+    comment.setText(data[2]);
     comment.setEditable(false);
     comment.setFocusTraversable(false);
-    answer.setText(data[3]);
+
+    if(data[3] != null) answer.setText(data[3]);
     answer.requestFocus();
     answer.positionCaret(answer.getText().length());
   }
@@ -33,7 +36,14 @@ public class AnswerCommentController {
   @FXML
   public void saveClicked(ActionEvent e)
   {
-    System.out.println("[" + Lib.GREEN + "ACTION" + Lib.RESET + "] Save button clicked");
+    int userId = Integer.parseInt(reviewData[4]);
+    int restaurantId = Integer.parseInt(reviewData[5]);
+    String answerText = answer.getText().trim();
+
+    boolean success = ReviewQ.saveReviewAnswer(userId, restaurantId, answerText);
+
+    if(success) System.out.println("[" + Lib.GREEN + "ACTION" + Lib.RESET + "] Answer saved");
+    else System.out.println("[" + Lib.RED + "ERROR" + Lib.RESET + "] Failed to save answer");
 
     Stage stage = (Stage) ((Node) e.getSource()).getScene().getWindow();
     stage.close();

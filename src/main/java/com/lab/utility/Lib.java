@@ -1,5 +1,6 @@
-package com.lab;
+package com.lab.utility;
 
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
@@ -21,7 +22,7 @@ public class Lib {
     double width = root.getPrefWidth();
     double height = root.getPrefHeight();
 
-    for(int i=0; i<width; i+=40){
+    for(int i=0; i<width; i+=40) {
       Line lineV = new Line(i, 0, i, height);
       lineV.setStroke(Color.RED);
       lineV.setStrokeWidth(1);
@@ -29,7 +30,7 @@ public class Lib {
       root.getChildren().add(lineV);
     }
 
-    for(int i=0; i<height; i+=50){
+    for(int i=0; i<height; i+=50) {
       Line lineH = new Line(0, i, width, i);
       lineH.setStroke(Color.RED);
       lineH.setStrokeWidth(1);
@@ -54,6 +55,27 @@ public class Lib {
   {
     field.clear();
     if (!field.getStyleClass().contains("errorInput")) field.getStyleClass().add("errorInput");
+  }
+
+  public static void errorBorder(DatePicker field)
+  {
+    field.setValue(null);
+    if (!field.getStyleClass().contains("errorInput")) field.getStyleClass().add("errorInput");
+  }
+
+  public static void resetBorder(DatePicker field)
+  {
+    field.focusedProperty().addListener((observable, wasFocused, isNowFocused) -> {
+      if(isNowFocused) field.getStyleClass().remove("errorInput");
+    });
+
+    field.valueProperty().addListener((observable, oldValue, newValue) -> {
+      field.getStyleClass().remove("errorInput");
+    });
+
+    field.setOnMouseClicked(event -> {
+      field.getStyleClass().remove("errorInput");
+    });
   }
 
   public static void resetBorder(TextField field)

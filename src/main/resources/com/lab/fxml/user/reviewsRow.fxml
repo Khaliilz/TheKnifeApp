@@ -19,4 +19,6 @@
   </HBox>
 
   <Label fx:id="comment" styleClass="infos" text="Default comment" wrapText="true"/>
+  <Label fx:id="answerL" styleClass="labels" text="Risposta: " wrapText="true"/>
+  <Label fx:id="answer" styleClass="infos" text="Default answer" wrapText="true"/>
 </VBox>

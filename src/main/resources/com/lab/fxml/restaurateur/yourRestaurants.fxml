@@ -2,26 +2,39 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Text?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.image.Image?>
 
-<HBox fx:id="row" alignment="CENTER_LEFT" stylesheets="@/com/lab/css/theKnifeStyle.css" xmlns="http://javafx.com/javafx/17.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.lab.controller.restaurateur.YourRestaurantsController">
-  <HBox alignment="CENTER_LEFT" spacing="15">
+<HBox fx:id="row" alignment="CENTER_LEFT" spacing="15" stylesheets="@/com/lab/css/theKnifeStyle.css" xmlns="http://javafx.com/javafx/17.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.lab.controller.restaurateur.YourRestaurantsController">
+  <VBox alignment="CENTER_LEFT" spacing="15" maxWidth="450" minWidth="450">
     <Text fx:id="name" styleClass="labels" text="Default name"/>
-    <Label fx:id="address" styleClass="infos" maxWidth="300" minWidth="300" text="Default address"/>
-  </HBox>
-
-  <Pane prefWidth="50"/>
+    <Label fx:id="address" styleClass="infos" text="Default address"/>
+  </VBox>
   
   <HBox alignment="CENTER_LEFT" spacing="15">
     <Text fx:id="starsNum" styleClass="infos" text="value"/>
-    <Text fx:id="stars" styleClass="labels" text="Stelle"/>
+    <ImageView fitHeight="20" fitWidth="20" preserveRatio="true">
+      <image>
+        <Image url="@/com/lab/img/starIcon.png" />
+      </image>
+    </ImageView>
+
+    <Pane minWidth="5"/>
+
     <Text fx:id="reviewsNum" styleClass="infos" text="value"/>
-    <Text fx:id="reviews" styleClass="labels" text="Recensioni"/>
+    <ImageView fitHeight="20" fitWidth="20" preserveRatio="true">
+      <image>
+        <Image url="@/com/lab/img/commentIcon.png" />
+      </image>
+    </ImageView>
   </HBox>
 
   <Pane HBox.hgrow="ALWAYS"/>
 
   <Button fx:id="detail" styleClass="greenButton" text="DETTAGLI" prefWidth="120" prefHeight="40" onAction="#detailClicked"/>
+  <Button fx:id="remove" styleClass="removeButton" prefWidth="40" prefHeight="40" onAction="#removeClicked"/>
 </HBox>
