@@ -1,6 +1,7 @@
 package com.lab.database.query;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
@@ -44,7 +45,7 @@ public class UserQ {
     return null;
   }
 
-  public static boolean signup(String name, String surname, java.sql.Date birthDate, String address, String username, String plainPassword, String role)
+  public static boolean signup(String name, String surname, Date birthDate, String address, String username, String plainPassword, String role)
   {
     double lat = 0.0;
     double lon = 0.0;

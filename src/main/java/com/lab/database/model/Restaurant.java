@@ -1,7 +1,11 @@
 package com.lab.database.model;
 
-public class Restaurant {
+import java.io.Serializable;
+
+public class Restaurant implements Serializable{
   
+  private static final long serialVersionUID = 1L; 
+
   private int id;
   private String name;
   private String address;

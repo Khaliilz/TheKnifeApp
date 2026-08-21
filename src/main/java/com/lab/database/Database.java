@@ -4,23 +4,22 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
-import com.lab.utility.Lib;
-
 public class Database {
 
-  private static final String URL = "jdbc:postgresql://localhost:5432/theKnife";
-  private static final String USER = "postgres";
-  private static final String PASSWORD = "admin";
+  private static String dbUrl;
+  private static String dbUser;
+  private static String dbPassword;
 
-  public static Connection getConnection()
+  public static void connect(String host, String user, String password)
   {
-    try {
-      Connection connection = DriverManager.getConnection(URL, USER, PASSWORD);
-      return connection;
-    }catch(SQLException e) {
-      System.out.println("[" + Lib.RED + "DATABASE" + Lib.RESET + "] Database connection failed");
-      e.printStackTrace();
-      return null;
-    }
+    dbUrl = "jdbc:postgresql://" + host + "/theKnife"; 
+    dbUser = user;
+    dbPassword = password;
+  }
+
+  public static Connection getConnection() throws SQLException
+  {
+    if(dbUrl == null) throw new SQLException("Database not initialized. Wrong server credentials");
+    return DriverManager.getConnection(dbUrl, dbUser, dbPassword);
   }
 }

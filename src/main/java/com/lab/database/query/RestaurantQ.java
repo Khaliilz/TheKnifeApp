@@ -22,17 +22,9 @@ public class RestaurantQ {
            "sin( radians( latitude ) ) ) )";
   }
 
-  public static List<Restaurant> getNearestRestaurants()
+  public static List<Restaurant> getNearestRestaurants(double lat, double lon)
   {
     List<Restaurant> list = new ArrayList<>();
-    double userLat = 0.0;
-    double userLon = 0.0;
-
-    User user = Session.getCurrentUser();
-    if(user != null) {
-      userLat = user.getLatitude();
-      userLon = user.getLongitude();
-    }
 
     String sql = "SELECT restaurants.id, restaurants.name, restaurants.address, restaurants.cuisine, restaurants.price, restaurants.delivery, restaurants.booking, " + haversineFormula() + " AS distance, " + "COALESCE(AVG(reviews.stars), 0) AS avg_stars, " + "COUNT(reviews.id) AS total_reviews " +
                  "FROM restaurants " +
@@ -43,9 +35,9 @@ public class RestaurantQ {
   
     try(Connection connection = Database.getConnection(); PreparedStatement ps = connection.prepareStatement(sql)) {
 
-      ps.setDouble(1, userLat);
-      ps.setDouble(2, userLon);
-      ps.setDouble(3, userLat);
+      ps.setDouble(1, lat);
+      ps.setDouble(2, lon);
+      ps.setDouble(3, lat);
       
       ResultSet rs = ps.executeQuery();
 
@@ -69,16 +61,9 @@ public class RestaurantQ {
     return list;
   }
 
-  public static List<Restaurant> getBookmarkedRestaurants()
+  public static List<Restaurant> getBookmarkedRestaurants(int userId, double lat, double lon)
   {
     List<Restaurant> list = new ArrayList<>();
-
-    User user = Session.getCurrentUser();
-    if(user == null) return list;
-
-    double userLat = user.getLatitude();
-    double userLon = user.getLongitude();
-    int userId = user.getId();
 
     String sql = "SELECT restaurants.id, restaurants.name, restaurants.address, restaurants.cuisine, restaurants.price, restaurants.delivery, restaurants.booking, " + haversineFormula() + " AS distance, " + "COALESCE(AVG(reviews.stars), 0) AS avg_stars, " + "COUNT(reviews.id) AS total_reviews " +
                  "FROM restaurants " +
@@ -89,9 +74,9 @@ public class RestaurantQ {
   
     try(Connection connection = Database.getConnection(); PreparedStatement ps = connection.prepareStatement(sql)) {
 
-      ps.setDouble(1, userLat);
-      ps.setDouble(2, userLon);
-      ps.setDouble(3, userLat);
+      ps.setDouble(1, lat);
+      ps.setDouble(2, lon);
+      ps.setDouble(3, lat);
       ps.setInt(4, userId);
       
       ResultSet rs = ps.executeQuery();
@@ -116,16 +101,9 @@ public class RestaurantQ {
     return list;
   }
 
-  public static List<Restaurant> getReviewedRestaurants()
+  public static List<Restaurant> getReviewedRestaurants(int userId, double lat, double lon)
   {
     List<Restaurant> list = new ArrayList<>();
-
-    User user = Session.getCurrentUser();
-    if(user == null) return list;
-
-    double userLat = user.getLatitude();
-    double userLon = user.getLongitude();
-    int userId = user.getId();
 
     String sql = "SELECT restaurants.id, restaurants.name, restaurants.address, restaurants.cuisine, restaurants.price, restaurants.delivery, restaurants.booking, " + haversineFormula() + " AS distance, COALESCE(AVG(reviews.stars), 0) AS avg_stars, COUNT(reviews.id) AS total_reviews " +
                  "FROM restaurants " +
@@ -136,9 +114,9 @@ public class RestaurantQ {
   
     try(Connection connection = Database.getConnection(); PreparedStatement ps = connection.prepareStatement(sql)) {
 
-      ps.setDouble(1, userLat);
-      ps.setDouble(2, userLon);
-      ps.setDouble(3, userLat);
+      ps.setDouble(1, lat);
+      ps.setDouble(2, lon);
+      ps.setDouble(3, lat);
       ps.setInt(4, userId);
       
       ResultSet rs = ps.executeQuery();
@@ -163,18 +141,9 @@ public class RestaurantQ {
     return list;
   }
 
-  public static List<Restaurant> getSerachedRestaurants(String place, String cuisine, String price, String delivery, String booking, String stars, int offset)
+  public static List<Restaurant> getSerachedRestaurants(String place, String cuisine, String price, String delivery, String booking, String stars, int offset, double lat, double lon)
   {
     List<Restaurant> list = new ArrayList<>();
-    double userLat = 0.0;
-    double userLon = 0.0;
-
-    User user = Session.getCurrentUser();
-    if(user != null) {
-      userLat = user.getLatitude();
-      userLon = user.getLongitude();
-    }
-
 
     StringBuilder sql = new StringBuilder(
       "SELECT restaurants.id, restaurants.name, restaurants.address, restaurants.cuisine, restaurants.price, restaurants.delivery, restaurants.booking, " + haversineFormula() + " AS distance, COALESCE(AVG(reviews.stars), 0) AS avg_stars, COUNT(reviews.id) AS total_reviews " +
@@ -184,9 +153,9 @@ public class RestaurantQ {
     );
 
     List<Object> params = new ArrayList<>();
-    params.add(userLat);
-    params.add(userLon);
-    params.add(userLat);
+    params.add(lat);
+    params.add(lon);
+    params.add(lat);
 
     if(place != null && !place.trim().isEmpty()) {
       sql.append("AND (restaurants.address ILIKE ? OR restaurants.address ILIKE ? OR restaurants.address ILIKE ? OR restaurants.address ILIKE ? OR restaurants.address ILIKE ?) ");
