@@ -5,6 +5,7 @@ import java.rmi.registry.LocateRegistry;
 import java.rmi.server.UnicastRemoteObject;
 import java.rmi.registry.Registry;
 import java.sql.Connection;
+import java.sql.Statement;
 import java.util.Scanner;
 
 import com.lab.database.Database;
@@ -37,6 +38,9 @@ public class ServerMain {
       System.out.print("\nInserisci la password del database: ");
       String password = scanner.nextLine();
 
+      System.out.print("\nVuoi formattare il database prima di iniziare? (S/N): ");
+      String resetChoice = scanner.nextLine().trim();
+
       Database.connect(host, user, password);
       
       try(Connection connection = Database.getConnection()) {
@@ -44,6 +48,19 @@ public class ServerMain {
         if(connection == null) throw new Exception("Credienziali errate o DB non raggiungibile");
         
         System.out.println("[" + StringColor.PURPLE + "DATABASE" + StringColor.RESET + "] Connesso");
+
+        String sql = "DROP TABLE IF EXISTS reviews CASCADE;" +
+                     "DROP TABLE IF EXISTS bookmarks CASCADE;" +
+                     "DROP TABLE IF EXISTS restaurants CASCADE;" +
+                     "DROP TABLE IF EXISTS users CASCADE;";
+        if(resetChoice.equalsIgnoreCase("S")) {
+          try(Statement s = connection.createStatement()) {
+            s.execute(sql);
+            System.out.println("[" + StringColor.PURPLE + "DATABASE" + StringColor.RESET + "] Vecchie tabelle eliminate");
+          } catch(Exception e) {
+            System.out.println("[" + StringColor.RED + "ERRORE" + StringColor.RESET + "] Errore durante il reset del DB");
+          }
+        }
 
         DatabaseInit.initialize();
 
@@ -89,7 +106,7 @@ public class ServerMain {
                     System.exit(1);
                   }
                 } else if(!command.isEmpty()) {
-                  System.out.println("[" + StringColor.RED + "COMANDO SCONOSCIUTO" + StringColor.RESET + "] Scrivi 'stop' oppure 'exit' per chiudere il server");
+                  System.out.println("[" + StringColor.RED + "ERRORE" + StringColor.RESET + "] Scrivi 'stop' oppure 'exit' per chiudere il server");
               }
           }
         });

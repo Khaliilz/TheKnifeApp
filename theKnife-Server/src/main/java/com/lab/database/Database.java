@@ -13,7 +13,7 @@ public class Database {
 
   public static void connect(String host, String user, String password)
   {
-    dbUrl = "jdbc:postgresql://" + host + "/theKnife"; 
+    dbUrl = "jdbc:postgresql://" + host + "/postgres"; 
     dbUser = user;
     dbPassword = password;
   }
