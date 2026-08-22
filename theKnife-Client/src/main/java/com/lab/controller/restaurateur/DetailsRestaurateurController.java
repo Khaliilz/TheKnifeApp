@@ -62,7 +62,7 @@ public class DetailsRestaurateurController {
           emptyLabel.setText("Errore di connessione con il server");
           emptyLabel.setVisible(true);
           emptyLabel.setManaged(true);
-        } else if(restaurants.isEmpty()) {
+        } else if(reviews.isEmpty()) {
           emptyLabel.setText("Nessuna recensione presente al momento");
           emptyLabel.setVisible(true);
           emptyLabel.setManaged(true);

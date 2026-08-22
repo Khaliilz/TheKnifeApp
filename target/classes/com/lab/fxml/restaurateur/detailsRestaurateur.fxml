@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Text?>
+
+<StackPane stylesheets="@/com/lab/css/theKnifeStyle.css" xmlns="http://javafx.com/javafx/17.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.lab.controller.restaurateur.DetailsRestaurateurController">
+    <VBox fx:id="mainArea" alignment="CENTER">
+      <Label fx:id="emptyLabel" text="Nessuna recensione presente per questo ristorante" visible="false" managed="false"/>
+      
+      <ScrollPane fx:id="listContainer" fitToWidth="true" VBox.vgrow="ALWAYS" pannable="true" minHeight="300" maxHeight="300">
+        <VBox fx:id="list" spacing="10"/>
+      </ScrollPane>
+
+      <Pane fx:id="spacer" prefHeight="15"/>
+
+      <Button fx:id="back" styleClass="greenButton" text="INDIETRO" prefWidth="120" minHeight="50" onAction="#backClicked"/>
+    </VBox>
+</StackPane>

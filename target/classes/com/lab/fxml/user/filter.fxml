@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.ToggleGroup?>
+<?import javafx.scene.text.Text?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.HBox?>
+
+<AnchorPane styleClass="popup" prefWidth="450" prefHeight="550" stylesheets="@/com/lab/css/theKnifeStyle.css" xmlns="http://javafx.com/javafx/17.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.lab.controller.user.FilterController">
+  <children>
+    <VBox alignment="CENTER" spacing="20" AnchorPane.topAnchor="0" AnchorPane.bottomAnchor="0" AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0">
+      <Label styleClass="labels" text="Tipo di cucina:"/>
+      <TextField fx:id="cuisine_TF" styleClass="defaultTextField" promptText="Mediterrane, orientale" maxWidth="370" prefHeight="30" alignment="CENTER"/>
+      
+      <Label styleClass="labels" text="Fascia di prezzo:"/>
+      <HBox alignment="CENTER" spacing="20">
+        <fx:define>
+          <ToggleGroup fx:id="priceGroup"/>
+        </fx:define>
+
+        <RadioButton fx:id="priceOne" styleClass="defaultRadioButton" text="10-20" toggleGroup="$priceGroup"/>
+        <RadioButton fx:id="priceTwo" styleClass="defaultRadioButton" text="30-40" toggleGroup="$priceGroup"/>
+        <RadioButton fx:id="priceThree" styleClass="defaultRadioButton" text="50-60" toggleGroup="$priceGroup"/>
+        <RadioButton fx:id="priceFour" styleClass="defaultRadioButton" text="70-80" toggleGroup="$priceGroup"/>
+      </HBox>
+
+      <Label styleClass="labels" text="Delivery:"/>
+      <HBox alignment="CENTER" spacing="20">
+        <fx:define>
+          <ToggleGroup fx:id="deliveryGroup"/>
+        </fx:define>
+
+        <RadioButton fx:id="deliveryYes" styleClass="defaultRadioButton" text="Si" toggleGroup="$deliveryGroup"/>
+        <RadioButton fx:id="deliveryNo" styleClass="defaultRadioButton" text="No" toggleGroup="$deliveryGroup"/>
+      </HBox>
+
+      <Label styleClass="labels" text="Media Stelle:"/>
+      <HBox alignment="CENTER" spacing="20">
+        <fx:define>
+          <ToggleGroup fx:id="starsGroup"/>
+        </fx:define>
+
+        <RadioButton fx:id="starsOne" styleClass="defaultRadioButton" text="1" toggleGroup="$starsGroup"/>
+        <RadioButton fx:id="starsTwo" styleClass="defaultRadioButton" text="2" toggleGroup="$starsGroup"/>
+        <RadioButton fx:id="starsThree" styleClass="defaultRadioButton" text="3" toggleGroup="$starsGroup"/>
+      </HBox>
+
+      <Label styleClass="labels" text="Prenotazioni:"/>
+      <HBox alignment="CENTER" spacing="20">
+        <fx:define>
+          <ToggleGroup fx:id="bookingGroup"/>
+        </fx:define>
+        
+        <RadioButton fx:id="bookingYes" styleClass="defaultRadioButton" text="Si" toggleGroup="$bookingGroup"/>
+        <RadioButton fx:id="bookingNo" styleClass="defaultRadioButton" text="No" toggleGroup="$bookingGroup"/>
+      </HBox>
+
+      <Button styleClass="greenButton" text="FILTRA" prefWidth="170" prefHeight="40" onAction="#applyFilterClicked"/>
+    </VBox>
+  </children>
+</AnchorPane>
