@@ -3,6 +3,8 @@ package com.lab.controller.access;
 import java.rmi.RemoteException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.concurrent.CompletableFuture;
+import javafx.application.Platform;
 
 import com.lab.controller.basic.PageController;
 import com.lab.controller.basic.ToolbarController;
@@ -84,12 +86,12 @@ public class SignupController {
       error = true;
     }
 
-    java.sql.Date sqlDate = null;
+    Date sqlDate = null;
     if(date == null || !checkBirthDate(date)) {
       ErrorContainer.errorBorder(birthDate);
       error = true;
     } else {
-      sqlDate = java.sql.Date.valueOf(date);
+      sqlDate = Date.valueOf(date);
     }
 
     String addressRegex = "^[\\p{L}\\s\\'\\-\\.]+\\s*,\\s*[\\p{L}\\s\\'\\-\\.]+$";
@@ -110,26 +112,52 @@ public class SignupController {
 
     if(error) return;
 
-    try {
-      boolean signup = ServerConnection.getServer().signup(name, surname, sqlDate, address, username, password, role);
-        
-      if(signup) {
-        System.out.println("[" + StringColor.PURPLE + "DATABASE" + StringColor.RESET + "] Signup completed");
-          
-        
-        User loggedUser = ServerConnection.getServer().signin(username, password);
-          
-        if(loggedUser != null){
-          Session.setCurrentUser(loggedUser);
-          if(loggedUser.getRole().equals("CLIENTE")) PageController.selectPage("/com/lab/fxml/user/userHome.fxml");
-          else if(loggedUser.getRole().equals("RISTORATORE")) PageController.selectPage("/com/lab/fxml/restaurateur/restaurateurHome.fxml");
+    signup_B.setDisable(true);
+    signup_B.setText("REGISTRAZIONE...");
+
+    Date SQLDATE = sqlDate;
+
+    CompletableFuture.supplyAsync(() -> {
+      try {
+        return ServerConnection.getServer().signup(name, surname, SQLDATE, address, username, password, role);
+      } catch(RemoteException e) {
+        e.printStackTrace();
+        System.out.println("[" + StringColor.RED + "ERRORE" + StringColor.RESET + "] Richiesta dati di registrazione");
+        return false;
+      }
+    }).thenAccept(signupSuccess -> {
+      Platform.runLater(() -> {
+        signup_B.setDisable(false);
+        signup_B.setText("REGISTRATI");
+
+        if(!signupSuccess) ErrorContainer.errorBorder(username_TF);
+        else {
+          System.out.println("[" + StringColor.PURPLE + "DATABASE" + StringColor.RESET + "] Registrazione completata");
+
+          CompletableFuture.supplyAsync(() -> {
+            try {
+              return ServerConnection.getServer().signin(username, password);
+            } catch(RemoteException e) {
+              e.printStackTrace();
+              System.out.println("[" + StringColor.RED + "ERRORE" + StringColor.RESET + "] Richiesta dati di accesso");
+              return null;
+            }
+          }).thenAccept(user -> {
+            Platform.runLater(() -> {
+              if(user == null) {
+                System.out.println("[" + StringColor.RED + "ERRORE" + StringColor.RESET + "] Richiesta dati di accesso");
+              } else {
+                System.out.println("[" + StringColor.PURPLE + "DATABASE" + StringColor.RESET + "] Accesso eseguito");
+                Session.setCurrentUser(user);
+
+                if(user.getRole().equals("CLIENTE")) PageController.selectPage("/com/lab/fxml/user/userHome.fxml");
+                else if(user.getRole().equals("RISTORATORE")) PageController.selectPage("/com/lab/fxml/restaurateur/restaurateurHome.fxml");
+              }
+            });
+          });
         }
-          
-      } else ErrorContainer.errorBorder(username_TF);
-    } catch(RemoteException e) {
-      e.printStackTrace();
-      System.out.println("[" + StringColor.RED + "ERROR" + StringColor.RESET + "] Server comunication");
-    }
+      });
+    });
   }
 
   public boolean checkBirthDate(LocalDate d)

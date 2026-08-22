@@ -17,6 +17,7 @@ public class AnswerCommentController {
   @FXML private Text name;
   @FXML private TextArea comment;
   @FXML private TextArea answer;
+  @FXML private Button saveButton;
   
   private String[] reviewData;
 
@@ -42,17 +43,28 @@ public class AnswerCommentController {
     int restaurantId = Integer.parseInt(reviewData[5]);
     String answerText = answer.getText().trim();
 
-    try{
-      boolean success = ServerConnection.getServer().saveReviewAnswer(userId, restaurantId, answerText);
-      
-      if(success) System.out.println("[" + StringColor.GREEN + "ACTION" + StringColor.RESET + "] Answer saved");
-      else System.out.println("[" + StringColor.RED + "ERROR" + StringColor.RESET + "] Failed to save answer");
+    saveButton.setDisable(true);
+    saveButton.setText("SALVATAGGIO...");
 
-      Stage stage = (Stage) ((Node) e.getSource()).getScene().getWindow();
-      stage.close();
-    } catch (RemoteException ex) {
-      ex.printStackTrace();
-      System.out.println("[" + StringColor.RED + "ERROR" + StringColor.RESET + "] Server comunication");
-    }
+    CompletableFuture.supplyAsync(() -> {
+      try {
+        return ServerConnection.getServer().saveReviewAnswer(userId, restaurantId, answerText);
+      } catch(RemoteException e) {
+        e.printStackTrace();
+        System.out.println("[" + StringColor.RED + "ERRORE" + StringColor.RESET + "] Richiesta salvataggio dati (risposta recensione)");
+        return false;
+      }
+    }).thenAccept(success -> {
+      Platform.runLater(() -> {
+        saveButton.setDisable(false);
+        saveButton.setText("SALVA");
+        if(!success) System.out.println("[" + StringColor.RED + "ERRORE" + StringColor.RESET + "] Richiesta salvataggio dati (risposta recensione))");
+        else {
+          System.out.println("[" + StringColor.GREEN + "AZIONE" + StringColor.RESET + "] Risposta alla recensione salvata");
+          Stage stage = (Stage) ((Node) e.getSource()).getScene().getWindow();
+          stage.close();
+        }
+      });
+    });
   }
 }

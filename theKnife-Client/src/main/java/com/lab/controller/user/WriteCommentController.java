@@ -1,6 +1,8 @@
 package com.lab.controller.user;
 
 import java.rmi.RemoteException;
+import java.util.concurrent.CompletableFuture;
+import javafx.application.Platform;
 
 import com.lab.model.Restaurant;
 import com.lab.model.Session;
@@ -33,27 +35,30 @@ public class WriteCommentController {
     int userId = Session.getCurrentUser().getId();
     int restaurantId = currentRestaurant.getId();
 
-    String[] existingReview = null;
-    try {
-      existingReview = ServerConnection.getServer().getUserReview(userId, restaurantId);
-    }catch(RemoteException e) {
-      e.printStackTrace();
-      System.out.println("[" + StringColor.RED + "ERROR" + StringColor.RESET + "] Server comunication");
-    }
-
-    if(existingReview != null) {
-      exists = true;
-      comment.setText(existingReview[1] != null ? existingReview[1] : "");
-      int userStar = Integer.parseInt(existingReview[0]);
-      if(userStar == 1) starsOne.setSelected(true);
-      else if(userStar == 2) starsTwo.setSelected(true);
-      else starsThree.setSelected(true);
-    }
+    CompletableFuture.supplyAsync(() -> {
+      try {
+        return ServerConnection.getServer().getUserReview(userId, restaurantId);
+      } catch(RemoteException e) {
+        e.printStackTrace();
+        System.out.println("[" + StringColor.RED + "ERRORE" + StringColor.RESET + "] Richiesta testo recensione esistente");
+        return null;
+      }
+    }).thenAccept(review -> {
+      Platform.runLater(() -> {
+        if(review != null) {
+          exists = true;
+          comment.setText(review[1] != null ? review[1] : "");
+          int userStar = Integer.parseInt(review[0]);
+          if(userStar == 1) starsOne.setSelected(true);
+          else if(userStar == 2) starsTwo.setSelected(true);
+          else starsThree.setSelected(true);
+        }
+      });
+    });
   }
 
   @FXML void backClicked(ActionEvent e)
   {
-    System.out.println("[" + StringColor.GREEN + "ACTION" + StringColor.RESET + "] Review view closed");
     UserHomeController.getInstance().closeWriteComment();
   }
 
@@ -69,24 +74,41 @@ public class WriteCommentController {
     boolean reviewed = false;
     
     if(exists) {
-      try{
-        reviewed = ServerConnection.getServer().updateReview(userId, restaurantId, stars, text);
-        System.out.println("[" + StringColor.PURPLE + "DATABASE" + StringColor.RESET + "] Review updated");
-      } catch (RemoteException ex) {
-        ex.printStackTrace();
-        System.out.println("[" + StringColor.RED + "ERROR" + StringColor.RESET + "] Server comunication");
-      }
+      CompletableFuture.supplyAsync(() -> {
+        try {
+          return ServerConnection.getServer().updateReview(userId, restaurantId, stars, text);
+        } catch(RemoteException ex) {
+          ex.printStackTrace();
+          System.out.println("[" + StringColor.RED + "ERRORE" + StringColor.RESET + "] Richiesta aggiornamento recensione");
+          return false;
+        }
+      }).thenAccept(review -> {
+        Platform.runLater(() -> {
+          if(!review) System.out.println("[" + StringColor.RED + "ERRORE" + StringColor.RESET + "] Richiesta aggiornamento recensione");
+          else {
+            System.out.println("[" + StringColor.PURPLE + "DATABASE" + StringColor.RESET + "] Recensione aggiornata");
+            UserHomeController.getInstance().closeWriteComment();
+          }
+        });
+      });
     } else {
-      try{
-        reviewed = ServerConnection.getServer().addReview(userId, restaurantId, stars, text);
-        System.out.println("[" + StringColor.PURPLE + "DATABASE" + StringColor.RESET + "] Review saved");
-      } catch (RemoteException ex) {
-        ex.printStackTrace();
-        System.out.println("[" + StringColor.RED + "ERROR" + StringColor.RESET + "] Server comunication");
-      }
+      CompletableFuture.supplyAsync(() -> {
+        try {
+          return ServerConnection.getServer().addReview(userId, restaurantId, stars, text);
+        } catch(RemoteException ex) {
+          ex.printStackTrace();
+          System.out.println("[" + StringColor.RED + "ERRORE" + StringColor.RESET + "] Richiesta salvataggio recensione");
+          return false;
+        }
+      }).thenAccept(review -> {
+        Platform.runLater(() -> {
+          if(!review) System.out.println("[" + StringColor.RED + "ERRORE" + StringColor.RESET + "] Richiesta salvataggio recensione");
+          else {
+            System.out.println("[" + StringColor.PURPLE + "DATABASE" + StringColor.RESET + "] Recensione salvata");
+            UserHomeController.getInstance().closeWriteComment();
+          }
+        });
+      });
     }
-
-    if(!reviewed) System.out.println("[" + StringColor.PURPLE + "DATABASE" + StringColor.RESET + "] Failed saving review");
-    UserHomeController.getInstance().closeWriteComment();
   }
 }

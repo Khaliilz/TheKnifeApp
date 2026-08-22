@@ -80,32 +80,43 @@ public class DetailsUserController {
   {
     listOfComments.getChildren().clear();
 
-    try{
-      List<String[]> reviews = ServerConnection.getServer().getRestaurantReviews(restaurantId);
-      
-      boolean isEmpty = reviews.isEmpty();
-      emptyLabel.setVisible(isEmpty);
-      emptyLabel.setManaged(isEmpty);
-      listContainer.setVisible(!isEmpty);
-      if(isEmpty) return;
+    emptyLabel.setText("Caricamento in corso...");
+    emptyLabel.setVisible(true);
+    emptyLabel.setManaged(true);
 
-      for(String[] r : reviews) {
-        try{
-          FXMLLoader loader = new FXMLLoader(com.lab.App.class.getResource("/com/lab/fxml/user/reviewsRow.fxml"));
-          VBox row = loader.load();
-
-          ReviewsRowController controller = loader.getController();
-          controller.setReview(r);
-
-          listOfComments.getChildren().add(row);
-        }catch (IOException e) {
-          System.out.println("[" + StringColor.RED + "ERROR" + StringColor.RESET + "] Loading review row");
-          e.printStackTrace();
-        }
+    CompletableFuture.supplyAsync(() -> {
+      try{
+        return ServerConnection.getServer().getRestaurantReviews(restaurantId);
+      } catch (RemoteException e) {
+        e.printStackTrace();
+        System.out.println("[" + StringColor.RED + "ERRORE" + StringColor.RESET + "] Richiesta recensioni ristorante");
+        return null;
       }
-    } catch (RemoteException e) {
-      e.printStackTrace();
-      System.out.println("[" + StringColor.RED + "ERROR" + StringColor.RESET + "] Server comunication");
-    }
+    }).thenAccept(reviews -> {
+      Platform.runLater(() -> {
+        emptyLabel.setText("Nessuna recensione trovata");
+        if(reviews == null) {
+          System.out.println("[" + StringColor.RED + "ERRORE" + StringColor.RESET + "] Richiesta recensioni ristorante");
+          emptyLabel.setText("Errore di connessione con il server");
+          emptyLabel.setVisible(true);
+          emptyLabel.setManaged(true);
+        } else {
+          for(String[] r : reviews) {
+            try{
+              FXMLLoader loader = new FXMLLoader(com.lab.App.class.getResource("/com/lab/fxml/user/reviewsRow.fxml"));
+              VBox row = loader.load();
+
+              ReviewsRowController controller = loader.getController();
+              controller.setReview(r);
+
+              listOfComments.getChildren().add(row);
+            }catch (IOException e) {
+              System.out.println("[" + StringColor.RED + "ERRORE" + StringColor.RESET + "] Caricamento recensioni ristorante");
+              e.printStackTrace();
+            }
+          }
+        }
+      });
+    });
   }
 }

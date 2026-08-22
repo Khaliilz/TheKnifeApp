@@ -3,9 +3,12 @@ package com.lab.controller.user;
 import com.lab.utility.StringColor;
 
 import java.rmi.RemoteException;
+import javafx.application.Platform;
+import java.util.concurrent.CompletableFuture;
 
 import com.lab.model.Restaurant;
 import com.lab.model.Session;
+import com.lab.model.User;
 import com.lab.server.ServerConnection;
 
 import javafx.event.ActionEvent;
@@ -40,24 +43,29 @@ public class UserRestaurantsRowController {
 
     starsNum.setText(String.format("%.1f", r.getAverageStars()));
     reviewsNum.setText(String.valueOf(r.getReviewsNum()));
-
-    if(Session.getCurrentUser() != null) {
-      try{
-        int userId = Session.getCurrentUser().getId();
-        isBookmarked = ServerConnection.getServer().isBookmarked(userId, r.getId());
-        updateBookmark();
-      } catch (RemoteException e) {
-        e.printStackTrace();
-        System.out.println("[" + StringColor.RED + "ERROR" + StringColor.RESET + "] Server comunication");
-      }
-    } else {
-      bookmark.setVisible(false); 
-    }
+    
+    User user = Session.getCurrentUser();
+    if(user != null) {
+      CompletableFuture.supplyAsync(() -> {
+        try {
+          return ServerConnection.getServer().isBookmarked(user.getId(), r.getId());
+        } catch(RemoteException e) {
+          e.printStackTrace();
+          System.out.println("[" + StringColor.RED + "ERRORE" + StringColor.RESET + "] Richiesta dati preferenza ristorante");
+          return false;
+        }
+      }).thenAccept(bookmark -> {
+        Platform.runLater(() -> {
+          isBookmarked = bookmark;
+          updateBookmark();
+        });
+      });
+    } else bookmark.setVisible(false);
   }
 
   @FXML public void detailClicked(ActionEvent e)
   {
-    System.out.println("[" + StringColor.GREEN + "ACTION" + StringColor.RESET + "] Detail button clicked");
+    System.out.println("[" + StringColor.GREEN + "AZIONE" + StringColor.RESET + "] Detail button clicked");
     UserHomeController.getInstance().openDetails(restaurant);
   }
 
@@ -68,22 +76,41 @@ public class UserRestaurantsRowController {
     int userId = Session.getCurrentUser().getId();
     int restId = restaurant.getId();
 
+    bookmark.setDisable(true);
+
     if(isBookmarked) {
-      try{
-        if(ServerConnection.getServer().removeBookmark(userId, restId)) isBookmarked = false;
-      } catch(RemoteException ex) {
-        ex.printStackTrace();
-        System.out.println("[" + StringColor.RED + "ERROR" + StringColor.RESET + "] Server comunication");
-      }
+      CompletableFuture.supplyAsync(() -> {
+        try {
+          return ServerConnection.getServer().removeBookmark(userId, restId);
+        } catch(RemoteException ex) {
+          ex.printStackTrace();
+          System.out.println("[" + StringColor.RED + "ERRORE" + StringColor.RESET + "] Richiesta dati preferenza ristorante");
+          return false;
+        }
+      }).thenAccept(success -> {
+        Platform.runLater(() -> {
+          if(success) isBookmarked = false;
+          updateBookmark();
+          bookmark.setDisable(false);
+        });
+      });
     } else {
-      try{
-        if(ServerConnection.getServer().addBookmark(userId, restId)) isBookmarked = true;
-      } catch(RemoteException ex) {
-        ex.printStackTrace();
-        System.out.println("[" + StringColor.RED + "ERROR" + StringColor.RESET + "] Server comunication");
-      }
+      CompletableFuture.supplyAsync(() -> {
+        try {
+          return ServerConnection.getServer().addBookmark(userId, restId);
+        } catch(RemoteException ex) {
+          ex.printStackTrace();
+          System.out.println("[" + StringColor.RED + "ERRORE" + StringColor.RESET + "] Richiesta dati preferenza ristorante");
+          return false;
+        }
+      }).thenAccept(success -> {
+        Platform.runLater(() -> {
+          if(success) isBookmarked = true;
+          updateBookmark();
+          bookmark.setDisable(false);
+        });
+      });
     }
-    updateBookmark();
   }
 
   private void updateBookmark()

@@ -3,6 +3,8 @@ package com.lab.controller.user;
 import java.io.IOException;
 import java.rmi.RemoteException;
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
+
 import javafx.event.ActionEvent;
 
 import com.lab.App;
@@ -25,6 +27,8 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
+
+import javafx.application.Platform;
 
 public class UserHomeController {
   
@@ -86,20 +90,34 @@ public class UserHomeController {
     }
     title.setText("Ristoranti nelle vicinanze");
     listOfRestaurants.getChildren().clear();
-    
+
     User user = Session.getCurrentUser();
+    double lat = user.getLatitude();
+    double lon = user.getLongitude();
 
-    try{
-      double lat = user.getLatitude();
-      double lon = user.getLongitude();
+    emptyLabel.setText("Caricamento in corso...");
+    emptyLabel.setVisible(true);
+    emptyLabel.setManaged(true);
 
-      List<Restaurant> nearest = ServerConnection.getServer().getNearestRestaurants(lat, lon);
-      
-      fillRestaurants(nearest);
-    } catch (RemoteException e) {
-      e.printStackTrace();
-      System.out.println("[" + StringColor.RED + "ERROR" + StringColor.RESET + "] Server comunication");
-    }
+    CompletableFuture.supplyAsync(() -> {
+      try{
+        return ServerConnection.getServer().getNearestRestaurants(lat, lon);
+      } catch (RemoteException e) {
+        e.printStackTrace();
+        System.out.println("[" + StringColor.RED + "ERRORE" + StringColor.RESET + "] Richiesta dei ristoranti vicini");
+        return null;
+      }
+    }).thenAccept(nearest -> {
+      Platform.runLater(() -> {
+        emptyLabel.setText("Nessun ristorante trovato");
+        if(nearest != null) fillRestaurants(nearest);
+        else {
+          emptyLabel.setText("Errore di connessione con il server");
+          emptyLabel.setVisible(true);
+          emptyLabel.setManaged(true);
+        }
+      });
+    });
   }
 
   public void loadBookmarked()
@@ -115,17 +133,32 @@ public class UserHomeController {
     listOfRestaurants.getChildren().clear();
 
     User user = Session.getCurrentUser();
+    double lat = user.getLatitude();
+    double lon = user.getLongitude();
 
-    try{
-      double lat = user.getLatitude();
-      double lon = user.getLongitude();
+    emptyLabel.setText("Caricamento in corso...");
+    emptyLabel.setVisible(true);
+    emptyLabel.setManaged(true);
 
-      List<Restaurant> bookmarked = ServerConnection.getServer().getBookmarkedRestaurants(user.getId(), lat, lon);
-      fillRestaurants(bookmarked);
-    } catch (RemoteException e) {
-      e.printStackTrace();
-      System.out.println("[" + StringColor.RED + "ERROR" + StringColor.RESET + "] Server comunication");
-    }
+    CompletableFuture.supplyAsync(() -> {
+      try{
+        return ServerConnection.getServer().getBookmarkedRestaurants(user.getId(), lat, lon);
+      } catch (RemoteException e) {
+        e.printStackTrace();
+        System.out.println("[" + StringColor.RED + "ERRORE" + StringColor.RESET + "] Richiesta dei ristoranti preferiti");
+        return null;
+      }
+    }).thenAccept(bookmarked -> {
+      Platform.runLater(() -> {
+        emptyLabel.setText("Nessun ristorante trovato");
+        if(bookmarked != null) fillRestaurants(bookmarked);
+        else {
+          emptyLabel.setText("Errore di connessione con il server");
+          emptyLabel.setVisible(true);
+          emptyLabel.setManaged(true);
+        }
+      });
+    });
   }
 
   public void loadReviews()
@@ -141,17 +174,32 @@ public class UserHomeController {
     listOfRestaurants.getChildren().clear();
 
     User user = Session.getCurrentUser();
+    double lat = user.getLatitude();
+    double lon = user.getLongitude();
 
-    try{
-      double lat = user.getLatitude();
-      double lon = user.getLongitude();
+    emptyLabel.setText("Caricamento in corso...");
+    emptyLabel.setVisible(true);
+    emptyLabel.setManaged(true);
 
-      List<Restaurant> reviewed = ServerConnection.getServer().getReviewedRestaurants(user.getId(), lat, lon);
-      fillReviewed(reviewed);
-    } catch (RemoteException e) {
-      e.printStackTrace();
-      System.out.println("[" + StringColor.RED + "ERROR" + StringColor.RESET + "] Server comunication");
-    }
+    CompletableFuture.supplyAsync(() -> {
+      try{
+        return ServerConnection.getServer().getReviewedRestaurants(user.getId(), lat, lon);
+      } catch (RemoteException e) {
+        e.printStackTrace();
+        System.out.println("[" + StringColor.RED + "ERRORE" + StringColor.RESET + "] Richiesta dei ristoranti recensiti");
+        return null;
+      }
+    }).thenAccept(reviewed -> {
+      Platform.runLater(() -> {
+        emptyLabel.setText("Nessuna recensione trovata");
+        if(reviewed != null) fillReviewed(reviewed);
+        else {
+          emptyLabel.setText("Errore di connessione con il server");
+          emptyLabel.setVisible(true);
+          emptyLabel.setManaged(true);
+        }
+      });
+    });
   }
 
   public void loadRightMenu(String newTitle, String fileName)
@@ -161,7 +209,7 @@ public class UserHomeController {
       Parent selectedMenu = FXMLLoader.load(App.class.getResource(fileName));
       rightMenuArea.getChildren().setAll(selectedMenu);
     }catch(IOException e) {
-      System.out.print("[" + StringColor.RED + "ERROR" + StringColor.RESET + "] fail to load the right menu: " + fileName);
+      System.out.print("[" + StringColor.RED + "ERRORE" + StringColor.RESET + "] Caricamento del menu destro");
       e.printStackTrace();
     }
   }
@@ -179,28 +227,10 @@ public class UserHomeController {
     currentSearchPlace = place;
     currentSearchOffset = 0;
 
-    title.setText("Ristoranti a " + place);
     listOfRestaurants.getChildren().clear();
-    loadMoreButton.setVisible(false);
-    loadMoreButton.setManaged(false);
+    title.setText("Ristoranti a " + place);
 
-    User user = Session.getCurrentUser();
-
-    try{
-      double lat = user.getLatitude();
-      double lon = user.getLongitude();
-
-      List<Restaurant> searchResults = ServerConnection.getServer().getSerachedRestaurants(currentSearchPlace, filterCuisine, filterPrice, filterDelivery, filterBooking, filterStars, currentSearchOffset, lat, lon);
-      fillRestaurants(searchResults);
-
-      if(searchResults.size() == 10) {
-        loadMoreButton.setVisible(true);
-        loadMoreButton.setManaged(true);
-      }
-    } catch (RemoteException e) {
-      e.printStackTrace();
-      System.out.println("[" + StringColor.RED + "ERROR" + StringColor.RESET + "] Server comunication");
-    }
+    executeSearch();
   }
 
   public void applyFilters(String cuisine, String price, String delivery, String booking, String stars)
@@ -218,26 +248,8 @@ public class UserHomeController {
     if (currentSearchPlace != null && !currentSearchPlace.isEmpty()) title.setText("Ristoranti filtrati a " + currentSearchPlace);
     else  title.setText("Ristoranti filtrati");
     listOfRestaurants.getChildren().clear();
-    loadMoreButton.setVisible(false);
-    loadMoreButton.setManaged(false);
-    
-    User user = Session.getCurrentUser();
 
-    try{
-      double lat = user.getLatitude();
-      double lon = user.getLongitude();
-
-      List<Restaurant> searchResults = ServerConnection.getServer().getSerachedRestaurants(currentSearchPlace, filterCuisine, filterPrice, filterDelivery, filterBooking, filterStars, currentSearchOffset, lat, lon);
-      fillRestaurants(searchResults);
-
-      if(searchResults.size() == 10) {
-        loadMoreButton.setVisible(true);
-        loadMoreButton.setManaged(true);
-      }
-    } catch (RemoteException e) {
-      e.printStackTrace();
-      System.out.println("[" + StringColor.RED + "ERROR" + StringColor.RESET + "] Server comunication");
-    }
+    executeSearch();
   }
 
   @FXML
@@ -245,23 +257,50 @@ public class UserHomeController {
   {
     currentSearchOffset += 10; 
     
+    executeSearch();
+  }
+
+  private void executeSearch()
+  {
+    loadMoreButton.setVisible(false);
+    loadMoreButton.setManaged(false);
+
     User user = Session.getCurrentUser();
+    double lat = user.getLatitude();
+    double lon = user.getLongitude();
 
-    try{
-      double lat = user.getLatitude();
-      double lon = user.getLongitude();
+    emptyLabel.setText("Caricamento in corso...");
+    emptyLabel.setVisible(true);
+    emptyLabel.setManaged(true);
 
-      List<Restaurant> nextResults = ServerConnection.getServer().getSerachedRestaurants(currentSearchPlace, filterCuisine, filterPrice, filterDelivery, filterBooking, filterStars, currentSearchOffset, lat, lon);
-      fillRestaurants(nextResults);
-
-      if(nextResults.size() < 10) {
-        loadMoreButton.setVisible(false);
-        loadMoreButton.setManaged(false);
+    CompletableFuture.supplyAsync(() -> {
+      try{
+        return ServerConnection.getServer().getSerachedRestaurants(currentSearchPlace, filterCuisine, filterPrice, filterDelivery, filterBooking, filterStars, currentSearchOffset, lat, lon);
+      } catch (RemoteException e) {
+        e.printStackTrace();
+        System.out.println("[" + StringColor.RED + "ERRORE" + StringColor.RESET + "] Richiesta dei ristoranti per: " + currentSearchPlace);
+        return null;
       }
-    } catch (RemoteException ex) {
-      ex.printStackTrace();
-      System.out.println("[" + StringColor.RED + "ERROR" + StringColor.RESET + "] Server comunication");
-    }
+    }).thenAccept(searchResults -> {
+      Platform.runLater(() -> {
+        emptyLabel.setText("Nessun ristorante trovato");
+        if(searchResults != null) {
+          fillRestaurants(searchResults);
+
+          if(searchResults.size() == 10) {
+            loadMoreButton.setVisible(true);
+            loadMoreButton.setManaged(true);
+          } else {
+            loadMoreButton.setVisible(false);
+            loadMoreButton.setManaged(false);
+          }
+        } else {
+          emptyLabel.setText("Errore di connessione con il server");
+          emptyLabel.setVisible(true);
+          emptyLabel.setManaged(true);
+        }
+      });
+    });
   }
 
   private void fillRestaurants(List<Restaurant> restaurants) 
@@ -282,7 +321,7 @@ public class UserHomeController {
 
         listOfRestaurants.getChildren().add(row);
        }catch (IOException e) {
-        System.out.println("[" + StringColor.RED + "ERROR" + StringColor.RESET + "] Loading user restaurants");
+        System.out.println("[" + StringColor.RED + "ERRORE" + StringColor.RESET + "] Caricamento dei ristoranti");
         e.printStackTrace();
        }
     }
@@ -304,31 +343,36 @@ public class UserHomeController {
 
     for(Restaurant r : restaurants) {
       String[] restaurantData = {r.getName(), r.getAddress(), String.format("%.1f", r.getAverageStars()), String.valueOf(r.getReviewsNum()), String.valueOf(r.getId())};
-      
-      String[] myReview = null;
-      try {
-          myReview = ServerConnection.getServer().getUserReview(userId, r.getId());
-      } catch (RemoteException ex) {
-        ex.printStackTrace();
-        System.out.println("[" + StringColor.RED + "ERROR" + StringColor.RESET + "] Server comunication");
-        continue;
-      }
-      
-      String answer = (myReview[2] != null) ? myReview[2] : "";
-      String[] reviewData = {myReview[0], myReview[1], answer};
 
-      try {
-        FXMLLoader loader = new FXMLLoader(App.class.getResource("/com/lab/fxml/user/restaurantReviewsRow.fxml"));
-        HBox row = loader.load();
+      CompletableFuture.supplyAsync(() -> {
+        try{
+          return ServerConnection.getServer().getUserReview(userId, r.getId());
+        } catch (RemoteException ex) {
+          ex.printStackTrace();
+          System.out.println("[" + StringColor.RED + "ERRORE" + StringColor.RESET + "] Richiesta recensioni");
+          return null;
+        }
+      }).thenAccept(myReview -> {
+        Platform.runLater(() -> {
+          if(myReview != null) {
+            String answer = (myReview[2] != null) ? myReview[2] : "";
+            String[] reviewData = {myReview[0], myReview[1], answer};
 
-        RestaurantReviewsRowController controller = loader.getController();
-        controller.setReview(restaurantData, reviewData);
+            try {
+              FXMLLoader loader = new FXMLLoader(App.class.getResource("/com/lab/fxml/user/restaurantReviewsRow.fxml"));
+              HBox row = loader.load();
 
-        listOfRestaurants.getChildren().add(row);
-      }catch (IOException e) {
-        System.out.println("[" + StringColor.RED + "ERROR" + StringColor.RESET + "] Loading reviewed restaurants");
-        e.printStackTrace();
-      }
+              RestaurantReviewsRowController controller = loader.getController();
+              controller.setReview(restaurantData, reviewData);
+
+              listOfRestaurants.getChildren().add(row);
+            }catch (IOException e) {
+              System.out.println("[" + StringColor.RED + "ERRORE" + StringColor.RESET + "] Caricamento recensioni");
+              e.printStackTrace();
+            }
+          }
+        });
+      });
     }
   }
 
@@ -345,7 +389,7 @@ public class UserHomeController {
       leftMenuArea.getChildren().add(detailsNode); 
 
     }catch(IOException e) {
-      System.out.println("[" + StringColor.RED + "ERROR" + StringColor.RESET + "] Loading details");
+      System.out.println("[" + StringColor.RED + "ERRORE" + StringColor.RESET + "] Caricamento dettagli del ristorante");
       e.printStackTrace();
     }
   }
@@ -373,7 +417,7 @@ public class UserHomeController {
       leftMenuArea.getChildren().add(commentNode); 
 
     }catch(IOException e) {
-      System.out.println("[" + StringColor.RED + "ERROR" + StringColor.RESET + "] Loading comment");
+      System.out.println("[" + StringColor.RED + "ERRORE" + StringColor.RESET + "] Caricamento recensioni del ristorante");
       e.printStackTrace();
     }
   }
@@ -401,7 +445,7 @@ public class UserHomeController {
       leftMenuArea.getChildren().add(commentNode); 
 
     }catch(IOException e) {
-      System.out.println("[" + StringColor.RED + "ERROR" + StringColor.RESET + "] Loading write comment page");
+      System.out.println("[" + StringColor.RED + "ERRORE" + StringColor.RESET + "] Caricamento form di scrittura commento");
       e.printStackTrace();
     }
   }

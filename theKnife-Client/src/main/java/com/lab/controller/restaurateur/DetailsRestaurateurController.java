@@ -46,39 +46,49 @@ public class DetailsRestaurateurController {
     list.getChildren().clear();
     if(currentRestaurant == null) return;
 
-    try{
-      List<String[]> reviews = ServerConnection.getServer().getRestaurateurReviews(currentRestaurant.getId());
-      
-      boolean isEmpty = reviews.isEmpty();
-      emptyLabel.setVisible(isEmpty);
-      emptyLabel.setManaged(isEmpty);
-      listContainer.setVisible(!isEmpty);
-      if(isEmpty) return;
+    emptyLabel.setText("Caricamento in corso...");
+    emptyLabel.setVisible(true);
+    emptyLabel.setManaged(true);
 
-      for(String[] r : reviews) {
-        try{
-          FXMLLoader loader = new FXMLLoader(App.class.getResource("/com/lab/fxml/restaurateur/yourReviews.fxml"));
-          HBox row = loader.load();
-
-          YourReviewsController controller = loader.getController();
-          String[] fullData = {r[0], r[1], r[2], r[3] != null ? r[3] : "", r[4], String.valueOf(currentRestaurant.getId())};
-          controller.setReviewData(fullData);
-
-          list.getChildren().add(row);
-        }catch(IOException e) {
-          System.out.println("[" + StringColor.RED + "ERROR" + StringColor.RESET + "] Filling your reviews list");
-          e.printStackTrace();
-        }
+    CompletableFuture.supplyAsync(() -> {
+      try{
+        return ServerConnection.getServer().getRestaurateurReviews(currentRestaurant.getId());
+      } catch (RemoteException e) {
+        e.printStackTrace();
+        System.out.println("[" + StringColor.RED + "ERRORE" + StringColor.RESET + "] Richiesta recensioni del proprio ristorante");
+        return null;
       }
-    } catch (RemoteException e) {
-      e.printStackTrace();
-      System.out.println("[" + StringColor.RED + "ERROR" + StringColor.RESET + "] Server comunication");
-    }
+    }).thenAccept(reviews -> {
+      Platform.runLater(() -> {
+        emptyLabel.setText("Nessun ristorante trovato");
+        if(reviews != null) {
+          for(String[] r : reviews) {
+            try{
+              FXMLLoader loader = new FXMLLoader(App.class.getResource("/com/lab/fxml/restaurateur/yourReviews.fxml"));
+              HBox row = loader.load();
+
+              YourReviewsController controller = loader.getController();
+              String[] fullData = {r[0], r[1], r[2], r[3] != null ? r[3] : "", r[4], String.valueOf(currentRestaurant.getId())};
+              controller.setReviewData(fullData);
+
+              list.getChildren().add(row);
+            }catch(IOException e) {
+              System.out.println("[" + StringColor.RED + "ERRORE" + StringColor.RESET + "] Caricamento delle recensioni del proprio ristorante");
+              e.printStackTrace();
+            }
+          }
+        } else {
+          emptyLabel.setText("Errore di connessione con il server");
+          emptyLabel.setVisible(true);
+          emptyLabel.setManaged(true);
+        }
+      });
+    });
   }
 
   @FXML public void backClicked(ActionEvent e)
   {
-    System.out.println("[" + StringColor.GREEN + "ACTION" + StringColor.RESET + "] Back button clicked");
+    System.out.println("[" + StringColor.GREEN + "AZIONE" + StringColor.RESET + "] Back button clicked");
     RestaurateurHomeController.getInstance().closeDetails();
   }
 }

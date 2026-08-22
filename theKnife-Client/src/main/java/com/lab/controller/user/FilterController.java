@@ -29,7 +29,7 @@ public class FilterController {
     String stars = starsGroup.getSelectedToggle() != null ? ((RadioButton) starsGroup.getSelectedToggle()).getText() : null;
     String booking = bookingGroup.getSelectedToggle() != null ? ((RadioButton) bookingGroup.getSelectedToggle()).getText() : null;
 
-    System.out.println("[" + StringColor.GREEN + "ACTION" + StringColor.RESET + "] Filter scene closed");
+    System.out.println("[" + StringColor.GREEN + "AZIONE" + StringColor.RESET + "] Filter scene closed");
 
     UserHomeController.getInstance().applyFilters(cuisine, price, delivery, booking, stars);
 

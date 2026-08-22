@@ -35,7 +35,7 @@ public class YourReviewsController {
 
   @FXML public void answerClicked(ActionEvent e)
   {
-    System.out.println("[" + StringColor.GREEN + "ACTION" + StringColor.RESET + "] Answer button clicked");
+    System.out.println("[" + StringColor.GREEN + "AZIONE" + StringColor.RESET + "] Answer button clicked");
 
     try{
       FXMLLoader loader = new FXMLLoader(App.class.getResource("/com/lab/fxml/restaurateur/answerComment.fxml"));

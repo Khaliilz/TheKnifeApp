@@ -16,7 +16,7 @@
     </StackPane>
 
     <StackPane fx:id="leftMenuArea" styleClass="container" AnchorPane.topAnchor="150" AnchorPane.bottomAnchor="70" AnchorPane.leftAnchor="30" AnchorPane.rightAnchor="350">
-      <Label fx:id="emptyLabel" text="Nessuna recensione presente per questo ristorante" visible="false" managed="false"/>
+      <Label fx:id="emptyLabel" text="Nessun ristorante nei dintorni" visible="false" managed="false"/>
       <ScrollPane fx:id="listContainer" styleClass="listContainer" fitToWidth="true" vbarPolicy="AS_NEEDED" pannable="true">
         <VBox alignment="CENTER" spacing="10">
           <VBox fx:id="listOfRestaurants" spacing="10"/>

@@ -66,33 +66,44 @@ public class RestaurateurHomeController {
     if (Session.getCurrentUser() == null) return;
     int ownerId = Session.getCurrentUser().getId();
 
-    try{
-      List<Restaurant> restaurants = ServerConnection.getServer().getRestaurantsByOwner(ownerId);
-      
-      boolean isEmpty = restaurants.isEmpty();
-      emptyLabel.setVisible(isEmpty);
-      emptyLabel.setManaged(isEmpty);
-      listContainer.setVisible(!isEmpty);
-      if(isEmpty) return;
+    emptyLabel.setText("Caricamento in corso...");
+    emptyLabel.setVisible(true);
+    emptyLabel.setManaged(true);
 
-      for(Restaurant r : restaurants) {
-        try{
-          FXMLLoader loader = new FXMLLoader(App.class.getResource("/com/lab/fxml/restaurateur/yourRestaurants.fxml"));
-          HBox row = loader.load();
-
-          YourRestaurantsController controller = loader.getController();
-          controller.setRestaurantData(r);
-
-          list.getChildren().add(row);
-        }catch(IOException e) {
-          System.out.println("[" + StringColor.RED + "ERROR" + StringColor.RESET + "] Filling your restaurants list");
-          e.printStackTrace();
-        }
-      }
-    } catch (RemoteException e) {
+    CompletableFuture.supplyAsync(() -> {
+      try{
+        return ServerConnection.getServer().getRestaurantsByOwner(ownerId);
+      } catch (RemoteException e) {
         e.printStackTrace();
-        System.out.println("[" + StringColor.RED + "ERROR" + StringColor.RESET + "] Server comunication");
-    }
+        System.out.println("[" + StringColor.RED + "ERRORE" + StringColor.RESET + "] Richiesta dei tuoi ristoranti");
+        return null;
+      }
+    }).thenAccept(restaurants -> {
+      Platform.runLater(() -> {
+        emptyLabel.setText("Nessun ristorante presente al momento");
+        if(restaurants == null) {
+          System.out.println("[" + StringColor.RED + "ERRORE" + StringColor.RESET + "] Richiesta dei tuoi ristoranti");
+          emptyLabel.setText("Errore di connessione con il server");
+          emptyLabel.setVisible(true);
+          emptyLabel.setManaged(true);
+        } else {
+          for(Restaurant r : restaurants) {
+            try{
+              FXMLLoader loader = new FXMLLoader(App.class.getResource("/com/lab/fxml/restaurateur/yourRestaurants.fxml"));
+              HBox row = loader.load();
+
+              YourRestaurantsController controller = loader.getController();
+              controller.setRestaurantData(r);
+
+              list.getChildren().add(row);
+            }catch(IOException e) {
+              System.out.println("[" + StringColor.RED + "ERRORE" + StringColor.RESET + "] Caricamento dei tuoi ristoranti");
+              e.printStackTrace();
+            }
+          }
+        }
+      });
+    });
   }
 
   public void openDetails(Restaurant r)
@@ -108,10 +119,8 @@ public class RestaurateurHomeController {
 
       mainArea.setVisible(false);
       contentArea.getChildren().add(detailsNode);
-
-      System.out.println("[" + StringColor.GREEN + "ACTION" + StringColor.RESET + "] Restaurant Reviews opended");
     }catch(IOException e) {
-      System.out.println("[" + StringColor.RED + "ERROR" + StringColor.RESET + "] Loading details view");
+      System.out.println("[" + StringColor.RED + "ERRORE" + StringColor.RESET + "] Caricamento dettagli del tuo ristorante");
       e.printStackTrace();
     }
   }
@@ -125,12 +134,10 @@ public class RestaurateurHomeController {
 
     setTitle("I tuoi ristoranti");
     mainArea.setVisible(true);
-    System.out.println("[" + StringColor.GREEN + "ACTION" + StringColor.RESET + "] Your restaurants displayed");
   }
 
   @FXML public void addClicked(ActionEvent e)
   {
-    System.out.println("[" + StringColor.GREEN + "ACTION" + StringColor.RESET + "] Add button clicked");
     openNewRestaurant();
   }
 
@@ -145,7 +152,7 @@ public class RestaurateurHomeController {
       mainArea.setVisible(false);
       contentArea.getChildren().add(newRestaurantNode);
     } catch(IOException ex) {
-      System.out.println("[" + StringColor.RED + "ERROR" + StringColor.RESET + "] Loading new restaurant view");
+      System.out.println("[" + StringColor.RED + "ERRORE" + StringColor.RESET + "] Caricamento finestra form nuovo ristorante");
       ex.printStackTrace();
     }
   }

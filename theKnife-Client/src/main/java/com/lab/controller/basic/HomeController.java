@@ -23,21 +23,21 @@ public class HomeController {
   @FXML
   public void signinClicked(ActionEvent event)
   {
-    System.out.println("[" + StringColor.GREEN + "ACTION" + StringColor.RESET + "] Signin button clicked");
+    System.out.println("[" + StringColor.GREEN + "AZIONE" + StringColor.RESET + "] Signin button clicked");
     PageController.selectPage("/com/lab/fxml/access/signin.fxml");
   }
 
   @FXML
   public void signupClicked(ActionEvent event)
   {
-    System.out.println("[" + StringColor.GREEN + "ACTION" + StringColor.RESET + "] Signup button clicked");
+    System.out.println("[" + StringColor.GREEN + "AZIONE" + StringColor.RESET + "] Signup button clicked");
     PageController.selectPage("/com/lab/fxml/access/signup.fxml");
   }
 
   @FXML
   public void guestClicked(ActionEvent event)
   {
-    System.out.println("[" + StringColor.GREEN + "ACTION" + StringColor.RESET + "] Guest button clicked");
+    System.out.println("[" + StringColor.GREEN + "AZIONE" + StringColor.RESET + "] Guest button clicked");
     PageController.selectPage("/com/lab/fxml/access/guest.fxml");
   }
 }

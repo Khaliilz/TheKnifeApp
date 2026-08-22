@@ -17,6 +17,9 @@ import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 
+import java.util.concurrent.CompletableFuture;
+import javafx.application.Platform;
+
 public class SigninController {
   
   @FXML private Button signin_B;
@@ -55,22 +58,32 @@ public class SigninController {
 
     if(error) return;
 
-    try {
-      User user = ServerConnection.getServer().signin(username, password);
+    signin_B.setDisable(true);
+    signin_B.setText("ACCESSO...");
 
-      if(user == null) {
-        ErrorContainer.errorBorder(username_TF);
-        ErrorContainer.errorBorder(password_PF);
-      } else {
-        System.out.println("[" + StringColor.PURPLE + "DATABASE" + StringColor.RESET + "] Singin completed [" + user.getUsername() + "]");
-        Session.setCurrentUser(user);
-
-        if(user.getRole().equals("CLIENTE")) PageController.selectPage("/com/lab/fxml/user/userHome.fxml");
-        else if(user.getRole().equals("RISTORATORE")) PageController.selectPage("/com/lab/fxml/restaurateur/restaurateurHome.fxml");
+    CompletableFuture.supplyAsync(() -> {
+      try {
+        return ServerConnection.getServer().signin(username, password);
+      } catch(RemoteException e) {
+        e.printStackTrace();
+        System.out.println("[" + StringColor.RED + "ERRORE" + StringColor.RESET + "] Richiesta dati di accesso");
+        return null;
       }
-    } catch(RemoteException e) {
-      e.printStackTrace();
-      System.out.println("[" + StringColor.RED + "ERROR" + StringColor.RESET + "] Server comunication");
-    }
+    }).thenAccept(user -> {
+      Platform.runLater(() -> {
+        signin_B.setDisable(false);
+        signin_B.setText("ACCEDI");
+        if(user == null) {
+          ErrorContainer.errorBorder(username_TF);
+          ErrorContainer.errorBorder(password_PF);
+        } else {
+          System.out.println("[" + StringColor.PURPLE + "DATABASE" + StringColor.RESET + "] Accesso eseguito [" + user.getUsername() + "]");
+          Session.setCurrentUser(user);
+
+          if(user.getRole().equals("CLIENTE")) PageController.selectPage("/com/lab/fxml/user/userHome.fxml");
+          else if(user.getRole().equals("RISTORATORE")) PageController.selectPage("/com/lab/fxml/restaurateur/restaurateurHome.fxml");
+        }
+      });
+    });
   }
 }

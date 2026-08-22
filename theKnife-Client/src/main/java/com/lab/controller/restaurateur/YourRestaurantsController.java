@@ -15,6 +15,7 @@ public class YourRestaurantsController {
   @FXML private Label address;
   @FXML private Text starsNum;
   @FXML private Text reviewsNum;
+  @FXML private Button removeButton;
 
   private Restaurant currentRestaurant;
   
@@ -38,25 +39,30 @@ public class YourRestaurantsController {
 
   @FXML public void detailClicked(ActionEvent e)
   {
-    System.out.println("[" + StringColor.GREEN + "ACTION" + StringColor.RESET + "] Detail button clicked");
     RestaurateurHomeController.getInstance().openDetails(currentRestaurant);
   }
 
   @FXML public void removeClicked(ActionEvent e)
   {
-    System.out.println("[" + StringColor.GREEN + "ACTION" + StringColor.RESET + "] Remove button clicked");
-    if(currentRestaurant != null) {
-      try {
-        boolean success = ServerConnection.getServer().removeRestaurant(currentRestaurant.getId());
-        if(success) {
-          System.out.println("[" + StringColor.GREEN + "ACTION" + StringColor.RESET + "] Restaurant removed successfully!");
-          RestaurateurHomeController.getInstance().fillRestaurants();
-        } else System.out.println("[" + StringColor.RED + "ERROR" + StringColor.RESET + "] Failed to remove restaurant.");
+    removeButton.setDisable(true);
 
-      } catch (Exception ex) {
-        ex.printStackTrace();
-        System.out.println("[" + StringColor.RED + "ERROR" + StringColor.RESET + "] Server comunication");
+    CompletableFuture.supplyAsync(() -> {
+      try {
+        return ServerConnection.getServer().removeRestaurant(currentRestaurant.getId());
+      } catch(RemoteException e) {
+        e.printStackTrace();
+        System.out.println("[" + StringColor.RED + "ERRORE" + StringColor.RESET + "] Richiesta di rimozione ristorante");
+        return false;
       }
-    }
+    }).thenAccept(success -> {
+      Platform.runLater(() -> {
+        removeButton.setDisable(false);
+        if(!success) System.out.println("[" + StringColor.RED + "ERRORE" + StringColor.RESET + "] Richiesta di rimozione ristorante");
+        else {
+          System.out.println("[" + StringColor.GREEN + "AZIONE" + StringColor.RESET + "] Ristorante rimosso");
+          RestaurateurHomeController.getInstance().fillRestaurants();
+        }
+      });
+    });
   }
 }

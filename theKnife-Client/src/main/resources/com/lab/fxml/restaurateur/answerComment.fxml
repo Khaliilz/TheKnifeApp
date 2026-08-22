@@ -15,7 +15,7 @@
 
       <TextArea fx:id="answer" styleClass="textArea" wrapText="true" prefRowCount="3" VBox.vgrow="ALWAYS" maxHeight="150"/>
 
-      <Button fx:id="save" styleClass="greenButton" text="SALVA" prefWidth="120" prefHeight="50" onAction="#saveClicked"/>
+      <Button fx:id="saveButton" styleClass="greenButton" text="SALVA" prefWidth="120" prefHeight="50" onAction="#saveClicked"/>
     </VBox>
   </children>
 </AnchorPane>

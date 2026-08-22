@@ -25,6 +25,7 @@ public class NewRestaurantController {
   @FXML private TextField websiteUrl;
   @FXML private TextField phoneNumber; 
   @FXML private ToggleGroup priceGroup;
+  @FXML private Button saveButton;
 
   @FXML
   public void initialize()
@@ -119,25 +120,35 @@ public class NewRestaurantController {
     String fullAddress = addressR + ", " + cityR + ", " + countryR;
     int ownerId = Session.getCurrentUser().getId();
     
-    try{
-      boolean success = ServerConnection.getServer().addRestaurant(nameR, fullAddress, cuisineR, price, phoneNumberR, websiteUrlR, Double.parseDouble(latitudeR), Double.parseDouble(longitudeR), ownerId);
-      
-      if(success) {
-        System.out.println("[" + StringColor.PURPLE + "DATABASE" + StringColor.RESET + "] Restaurant correctly saved");
-        RestaurateurHomeController.getInstance().fillRestaurants(); 
-      } else  System.out.println("[" + StringColor.RED + "ERROR" + StringColor.RESET + "] Failed saving restaurant");
+    saveButton.setDisable(true);
+    saveButton.setText("SALVATAGGIO...");
 
-      RestaurateurHomeController.getInstance().closeNewRestaurant();
-    } catch (RemoteException ex) {
-        ex.printStackTrace();
-        System.out.println("[" + StringColor.RED + "ERROR" + StringColor.RESET + "] Server comunication");
-    }
+    CompletableFuture.supplyAsync(() -> {
+      try {
+        return ServerConnection.getServer().addRestaurant(nameR, fullAddress, cuisineR, price, phoneNumberR, websiteUrlR, Double.parseDouble(latitudeR), Double.parseDouble(longitudeR), ownerId);
+      } catch(RemoteException e) {
+        e.printStackTrace();
+        System.out.println("[" + StringColor.RED + "ERRORE" + StringColor.RESET + "] Richiesta salvataggio dati nuovo ristorante");
+        return false;
+      }
+    }).thenAccept(success -> {
+      Platform.runLater(() -> {
+        saveButton.setDisable(false);
+        saveButton.setText("SALVA");
+        if(!success) System.out.println("[" + StringColor.RED + "ERRORE" + StringColor.RESET + "] Richiesta salvataggio dati nuovo ristorante");
+        else {
+          System.out.println("[" + StringColor.PURPLE + "DATABASE" + StringColor.RESET + "] Nuovo ristorante salvato");
+          RestaurateurHomeController.getInstance().fillRestaurants();
+          RestaurateurHomeController.getInstance().closeNewRestaurant();
+        }
+      });
+    });
   }
 
   @FXML
   public void cancelClicked(ActionEvent e)
   {
-    System.out.println("[" + StringColor.GREEN + "ACTION" + StringColor.RESET + "] Cancel button clicked");
+    System.out.println("[" + StringColor.GREEN + "AZIONE" + StringColor.RESET + "] Cancel button clicked");
     RestaurateurHomeController.getInstance().closeNewRestaurant();
   }
 

@@ -39,7 +39,7 @@ public class RestaurantReviewsRowController {
   @FXML
   public void viewClicked(ActionEvent e)
   {
-    System.out.println("[" + StringColor.GREEN + "ACTION" + StringColor.RESET + "] View button clicked");
+    System.out.println("[" + StringColor.GREEN + "AZIONE" + StringColor.RESET + "] View button clicked");
     String[] completedReview = {restaurantName, review[1], review[2], review[0], restaurantId};
     UserHomeController.getInstance().viewComment(completedReview);
   }

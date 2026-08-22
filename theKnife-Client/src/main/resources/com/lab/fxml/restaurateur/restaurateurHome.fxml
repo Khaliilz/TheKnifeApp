@@ -18,7 +18,7 @@
     <StackPane fx:id="contentArea" AnchorPane.topAnchor="150" AnchorPane.bottomAnchor="50" AnchorPane.leftAnchor="50" AnchorPane.rightAnchor="50">      
       <VBox fx:id="mainArea" alignment="CENTER">
       
-        <Label fx:id="emptyLabel" text="Nessuna recensione presente per questo ristorante" visible="false" managed="false"/>
+        <Label fx:id="emptyLabel" text="Nessun ristorante presente al momento" visible="false" managed="false"/>
         <ScrollPane fx:id="listContainer" fitToWidth="true" VBox.vgrow="ALWAYS" pannable="true" minHeight="350" maxHeight="350">
           <VBox fx:id="list" spacing="10"/>
         </ScrollPane>

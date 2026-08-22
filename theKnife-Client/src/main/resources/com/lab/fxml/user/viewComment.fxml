@@ -45,8 +45,8 @@
       </HBox>
 
       <HBox alignment="CENTER_RIGHT" spacing="20">
-        <Button styleClass="redButton" text="RIMUOVI" prefWidth="120" prefHeight="40" onAction="#removeClicked"/>
-        <Button styleClass="greenButton" text="SALVA" prefWidth="120" prefHeight="40" onAction="#saveClicked"/>
+        <Button fx:id="removeButton" styleClass="redButton" text="RIMUOVI" prefWidth="120" prefHeight="40" onAction="#removeClicked"/>
+        <Button fx:id="saveButton" styleClass="greenButton" text="SALVA" prefWidth="120" prefHeight="40" onAction="#saveClicked"/>
       </HBox>
     </VBox>
   </children>

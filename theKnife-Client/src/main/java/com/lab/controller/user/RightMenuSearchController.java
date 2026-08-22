@@ -51,7 +51,7 @@ public class RightMenuSearchController {
 
     if(error) return;
 
-    System.out.println("[" + StringColor.GREEN + "ACTION" + StringColor.RESET + "] Search: " + place);
+    System.out.println("[" + StringColor.GREEN + "AZIONE" + StringColor.RESET + "] Search: " + place);
     UserHomeController.getInstance().searchByPlace(place);
   }
 
@@ -74,7 +74,7 @@ public class RightMenuSearchController {
       scene.setFill(javafx.scene.paint.Color.TRANSPARENT);
       popupStage.setScene(scene);
       popupStage.show();
-      System.out.println("[" + StringColor.GREEN + "ACTION" + StringColor.RESET + "] Filter button clicked");
+      System.out.println("[" + StringColor.GREEN + "AZIONE" + StringColor.RESET + "] Filter button clicked");
     }catch(IOException e) {
       System.out.println("[" + StringColor.RED + "ERROR" + StringColor.RESET + "] Filter page loading");
       e.printStackTrace();
@@ -85,13 +85,13 @@ public class RightMenuSearchController {
   public void bookmarkClicked(ActionEvent event)
   {
     UserHomeController.getInstance().loadBookmarked();
-    System.out.println("[" + StringColor.GREEN + "ACTION" + StringColor.RESET + "] Bookmark button clicked");
+    System.out.println("[" + StringColor.GREEN + "AZIONE" + StringColor.RESET + "] Bookmark button clicked");
   }
 
   @FXML
   public void reviewClicked(ActionEvent event)
   {
     UserHomeController.getInstance().loadReviews();
-    System.out.println("[" + StringColor.GREEN + "ACTION" + StringColor.RESET + "] Review button clicked");
+    System.out.println("[" + StringColor.GREEN + "AZIONE" + StringColor.RESET + "] Review button clicked");
   }
 }
