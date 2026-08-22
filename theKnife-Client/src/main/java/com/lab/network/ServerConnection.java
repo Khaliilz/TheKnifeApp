@@ -1,4 +1,4 @@
-package com.lab.server;
+package com.lab.network;
 
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;

@@ -1,7 +1,7 @@
 package com.lab.controller.restaurateur;
 
 import com.lab.model.Restaurant;
-import com.lab.server.ServerConnection;
+import com.lab.network.ServerConnection;
 import com.lab.utility.StringColor;
 
 import javafx.event.ActionEvent;

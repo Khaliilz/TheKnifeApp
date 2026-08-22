@@ -4,7 +4,7 @@ import java.rmi.RemoteException;
 import java.util.concurrent.CompletableFuture;
 import javafx.application.Platform;
 
-import com.lab.server.ServerConnection;
+import com.lab.network.ServerConnection;
 import com.lab.utility.StringColor;
 
 import javafx.event.ActionEvent;

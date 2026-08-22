@@ -1,7 +1,7 @@
 package com.lab.controller.ipConfig;
 
 import com.lab.App;
-import com.lab.server.ServerConnection;
+import com.lab.network.ServerConnection;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;

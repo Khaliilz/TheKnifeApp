@@ -40,7 +40,7 @@ public class ServerImpl extends UnicastRemoteObject implements ServerInterface {
   @Override
   public void signout(int userId)
   {
-    System.out.println("[" + StringColor.YELLOW + "SERVER" + StringColor.RESET + "] " + getClientIP() + ": Richiesta di uscita dell'utente(" + userId + ")");;
+    System.out.println("[" + StringColor.YELLOW + "SERVER" + StringColor.RESET + "] " + getClientIP() + ": Richiesta di uscita");
   }
 
 

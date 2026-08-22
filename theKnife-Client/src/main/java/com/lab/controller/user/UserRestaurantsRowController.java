@@ -9,7 +9,7 @@ import java.util.concurrent.CompletableFuture;
 import com.lab.model.Restaurant;
 import com.lab.model.Session;
 import com.lab.model.User;
-import com.lab.server.ServerConnection;
+import com.lab.network.ServerConnection;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;

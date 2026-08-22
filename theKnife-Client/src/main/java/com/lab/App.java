@@ -3,7 +3,7 @@ package com.lab;
 import javafx.fxml.FXMLLoader;
 import java.io.IOException;
 
-import com.lab.server.ServerConnection;
+import com.lab.network.ServerConnection;
 import com.lab.utility.StringColor;
 
 import javafx.application.Application;

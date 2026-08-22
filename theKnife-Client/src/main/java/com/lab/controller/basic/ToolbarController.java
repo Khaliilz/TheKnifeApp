@@ -12,6 +12,7 @@ import javafx.stage.Stage;
 
 import java.util.concurrent.CompletableFuture;
 import javafx.application.Platform;
+import com.lab.network.ServerConnection;
 
 public class ToolbarController {
   @FXML private StackPane toolbar;
@@ -107,21 +108,33 @@ public class ToolbarController {
     }
 
     Session.signOut();
-    System.out.println("[" + StringColor.PURPLE + "DATABASE" + StringColor.RESET + "] Signed out");
+    System.out.println("[" + StringColor.YELLOW + "SERVER" + StringColor.RESET + "] Uscito");
     PageController.selectPage("/com/lab/fxml/basic/home.fxml");
   }
 
   @FXML
   public void exitClicked(ActionEvent event)
-  {
-    System.out.println("[" + StringColor.BLUE + "INFO" + StringColor.RESET + "] Application closed");
+  { 
+    if(Session.getCurrentUser() != null){
+      final int userId = Session.getCurrentUser().getId();
+
+      CompletableFuture.runAsync(() -> {
+        try {
+          ServerConnection.getServer().signout(userId);
+        } catch(Exception e) { }
+      });
+    }
+
+    Session.signOut();
+    System.out.println("[" + StringColor.YELLOW + "SERVER" + StringColor.RESET + "] Uscito");
+    System.out.println("[" + StringColor.BLUE + "INFO" + StringColor.RESET + "] Applicazione chiusa");
     Platform.exit();
   }
 
   @FXML
   public void minimizeClicked(ActionEvent event)
   {
-    System.out.println("[" + StringColor.BLUE + "INFO" + StringColor.RESET + "] Window minimized");
+    System.out.println("[" + StringColor.BLUE + "INFO" + StringColor.RESET + "] Applicazione in finestra");
     Stage stage = (Stage) toolbar.getScene().getWindow();
     stage.setIconified(true);
   }

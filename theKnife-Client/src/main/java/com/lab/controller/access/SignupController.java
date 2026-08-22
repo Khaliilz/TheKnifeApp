@@ -12,7 +12,7 @@ import com.lab.controller.basic.ToolbarController;
 import com.lab.controller.user.UserHomeController;
 import com.lab.model.Session;
 import com.lab.model.User;
-import com.lab.server.ServerConnection;
+import com.lab.network.ServerConnection;
 import com.lab.utility.StringColor;
 import com.lab.utility.ErrorContainer;
 
