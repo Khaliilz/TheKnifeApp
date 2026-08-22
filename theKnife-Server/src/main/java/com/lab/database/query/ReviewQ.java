@@ -20,7 +20,6 @@ public class ReviewQ {
                   "JOIN users ON reviews.user_id = users.id " +
                   "WHERE reviews.restaurant_id = ?";
 
-    System.out.println("[" + StringColor.YELLOW + "SERVER" + StringColor.RESET + "] Cerco le recensioni del ristorante(" + restaurantId + ")...");
     try(Connection connection = Database.getConnection(); PreparedStatement ps = connection.prepareStatement(sql)) {
 
       ps.setInt(1, restaurantId);
@@ -48,7 +47,6 @@ public class ReviewQ {
   {
     String sql = "SELECT stars, comment, answer FROM reviews WHERE user_id = ? AND restaurant_id = ?";
     
-    System.out.println("[" + StringColor.YELLOW + "SERVER" + StringColor.RESET + "] Cerco le recensioni dell'utente(" + userId + ")...");
     try(Connection connection = Database.getConnection(); PreparedStatement ps = connection.prepareStatement(sql)) {
       
       ps.setInt(1, userId);
@@ -71,7 +69,6 @@ public class ReviewQ {
   {
     String sql = "INSERT INTO reviews (user_id, restaurant_id, stars, comment) VALUES (?, ?, ?, ?)";
 
-    System.out.println("[" + StringColor.YELLOW + "SERVER" + StringColor.RESET + "] Aggiungo la recensione dell'utente(" + userId + ") per il ristorante(" + restaurantId + ")...");
     try(Connection connection = Database.getConnection(); PreparedStatement ps = connection.prepareStatement(sql)) {
 
       ps.setInt(1, userId);
@@ -79,11 +76,11 @@ public class ReviewQ {
       ps.setInt(3, stars);
       ps.setString(4, comment);
 
-      System.out.println("[" + StringColor.PURPLE + "DATABASE" + StringColor.RESET + "] Aggiunta la recensione dell'utente(" + userId + ") per il ristorante(" + restaurantId + ")...");
+      System.out.println("[" + StringColor.PURPLE + "DATABASE" + StringColor.RESET + "] Aggiunta la recensione dell'utente(" + userId + ") per il ristorante(" + restaurantId + ")");
       return ps.executeUpdate() > 0;
     }catch(Exception e) {
       e.printStackTrace();
-      System.out.println("[" + StringColor.RED + "ERRORE" + StringColor.RESET + "] Impossibile aggiungere la recensione dell'utente(" + userId + ") per il ristorante(" + restaurantId + ")...");
+      System.out.println("[" + StringColor.RED + "ERRORE" + StringColor.RESET + "] Impossibile aggiungere la recensione dell'utente(" + userId + ") per il ristorante(" + restaurantId + ")");
       return false;
     }
   }
@@ -92,7 +89,6 @@ public class ReviewQ {
   {
     String sql = "UPDATE reviews SET stars = ?, comment = ? WHERE user_id = ? AND restaurant_id = ?";
     
-    System.out.println("[" + StringColor.YELLOW + "SERVER" + StringColor.RESET + "] Aggiorno la recensione dell'utente(" + userId + ") per il ristorante(" + restaurantId + ")...");
     try(Connection connection = Database.getConnection(); PreparedStatement ps = connection.prepareStatement(sql)) {
             
       ps.setInt(1, stars);
@@ -100,11 +96,11 @@ public class ReviewQ {
       ps.setInt(3, userId);
       ps.setInt(4, restaurantId);
       
-      System.out.println("[" + StringColor.PURPLE + "DATABASE" + StringColor.RESET + "] Aggiornata la recensione dell'utente(" + userId + ") per il ristorante(" + restaurantId + ")...");
+      System.out.println("[" + StringColor.PURPLE + "DATABASE" + StringColor.RESET + "] Aggiornata la recensione dell'utente(" + userId + ") per il ristorante(" + restaurantId + ")");
       return ps.executeUpdate() > 0;
     }catch(Exception e) {
       e.printStackTrace();
-      System.out.println("[" + StringColor.RED + "ERRORE" + StringColor.RESET + "] Impossibile aggiornare la recensione dell'utente(" + userId + ") per il ristorante(" + restaurantId + ")...");
+      System.out.println("[" + StringColor.RED + "ERRORE" + StringColor.RESET + "] Impossibile aggiornare la recensione dell'utente(" + userId + ") per il ristorante(" + restaurantId + ")");
       return false;
     }
   }
@@ -113,17 +109,16 @@ public class ReviewQ {
   {
     String sql = "DELETE FROM reviews WHERE user_id = ? AND restaurant_id = ?";
 
-    System.out.println("[" + StringColor.YELLOW + "SERVER" + StringColor.RESET + "] Rimuovo la recensione dell'utente(" + userId + ") per il ristorante(" + restaurantId + ")...");
     try(Connection connection = Database.getConnection(); PreparedStatement ps = connection.prepareStatement(sql)) {
 
       ps.setInt(1, userId);
       ps.setInt(2, restaurantId);
 
-      System.out.println("[" + StringColor.PURPLE + "DATABASE" + StringColor.RESET + "] Rimossa la recensione dell'utente(" + userId + ") per il ristorante(" + restaurantId + ")...");
+      System.out.println("[" + StringColor.PURPLE + "DATABASE" + StringColor.RESET + "] Rimossa la recensione dell'utente(" + userId + ") per il ristorante(" + restaurantId + ")");
       return ps.executeUpdate() > 0;
     }catch(Exception e) {
       e.printStackTrace();
-      System.out.println("[" + StringColor.RED + "ERRORE" + StringColor.RESET + "] Impossibile rimuovere la recensione dell'utente(" + userId + ") per il ristorante(" + restaurantId + ")...");
+      System.out.println("[" + StringColor.RED + "ERRORE" + StringColor.RESET + "] Impossibile rimuovere la recensione dell'utente(" + userId + ") per il ristorante(" + restaurantId + ")");
       return false;
     }
   }
@@ -137,7 +132,6 @@ public class ReviewQ {
                  "JOIN users ON reviews.user_id = users.id " +
                  "WHERE reviews.restaurant_id = ?";
 
-    System.out.println("[" + StringColor.YELLOW + "SERVER" + StringColor.RESET + "] Cerco le recensioni del ristorante(" + restaurantId + ")...");
     try(Connection connection = Database.getConnection(); PreparedStatement ps = connection.prepareStatement(sql)) {
       ps.setInt(1, restaurantId);
       
@@ -165,7 +159,6 @@ public class ReviewQ {
   {
     String sql = "UPDATE reviews SET answer = ? WHERE user_id = ? AND restaurant_id = ?";
     
-    System.out.println("[" + StringColor.YELLOW + "SERVER" + StringColor.RESET + "] Salvo la risposta del ristoratore(" + restaurantId + ") alla recensione dell'utente(" + userId + ")...");
     try(Connection connection = Database.getConnection(); PreparedStatement ps = connection.prepareStatement(sql)) {
       ps.setString(1, answer);
       ps.setInt(2, userId);

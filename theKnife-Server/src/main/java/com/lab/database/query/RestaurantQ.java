@@ -23,7 +23,6 @@ public class RestaurantQ {
   public static boolean isDatabaseEmpty() {
     String sql = "SELECT COUNT(*) AS total FROM restaurants";
     
-    System.out.println("[" + StringColor.YELLOW + "SERVER" + StringColor.RESET + "] Verifico che il DB non sia vuoto...");
     try(Connection connection = Database.getConnection(); PreparedStatement ps = connection.prepareStatement(sql)) {
       ResultSet rs = ps.executeQuery();
          
@@ -49,7 +48,6 @@ public class RestaurantQ {
                  "ORDER BY distance ASC " +
                  "LIMIT 10";
     
-    System.out.println("[" + StringColor.YELLOW + "SERVER" + StringColor.RESET + "] Cerco i ristoranti vicini all'utente...");
     try(Connection connection = Database.getConnection(); PreparedStatement ps = connection.prepareStatement(sql)) {
 
       ps.setDouble(1, lat);
@@ -90,7 +88,6 @@ public class RestaurantQ {
                  "GROUP BY restaurants.id, restaurants.name, restaurants.address, restaurants.cuisine, restaurants.price, restaurants.delivery, restaurants.booking, restaurants.latitude, restaurants.longitude " +
                  "ORDER BY distance ASC";
     
-    System.out.println("[" + StringColor.YELLOW + "SERVER" + StringColor.RESET + "] Cerco i ristoranti preferiti dello user(" + userId + ") ...");
     try(Connection connection = Database.getConnection(); PreparedStatement ps = connection.prepareStatement(sql)) {
 
       ps.setDouble(1, lat);
@@ -132,7 +129,6 @@ public class RestaurantQ {
                  "GROUP BY restaurants.id, restaurants.name, restaurants.address, restaurants.cuisine, restaurants.price, restaurants.delivery, restaurants.booking, restaurants.latitude, restaurants.longitude " +
                  "ORDER BY distance ASC";
 
-    System.out.println("[" + StringColor.YELLOW + "SERVER" + StringColor.RESET + "] Cerco i ristoranti recensiti dello user(" + userId + ") ...");
     try(Connection connection = Database.getConnection(); PreparedStatement ps = connection.prepareStatement(sql)) {
 
       ps.setDouble(1, lat);
@@ -229,7 +225,6 @@ public class RestaurantQ {
     sql.append("ORDER BY distance ASC LIMIT 10 OFFSET ?");
     params.add(offset);
     
-    System.out.println("[" + StringColor.YELLOW + "SERVER" + StringColor.RESET + "] Cerco ristoranti a (" + place + ") ...");
     try(Connection connection = Database.getConnection(); PreparedStatement ps = connection.prepareStatement(sql.toString())) {
       
       for(int i = 0; i < params.size(); i++) ps.setObject(i + 1, params.get(i));
@@ -270,7 +265,6 @@ public class RestaurantQ {
                  "GROUP BY restaurants.id, restaurants.name, restaurants.address, restaurants.cuisine, restaurants.price, restaurants.delivery, restaurants.booking, restaurants.latitude, restaurants.longitude " +
                  "ORDER BY restaurants.id DESC";
   
-    System.out.println("[" + StringColor.YELLOW + "SERVER" + StringColor.RESET + "] Cerco i ristoranti del ristoratore(" + ownerId + ") ...");
     try(Connection connection = Database.getConnection(); PreparedStatement ps = connection.prepareStatement(sql)) {
       ps.setInt(1, ownerId);
       
@@ -327,7 +321,6 @@ public class RestaurantQ {
   {
     String sql = "DELETE FROM restaurants WHERE id = ?";
     
-    System.out.println("[" + StringColor.YELLOW + "SERVER" + StringColor.RESET + "] Rimuovo il ristorante(" + restaurantId + ") ...");
     try(Connection connection = Database.getConnection(); PreparedStatement ps = connection.prepareStatement(sql)) {
       ps.setInt(1, restaurantId);
       

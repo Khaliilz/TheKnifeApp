@@ -17,7 +17,6 @@ public class UserQ {
   {
     String sql = "SELECT id, username, password, role, address, latitude, longitude FROM users WHERE username = ?";
 
-    System.out.println("[" + StringColor.YELLOW + "SERVER" + StringColor.RESET + "] Cerco l'utente nel database...");
     try(Connection connection = Database.getConnection(); PreparedStatement ps = connection.prepareStatement(sql)) {
       ps.setString(1, username);
             
@@ -58,7 +57,6 @@ public class UserQ {
 
     String sql = "INSERT INTO users (name, surname, birth_date, address, latitude, longitude, username, password, role) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
-    System.out.println("[" + StringColor.YELLOW + "SERVER" + StringColor.RESET + "] Registro l'utente + " + username + " nel database...");
     try (Connection connection = Database.getConnection(); PreparedStatement ps = connection.prepareStatement(sql)) {
       ps.setString(1, name);
       ps.setString(2, surname);

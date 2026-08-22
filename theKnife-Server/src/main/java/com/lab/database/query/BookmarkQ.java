@@ -28,7 +28,6 @@ public class BookmarkQ {
   {
     String sql = "INSERT INTO bookmarks (user_id, restaurant_id) VALUES (?, ?)";
 
-    System.out.println("[" + StringColor.YELLOW + "SERVER" + StringColor.RESET + "] Aggiungo il ristorante(" + restaurantId + ") ai preferiti dell'utente(" + userId + ")...");
     try(Connection connection = Database.getConnection(); PreparedStatement ps = connection.prepareStatement(sql)) {
       ps.setInt(1, userId);
       ps.setInt(2, restaurantId);
@@ -46,7 +45,6 @@ public class BookmarkQ {
   {
     String sql = "DELETE FROM bookmarks WHERE user_id = ? AND restaurant_id = ?";
 
-    System.out.println("[" + StringColor.YELLOW + "SERVER" + StringColor.RESET + "] Rimuovo il ristorante(" + restaurantId + ") dai preferiti dell'utente(" + userId + ")...");
     try(Connection connection = Database.getConnection(); PreparedStatement ps = connection.prepareStatement(sql)) {
       ps.setInt(1, userId);
       ps.setInt(2, restaurantId);
