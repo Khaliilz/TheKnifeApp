@@ -42,6 +42,7 @@ public class UserHomeController {
   @FXML private Label emptyLabel;
 
   private static UserHomeController instance;
+  private DetailsUserController currentDetailsController;
   private javafx.scene.Node detailsNode;
   private javafx.scene.Node commentNode;
 
@@ -408,8 +409,8 @@ public class UserHomeController {
       FXMLLoader loader = new FXMLLoader(App.class.getResource("/com/lab/fxml/user/detailsUser.fxml"));
       detailsNode = loader.load();
 
-      DetailsUserController controller = loader.getController();
-      controller.setDetails(restaurant);
+      currentDetailsController = loader.getController();
+      currentDetailsController.setDetails(restaurant);
 
       listContainer.setVisible(false); 
       leftMenuArea.getChildren().add(detailsNode); 
@@ -475,7 +476,10 @@ public class UserHomeController {
       commentNode = null;
     }
     
-    if (detailsNode != null) detailsNode.setVisible(true);
+    if(detailsNode != null) {
+      detailsNode.setVisible(true);
+      if(currentDetailsController != null) currentDetailsController.refreshReviews();
+    }
   }
 
   public void closeWithoutRefresh()

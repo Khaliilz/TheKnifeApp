@@ -133,7 +133,7 @@ public class ServerImpl extends UnicastRemoteObject implements ServerInterface {
   public List<String[]> getRestaurateurReviews(int restaurantId) throws RemoteException
   {
     System.out.println("[" + StringColor.YELLOW + "SERVER" + StringColor.RESET + "] " + getClientIP() + ": Richiesta recensioni ristorante");
-    return ReviewQ.getRestaurantReviews(restaurantId);
+    return ReviewQ.getRestaurateurReviews(restaurantId);
   }
 
   @Override

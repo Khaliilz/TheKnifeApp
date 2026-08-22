@@ -20,7 +20,7 @@
       <Text fx:id="starsNum" styleClass="infos" text="value"/>
       <ImageView fitHeight="20" fitWidth="20" preserveRatio="true">
         <image>
-          <Image url="@/com/lab/img/starIcon.png" />
+          <Image url="/com/lab/img/starIcon.png" />
         </image>
       </ImageView>
 

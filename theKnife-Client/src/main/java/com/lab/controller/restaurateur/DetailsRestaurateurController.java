@@ -67,6 +67,8 @@ public class DetailsRestaurateurController {
           emptyLabel.setVisible(true);
           emptyLabel.setManaged(true);
         } else {
+          emptyLabel.setVisible(false);
+          emptyLabel.setManaged(false);
           for(String[] r : reviews) {
             try{
               FXMLLoader loader = new FXMLLoader(App.class.getResource("/com/lab/fxml/restaurateur/yourReviews.fxml"));

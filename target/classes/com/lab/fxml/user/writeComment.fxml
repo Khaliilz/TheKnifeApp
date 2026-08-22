@@ -32,7 +32,7 @@
         <RadioButton fx:id="starsThree" styleClass="defaultRadioButton" text="3" selected="true" toggleGroup="$starsGroup"/>
       </HBox>
 
-      <HBox alignment="CENTER_RIGHT" spacing="10">
+      <HBox alignment="CENTER" spacing="10">
         <Button styleClass="greenButton" text="INDIETRO" prefWidth="120" prefHeight="40" onAction="#backClicked"/>
         <Button styleClass="greenButton" text="SALVA" prefWidth="120" prefHeight="40" onAction="#saveClicked"/>
       </HBox>

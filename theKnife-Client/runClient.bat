@@ -1,10 +1,6 @@
 @echo off
 title TheKnife - Client
 
-echo ===================================
-echo        AVVIO THE KNIFE CLIENT      
-echo ===================================
-
 IF EXIST "target\theknife-client-1.0-shaded.jar" GOTO AVVIA
 
 echo.

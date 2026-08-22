@@ -97,7 +97,13 @@ public class DetailsUserController {
           emptyLabel.setText("Errore di connessione con il server");
           emptyLabel.setVisible(true);
           emptyLabel.setManaged(true);
+        } else if(reviews.isEmpty()) {
+          emptyLabel.setText("Nessuna recensione trovata");
+          emptyLabel.setVisible(true);
+          emptyLabel.setManaged(true);
         } else {
+          emptyLabel.setVisible(false);
+          emptyLabel.setManaged(false);
           for(String[] r : reviews) {
             try{
               FXMLLoader loader = new FXMLLoader(com.lab.App.class.getResource("/com/lab/fxml/user/reviewsRow.fxml"));
@@ -115,5 +121,10 @@ public class DetailsUserController {
         }
       });
     });
+  }
+
+  public void refreshReviews()
+  {
+    if (restaurant != null) loadReviews(restaurant.getId());
   }
 }

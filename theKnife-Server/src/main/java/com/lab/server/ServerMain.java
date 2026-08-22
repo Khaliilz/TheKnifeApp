@@ -2,6 +2,7 @@ package com.lab.server;
 
 import java.net.InetAddress;
 import java.rmi.registry.LocateRegistry;
+import java.rmi.server.UnicastRemoteObject;
 import java.rmi.registry.Registry;
 import java.sql.Connection;
 import java.util.Scanner;
@@ -68,12 +69,36 @@ public class ServerMain {
         registry.rebind("TheKnifeServer", server);
 
         System.out.println("[" + StringColor.YELLOW + "SERVER" + StringColor.RESET + "] In ascolto ...");
+        Thread consoleThread = new Thread(() -> {
+          Scanner cmdScanner = new Scanner(System.in);
+            while(true) {
+              String command = cmdScanner.nextLine().trim();
+              if(command.equalsIgnoreCase("stop") || command.equalsIgnoreCase("exit")) {
+                System.out.println("\n[" + StringColor.YELLOW + "SERVER" + StringColor.RESET + "] Spegnimento in corso...");
+                  try {
+                    registry.unbind("TheKnifeServer");
+                    UnicastRemoteObject.unexportObject(server, true);
+                    System.out.println("[" + StringColor.YELLOW + "SERVER" + StringColor.RESET + "] RMI Registry disconnesso");
+                    
+                    System.out.println("[" + StringColor.YELLOW + "SERVER" + StringColor.RESET + "] Server chiuso correttamente");
+                    scanner.close();
+                    cmdScanner.close();
+                    System.exit(0);
+                  } catch(Exception ex) {
+                    System.out.println("[" + StringColor.RED + "ERRORE" + StringColor.RESET + "] Errore durante la chiusura del server");
+                    System.exit(1);
+                  }
+                } else if(!command.isEmpty()) {
+                  System.out.println("[" + StringColor.RED + "COMANDO SCONOSCIUTO" + StringColor.RESET + "] Scrivi 'stop' oppure 'exit' per chiudere il server");
+              }
+          }
+        });
+        consoleThread.setDaemon(true);
+        consoleThread.start();
       } catch(Exception e) {
         System.out.println("[" + StringColor.RED + "ERROR" + StringColor.RESET + "] Impossibile avviare il server");
         success = false;
       }
     }while(!success);
-    
-    scanner.close();
   }
 }
