@@ -15,31 +15,11 @@ import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
-import javax.swing.JOptionPane;
 
 public class App extends Application {
 
 	public static void main(String[] args) {
-    String inputIP = JOptionPane.showInputDialog(
-      null,
-      "Inserisci l'IP del Server (lascia vuoto per localhost):",
-      "Connessione a TheKnife Server",
-      JOptionPane.QUESTION_MESSAGE
-    );
-    if (inputIP == null)  System.exit(0);
-    String serverIP = inputIP.trim().isEmpty() ? "localhost" : inputIP.trim();
-
-		boolean connected = ServerConnection.connect(serverIP);
-		if(connected) launch(args);
-		else {
-			JOptionPane.showMessageDialog(
-        null, 
-        "Impossibile connettersi al Server sull'IP:\n" + serverIP, 
-        "Errore di Connessione", 
-        JOptionPane.ERROR_MESSAGE
-      );
-			System.exit(1);
-		}
+    launch(args);
 	}
 
 	@Override
@@ -47,58 +27,22 @@ public class App extends Application {
 	{
 		Parent root = null;
     try {
-      root = FXMLLoader.load(App.class.getResource("/com/lab/fxml/basic/page.fxml"));
+      root = FXMLLoader.load(App.class.getResource("/com/lab/fxml/ipConfig/ipConfig.fxml"));
     } catch(IOException e) {
-      System.out.println("[" + StringColor.RED + "ERRORE" + StringColor.RESET + "]" + " file page.fxml non trovato: ");
       e.printStackTrace();
-      return;
+      System.out.println("[" + StringColor.RED + "ERRORE" + StringColor.RESET + "]" + " file ipConfig.fxml non trovato");
+      System.exit(1);
     }
 
-		//if(root instanceof Pane) drawGridLines((Pane) root);
-
-		Scene scene = new Scene(root, 1280, 700);
+		Scene scene = new Scene(root, 640, 350);
 		scene.setFill(Color.TRANSPARENT);
 
 		Image icon = new Image(getClass().getResource("/com/lab/img/logo.png").toExternalForm());
 		stage.getIcons().add(icon);
 		
-		stage.setTitle("TheKnife");
+		stage.setTitle("TheKnife - Connect");
 		stage.initStyle(StageStyle.TRANSPARENT);
 		stage.setScene(scene);
 		stage.show();
 	}
-
-	private static void drawGridLines(Pane root)
-  {
-    double width = root.getPrefWidth();
-    double height = root.getPrefHeight();
-
-    for(int i=0; i<width; i+=40) {
-      Line lineV = new Line(i, 0, i, height);
-      lineV.setStroke(Color.RED);
-      lineV.setStrokeWidth(1);
-      lineV.setOpacity(0.3);
-      root.getChildren().add(lineV);
-    }
-
-    for(int i=0; i<height; i+=50) {
-      Line lineH = new Line(0, i, width, i);
-      lineH.setStroke(Color.RED);
-      lineH.setStrokeWidth(1);
-      lineH.setOpacity(0.3);
-      root.getChildren().add(lineH);
-    }
-
-    Line lineC = new Line(0, height/2, width, height/2);
-    lineC.setStroke(Color.BLUE);
-    lineC.setStrokeWidth(3);
-    lineC.setOpacity(0.3);
-    root.getChildren().add(lineC);
-
-    lineC = new Line(width/2, 0, width/2, height);
-    lineC.setStroke(Color.BLUE);
-    lineC.setStrokeWidth(3);
-    lineC.setOpacity(0.5);
-    root.getChildren().add(lineC);
-  }
 }
