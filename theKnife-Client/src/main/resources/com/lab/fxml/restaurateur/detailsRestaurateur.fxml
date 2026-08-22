@@ -10,10 +10,10 @@
 <?import javafx.scene.text.Text?>
 
 <StackPane stylesheets="@/com/lab/css/theKnifeStyle.css" xmlns="http://javafx.com/javafx/17.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.lab.controller.restaurateur.DetailsRestaurateurController">
-    <VBox fx:id="mainArea" alignment="CENTER">
+    <VBox fx:id="mainArea" alignment="CENTER" minHeight="450" maxHeight="450">
       <Label fx:id="emptyLabel" text="Nessuna recensione presente" visible="false" managed="false"/>
       
-      <ScrollPane fx:id="listContainer" fitToWidth="true" VBox.vgrow="ALWAYS" pannable="true" minHeight="300" maxHeight="300">
+      <ScrollPane fx:id="listContainer" fitToWidth="true" VBox.vgrow="ALWAYS" pannable="true">
         <VBox fx:id="list" spacing="10"/>
       </ScrollPane>
 

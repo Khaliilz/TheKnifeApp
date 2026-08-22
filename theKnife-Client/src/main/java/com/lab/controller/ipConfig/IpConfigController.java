@@ -32,6 +32,7 @@ public class IpConfigController {
 	{
 		ErrorContainer.resetBorder(ipContent);
   	errorLabel.setText("");
+		connectButton.setOnAction(this::connectClicked);
   }
 
   @FXML

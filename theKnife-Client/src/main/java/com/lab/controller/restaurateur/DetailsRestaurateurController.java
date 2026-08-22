@@ -58,7 +58,15 @@ public class DetailsRestaurateurController {
       }
     }).thenAccept(reviews -> {
       Platform.runLater(() -> {
-        if(reviews != null) {
+        if(reviews == null) {
+          emptyLabel.setText("Errore di connessione con il server");
+          emptyLabel.setVisible(true);
+          emptyLabel.setManaged(true);
+        } else if(restaurants.isEmpty()) {
+          emptyLabel.setText("Nessuna recensione presente al momento");
+          emptyLabel.setVisible(true);
+          emptyLabel.setManaged(true);
+        } else {
           for(String[] r : reviews) {
             try{
               FXMLLoader loader = new FXMLLoader(App.class.getResource("/com/lab/fxml/restaurateur/yourReviews.fxml"));
@@ -74,10 +82,6 @@ public class DetailsRestaurateurController {
               e.printStackTrace();
             }
           }
-        } else {
-          emptyLabel.setText("Errore di connessione con il server");
-          emptyLabel.setVisible(true);
-          emptyLabel.setManaged(true);
         }
       });
     });

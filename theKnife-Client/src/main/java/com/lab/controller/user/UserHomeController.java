@@ -320,7 +320,6 @@ public class UserHomeController {
     listOfRestaurants.setVisible(!isEmpty);
     if(isEmpty) return;
 
-
     for(Restaurant r : restaurants) {
       String[] restaurantData = {r.getName(), r.getAddress(), String.format("%.1f", r.getAverageStars()), String.valueOf(r.getReviewsNum()), String.valueOf(r.getId())};
 
@@ -369,8 +368,8 @@ public class UserHomeController {
       leftMenuArea.getChildren().add(detailsNode); 
 
     }catch(IOException e) {
-      System.out.println("[" + StringColor.RED + "ERRORE" + StringColor.RESET + "] Caricamento dettagli del ristorante");
       e.printStackTrace();
+      System.out.println("[" + StringColor.RED + "ERRORE" + StringColor.RESET + "] Caricamento dettagli del ristorante");
     }
   }
 
@@ -397,8 +396,8 @@ public class UserHomeController {
       leftMenuArea.getChildren().add(commentNode); 
 
     }catch(IOException e) {
-      System.out.println("[" + StringColor.RED + "ERRORE" + StringColor.RESET + "] Caricamento recensioni del ristorante");
       e.printStackTrace();
+      System.out.println("[" + StringColor.RED + "ERRORE" + StringColor.RESET + "] Caricamento recensioni del ristorante");
     }
   }
 
@@ -425,8 +424,8 @@ public class UserHomeController {
       leftMenuArea.getChildren().add(commentNode); 
 
     }catch(IOException e) {
-      System.out.println("[" + StringColor.RED + "ERRORE" + StringColor.RESET + "] Caricamento form di scrittura commento");
       e.printStackTrace();
+      System.out.println("[" + StringColor.RED + "ERRORE" + StringColor.RESET + "] Caricamento form di scrittura commento");
     }
   }
 

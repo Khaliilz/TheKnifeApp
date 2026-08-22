@@ -16,10 +16,10 @@
     </StackPane>
     
     <StackPane fx:id="contentArea" AnchorPane.topAnchor="150" AnchorPane.bottomAnchor="50" AnchorPane.leftAnchor="50" AnchorPane.rightAnchor="50">      
-      <VBox fx:id="mainArea" alignment="CENTER">
+      <VBox fx:id="mainArea" alignment="CENTER" minHeight="450" maxHeight="450">
       
         <Label fx:id="emptyLabel" text="Nessun ristorante presente al momento" visible="false" managed="false"/>
-        <ScrollPane fx:id="listContainer" fitToWidth="true" VBox.vgrow="ALWAYS" pannable="true" minHeight="350" maxHeight="350">
+        <ScrollPane fx:id="listContainer" fitToWidth="true" VBox.vgrow="ALWAYS" pannable="true">
           <VBox fx:id="list" spacing="10"/>
         </ScrollPane>
 

@@ -83,7 +83,13 @@ public class RestaurateurHomeController {
           emptyLabel.setText("Errore di connessione con il server");
           emptyLabel.setVisible(true);
           emptyLabel.setManaged(true);
+        } else if(restaurants.isEmpty()) {
+          emptyLabel.setText("Nessun ristorante presente al momento");
+          emptyLabel.setVisible(true);
+          emptyLabel.setManaged(true);
         } else {
+          emptyLabel.setVisible(false);
+          emptyLabel.setManaged(false);
           for(Restaurant r : restaurants) {
             try{
               FXMLLoader loader = new FXMLLoader(App.class.getResource("/com/lab/fxml/restaurateur/yourRestaurants.fxml"));
