@@ -3,6 +3,7 @@ package com.lab.database;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import com.lab.utility.StringColor;
 
 public class Database {
 
@@ -17,9 +18,13 @@ public class Database {
     dbPassword = password;
   }
 
-  public static Connection getConnection() throws SQLException
+  public static Connection getConnection()
   {
-    if(dbUrl == null) throw new SQLException("Database not initialized. Wrong server credentials");
-    return DriverManager.getConnection(dbUrl, dbUser, dbPassword);
+    try {
+      Connection connection = DriverManager.getConnection(dbUrl, dbUser, dbPassword);
+      return connection;
+    } catch(SQLException e) {
+      return null;
+    }
   }
 }

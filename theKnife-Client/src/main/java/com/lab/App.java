@@ -15,14 +15,29 @@ import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import javax.swing.JOptionPane;
 
 public class App extends Application {
 
 	public static void main(String[] args) {
-		boolean connected = ServerConnection.connect("localhost");
+    String inputIP = JOptionPane.showInputDialog(
+      null,
+      "Inserisci l'IP del Server (lascia vuoto per localhost):",
+      "Connessione a TheKnife Server",
+      JOptionPane.QUESTION_MESSAGE
+    );
+    if (inputIP == null)  System.exit(0);
+    String serverIP = inputIP.trim().isEmpty() ? "localhost" : inputIP.trim();
+
+		boolean connected = ServerConnection.connect(serverIP);
 		if(connected) launch(args);
 		else {
-			System.out.println("[" + StringColor.RED + "ERROR" + StringColor.RESET + "]" + " Impossibile avviare il client, controllare la conessione con il server");
+			JOptionPane.showMessageDialog(
+        null, 
+        "Impossibile connettersi al Server sull'IP:\n" + serverIP, 
+        "Errore di Connessione", 
+        JOptionPane.ERROR_MESSAGE
+      );
 			System.exit(1);
 		}
 	}
@@ -34,7 +49,7 @@ public class App extends Application {
     try {
       root = FXMLLoader.load(App.class.getResource("/com/lab/fxml/basic/page.fxml"));
     } catch(IOException e) {
-      System.out.println("[" + StringColor.RED + "ERROR" + StringColor.RESET + "]" + " file page.fxml non trovato: ");
+      System.out.println("[" + StringColor.RED + "ERRORE" + StringColor.RESET + "]" + " file page.fxml non trovato: ");
       e.printStackTrace();
       return;
     }

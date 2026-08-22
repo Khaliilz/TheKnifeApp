@@ -20,6 +20,7 @@ public class ReviewQ {
                   "JOIN users ON reviews.user_id = users.id " +
                   "WHERE reviews.restaurant_id = ?";
 
+    System.out.println("[" + StringColor.YELLOW + "SERVER" + StringColor.RESET + "] Cerco le recensioni del ristorante(" + restaurantId + ")...");
     try(Connection connection = Database.getConnection(); PreparedStatement ps = connection.prepareStatement(sql)) {
 
       ps.setInt(1, restaurantId);
@@ -36,16 +37,18 @@ public class ReviewQ {
       }
     }catch(Exception e) {
       e.printStackTrace();
-      System.out.println("[" + StringColor.RED + "DATABASE" + StringColor.RESET + "] Acquiring reviews failed");
+      System.out.println("[" + StringColor.RED + "ERRORE" + StringColor.RESET + "] Richiesta lista recensioni del ristorante(" + restaurantId + ")");
     }
 
+    System.out.println("[" + StringColor.PURPLE + "DATABASE" + StringColor.RESET + "] Ottenuta la lista di recensioni del ristorante(" + restaurantId + ")");
     return list;
   }
 
   public static String[] getUserReview(int userId, int restaurantId)
   {
     String sql = "SELECT stars, comment, answer FROM reviews WHERE user_id = ? AND restaurant_id = ?";
-      
+    
+    System.out.println("[" + StringColor.YELLOW + "SERVER" + StringColor.RESET + "] Cerco le recensioni dell'utente(" + userId + ")...");
     try(Connection connection = Database.getConnection(); PreparedStatement ps = connection.prepareStatement(sql)) {
       
       ps.setInt(1, userId);
@@ -53,12 +56,14 @@ public class ReviewQ {
       
       ResultSet rs = ps.executeQuery();
             
-      if(rs.next()) return new String[] { String.valueOf(rs.getInt("stars")), rs.getString("comment"), rs.getString("answer") };
-            
+      if(rs.next()){
+        System.out.println("[" + StringColor.PURPLE + "DATABASE" + StringColor.RESET + "] Ottenuta la lista di recensioni dell'utente(" + userId + ")...");
+        return new String[] { String.valueOf(rs.getInt("stars")), rs.getString("comment"), rs.getString("answer") };
+      }
       }catch(Exception e) {
         e.printStackTrace();
+        System.out.println("[" + StringColor.PURPLE + "ERRORE" + StringColor.RESET + "] Impossibile ottenere le recensioni dell'utente(" + userId + ")");
       }
-
       return null;
   }
 
@@ -66,6 +71,7 @@ public class ReviewQ {
   {
     String sql = "INSERT INTO reviews (user_id, restaurant_id, stars, comment) VALUES (?, ?, ?, ?)";
 
+    System.out.println("[" + StringColor.YELLOW + "SERVER" + StringColor.RESET + "] Aggiungo la recensione dell'utente(" + userId + ") per il ristorante(" + restaurantId + ")...");
     try(Connection connection = Database.getConnection(); PreparedStatement ps = connection.prepareStatement(sql)) {
 
       ps.setInt(1, userId);
@@ -73,10 +79,11 @@ public class ReviewQ {
       ps.setInt(3, stars);
       ps.setString(4, comment);
 
+      System.out.println("[" + StringColor.PURPLE + "DATABASE" + StringColor.RESET + "] Aggiunta la recensione dell'utente(" + userId + ") per il ristorante(" + restaurantId + ")...");
       return ps.executeUpdate() > 0;
     }catch(Exception e) {
       e.printStackTrace();
-      System.out.println("[" + StringColor.RED + "DATABASE" + StringColor.RESET + "] Uploading review failed");
+      System.out.println("[" + StringColor.RED + "ERRORE" + StringColor.RESET + "] Impossibile aggiungere la recensione dell'utente(" + userId + ") per il ristorante(" + restaurantId + ")...");
       return false;
     }
   }
@@ -84,18 +91,20 @@ public class ReviewQ {
   public static boolean updateReview(int userId, int restaurantId, int stars, String comment)
   {
     String sql = "UPDATE reviews SET stars = ?, comment = ? WHERE user_id = ? AND restaurant_id = ?";
-      
+    
+    System.out.println("[" + StringColor.YELLOW + "SERVER" + StringColor.RESET + "] Aggiorno la recensione dell'utente(" + userId + ") per il ristorante(" + restaurantId + ")...");
     try(Connection connection = Database.getConnection(); PreparedStatement ps = connection.prepareStatement(sql)) {
             
       ps.setInt(1, stars);
       ps.setString(2, comment);
       ps.setInt(3, userId);
       ps.setInt(4, restaurantId);
-            
+      
+      System.out.println("[" + StringColor.PURPLE + "DATABASE" + StringColor.RESET + "] Aggiornata la recensione dell'utente(" + userId + ") per il ristorante(" + restaurantId + ")...");
       return ps.executeUpdate() > 0;
     }catch(Exception e) {
       e.printStackTrace();
-      System.out.println("[" + StringColor.RED + "DATABASE" + StringColor.RESET + "] Updating review failed");
+      System.out.println("[" + StringColor.RED + "ERRORE" + StringColor.RESET + "] Impossibile aggiornare la recensione dell'utente(" + userId + ") per il ristorante(" + restaurantId + ")...");
       return false;
     }
   }
@@ -104,15 +113,17 @@ public class ReviewQ {
   {
     String sql = "DELETE FROM reviews WHERE user_id = ? AND restaurant_id = ?";
 
+    System.out.println("[" + StringColor.YELLOW + "SERVER" + StringColor.RESET + "] Rimuovo la recensione dell'utente(" + userId + ") per il ristorante(" + restaurantId + ")...");
     try(Connection connection = Database.getConnection(); PreparedStatement ps = connection.prepareStatement(sql)) {
 
       ps.setInt(1, userId);
       ps.setInt(2, restaurantId);
 
+      System.out.println("[" + StringColor.PURPLE + "DATABASE" + StringColor.RESET + "] Rimossa la recensione dell'utente(" + userId + ") per il ristorante(" + restaurantId + ")...");
       return ps.executeUpdate() > 0;
     }catch(Exception e) {
       e.printStackTrace();
-      System.out.println("[" + StringColor.RED + "DATABASE" + StringColor.RESET + "] Removing review failed");
+      System.out.println("[" + StringColor.RED + "ERRORE" + StringColor.RESET + "] Impossibile rimuovere la recensione dell'utente(" + userId + ") per il ristorante(" + restaurantId + ")...");
       return false;
     }
   }
@@ -126,6 +137,7 @@ public class ReviewQ {
                  "JOIN users ON reviews.user_id = users.id " +
                  "WHERE reviews.restaurant_id = ?";
 
+    System.out.println("[" + StringColor.YELLOW + "SERVER" + StringColor.RESET + "] Cerco le recensioni del ristorante(" + restaurantId + ")...");
     try(Connection connection = Database.getConnection(); PreparedStatement ps = connection.prepareStatement(sql)) {
       ps.setInt(1, restaurantId);
       
@@ -143,7 +155,9 @@ public class ReviewQ {
       }
     } catch(Exception e) {
       e.printStackTrace();
+      System.out.println("[" + StringColor.RED + "ERRORE" + StringColor.RESET + "] Impossibile trovare le recensioni del ristorante(" + restaurantId + ")");
     }
+    System.out.println("[" + StringColor.PURPLE + "DATABASE" + StringColor.RESET + "] Ottenuta la lista di recensioni del ristorante(" + restaurantId + ")");
     return list;
   }
 
@@ -151,14 +165,17 @@ public class ReviewQ {
   {
     String sql = "UPDATE reviews SET answer = ? WHERE user_id = ? AND restaurant_id = ?";
     
+    System.out.println("[" + StringColor.YELLOW + "SERVER" + StringColor.RESET + "] Salvo la risposta del ristoratore(" + restaurantId + ") alla recensione dell'utente(" + userId + ")...");
     try(Connection connection = Database.getConnection(); PreparedStatement ps = connection.prepareStatement(sql)) {
       ps.setString(1, answer);
       ps.setInt(2, userId);
       ps.setInt(3, restaurantId);
       
+      System.out.println("[" + StringColor.PURPLE + "DATABASE" + StringColor.RESET + "] Salvata la risposta alla recensione del ristorante(" + restaurantId + ")");
       return ps.executeUpdate() > 0;
     } catch(Exception e) {
       e.printStackTrace();
+      System.out.println("[" + StringColor.RED + "ERRORE" + StringColor.RESET + "] Impossibile salvare la risposta alla recensione del ristorante(" + restaurantId + ")");
       return false;
     }
   }

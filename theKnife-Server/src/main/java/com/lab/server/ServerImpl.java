@@ -12,6 +12,7 @@ import com.lab.database.query.RestaurantQ;
 import com.lab.database.query.ReviewQ;
 import com.lab.database.query.UserQ;
 import com.lab.interfaces.ServerInterface;
+import com.lab.utility.StringColor;
 
 public class ServerImpl extends UnicastRemoteObject implements ServerInterface {
   
@@ -23,12 +24,14 @@ public class ServerImpl extends UnicastRemoteObject implements ServerInterface {
   @Override
   public User signin(String username, String password) throws RemoteException
   {
+    System.out.println("[" + StringColor.BLUE + "INFO" + StringColor.RESET + "] Richiesta di accesso per l'utente: " + username);
     return UserQ.signin(username, password);
   }
 
   @Override
   public boolean signup(String name, String surname, Date birthDate, String address, String username, String plainPassword, String role) throws RemoteException
   {
+    System.out.println("[" + StringColor.BLUE + "INFO" + StringColor.RESET + "] Richiesta di registrazione per l'utente: " + username);
     return UserQ.signup(name, surname, birthDate, address, username, plainPassword, role);
   }
 

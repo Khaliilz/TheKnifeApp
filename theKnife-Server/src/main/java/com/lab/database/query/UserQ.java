@@ -16,7 +16,8 @@ public class UserQ {
   public static User signin(String username, String password)
   {
     String sql = "SELECT id, username, password, role, address, latitude, longitude FROM users WHERE username = ?";
-        
+
+    System.out.println("[" + StringColor.YELLOW + "SERVER" + StringColor.RESET + "] Cerco l'utente nel database...");
     try(Connection connection = Database.getConnection(); PreparedStatement ps = connection.prepareStatement(sql)) {
       ps.setString(1, username);
             
@@ -25,7 +26,8 @@ public class UserQ {
       if(rs.next()) {
         String hashedPassword = rs.getString("password");
         
-        if(PasswordHashing.checkPassword(password, hashedPassword))
+        if(PasswordHashing.checkPassword(password, hashedPassword)) {
+          System.out.println("[" + StringColor.PURPLE + "DATABASE" + StringColor.RESET + "] Utente " + username + " trovato e password verificata");
           return new User(rs.getInt("id"),
                           rs.getString("username"),
                           rs.getString("address"),
@@ -33,12 +35,11 @@ public class UserQ {
                           rs.getDouble("longitude"),
                           rs.getString("role")
                         );
-
-        else System.out.println("[" + StringColor.RED + "DATABASE" + StringColor.RESET + "] Wrong password");
-      } else System.out.println("[" + StringColor.RED + "DATABASE" + StringColor.RESET + "] Wrong username");
+        } else System.out.println("[" + StringColor.RED + "DATABASE" + StringColor.RESET + "] Password errata");
+      } else System.out.println("[" + StringColor.RED + "DATABASE" + StringColor.RESET + "] Username errato");
       
     }catch(Exception e) {
-      System.out.println("[" + StringColor.RED + "DATABASE" + StringColor.RESET + "] Signin failed");
+      System.out.println("[" + StringColor.RED + "DATABASE" + StringColor.RESET + "] Registrazione fallita");
       e.printStackTrace();
     }
         
@@ -53,12 +54,12 @@ public class UserQ {
     if(coords != null) {
       lat = coords[0];
       lon = coords[1];
-    } else System.out.println("[" + StringColor.RED + "ERROR" + StringColor.RESET + "] Can't convert address into coordinates");
+    } else System.out.println("[" + StringColor.RED + "ERROR" + StringColor.RESET + "] Impossibile l'indirizzo in coordinate");
 
     String sql = "INSERT INTO users (name, surname, birth_date, address, latitude, longitude, username, password, role) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
+    System.out.println("[" + StringColor.YELLOW + "SERVER" + StringColor.RESET + "] Registro l'utente + " + username + " nel database...");
     try (Connection connection = Database.getConnection(); PreparedStatement ps = connection.prepareStatement(sql)) {
-            
       ps.setString(1, name);
       ps.setString(2, surname);
       ps.setDate(3, birthDate);
@@ -71,13 +72,14 @@ public class UserQ {
             
       int insertRow = ps.executeUpdate();
       connection.commit();
+      System.out.println("[" + StringColor.PURPLE + "DATABASE" + StringColor.RESET + "] Utente " + username + " registrato");
       return insertRow > 0;
             
       }catch(java.sql.SQLException e) {
         if("23505".equals(e.getSQLState())) {
-          System.out.println("[" + StringColor.RED + "DATABASE" + StringColor.RESET + "] Username already existing");
+          System.out.println("[" + StringColor.RED + "DATABASE" + StringColor.RESET + "] Username gia' esistente");
         } else {
-          System.out.println("[" + StringColor.RED + "DATABASE" + StringColor.RESET + "] Failed inserting signup infos");
+          System.out.println("[" + StringColor.RED + "DATABASE" + StringColor.RESET + "] Registrazione nel DB fallita");
           e.printStackTrace();
         }
         return false;

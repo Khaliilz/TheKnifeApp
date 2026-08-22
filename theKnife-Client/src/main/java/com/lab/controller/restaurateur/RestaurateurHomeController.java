@@ -2,6 +2,8 @@ package com.lab.controller.restaurateur;
 
 import java.io.IOException;
 import java.rmi.RemoteException;
+import java.util.concurrent.CompletableFuture;
+import javafx.application.Platform;
 import java.util.List;
 
 import com.lab.App;
@@ -66,10 +68,6 @@ public class RestaurateurHomeController {
     if (Session.getCurrentUser() == null) return;
     int ownerId = Session.getCurrentUser().getId();
 
-    emptyLabel.setText("Caricamento in corso...");
-    emptyLabel.setVisible(true);
-    emptyLabel.setManaged(true);
-
     CompletableFuture.supplyAsync(() -> {
       try{
         return ServerConnection.getServer().getRestaurantsByOwner(ownerId);
@@ -80,7 +78,6 @@ public class RestaurateurHomeController {
       }
     }).thenAccept(restaurants -> {
       Platform.runLater(() -> {
-        emptyLabel.setText("Nessun ristorante presente al momento");
         if(restaurants == null) {
           System.out.println("[" + StringColor.RED + "ERRORE" + StringColor.RESET + "] Richiesta dei tuoi ristoranti");
           emptyLabel.setText("Errore di connessione con il server");

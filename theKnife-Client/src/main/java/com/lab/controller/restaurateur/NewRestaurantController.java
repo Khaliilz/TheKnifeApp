@@ -1,6 +1,8 @@
 package com.lab.controller.restaurateur;
 
 import java.rmi.RemoteException;
+import java.util.concurrent.CompletableFuture;
+import javafx.application.Platform;
 
 import com.lab.model.Session;
 import com.lab.server.ServerConnection;
@@ -9,6 +11,7 @@ import com.lab.utility.ErrorContainer;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
@@ -126,8 +129,8 @@ public class NewRestaurantController {
     CompletableFuture.supplyAsync(() -> {
       try {
         return ServerConnection.getServer().addRestaurant(nameR, fullAddress, cuisineR, price, phoneNumberR, websiteUrlR, Double.parseDouble(latitudeR), Double.parseDouble(longitudeR), ownerId);
-      } catch(RemoteException e) {
-        e.printStackTrace();
+      } catch(RemoteException ex) {
+        ex.printStackTrace();
         System.out.println("[" + StringColor.RED + "ERRORE" + StringColor.RESET + "] Richiesta salvataggio dati nuovo ristorante");
         return false;
       }

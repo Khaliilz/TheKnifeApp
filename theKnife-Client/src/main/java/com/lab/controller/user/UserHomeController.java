@@ -95,10 +95,6 @@ public class UserHomeController {
     double lat = user.getLatitude();
     double lon = user.getLongitude();
 
-    emptyLabel.setText("Caricamento in corso...");
-    emptyLabel.setVisible(true);
-    emptyLabel.setManaged(true);
-
     CompletableFuture.supplyAsync(() -> {
       try{
         return ServerConnection.getServer().getNearestRestaurants(lat, lon);
@@ -109,7 +105,6 @@ public class UserHomeController {
       }
     }).thenAccept(nearest -> {
       Platform.runLater(() -> {
-        emptyLabel.setText("Nessun ristorante trovato");
         if(nearest != null) fillRestaurants(nearest);
         else {
           emptyLabel.setText("Errore di connessione con il server");
@@ -136,10 +131,6 @@ public class UserHomeController {
     double lat = user.getLatitude();
     double lon = user.getLongitude();
 
-    emptyLabel.setText("Caricamento in corso...");
-    emptyLabel.setVisible(true);
-    emptyLabel.setManaged(true);
-
     CompletableFuture.supplyAsync(() -> {
       try{
         return ServerConnection.getServer().getBookmarkedRestaurants(user.getId(), lat, lon);
@@ -150,7 +141,6 @@ public class UserHomeController {
       }
     }).thenAccept(bookmarked -> {
       Platform.runLater(() -> {
-        emptyLabel.setText("Nessun ristorante trovato");
         if(bookmarked != null) fillRestaurants(bookmarked);
         else {
           emptyLabel.setText("Errore di connessione con il server");
@@ -177,10 +167,6 @@ public class UserHomeController {
     double lat = user.getLatitude();
     double lon = user.getLongitude();
 
-    emptyLabel.setText("Caricamento in corso...");
-    emptyLabel.setVisible(true);
-    emptyLabel.setManaged(true);
-
     CompletableFuture.supplyAsync(() -> {
       try{
         return ServerConnection.getServer().getReviewedRestaurants(user.getId(), lat, lon);
@@ -191,7 +177,6 @@ public class UserHomeController {
       }
     }).thenAccept(reviewed -> {
       Platform.runLater(() -> {
-        emptyLabel.setText("Nessuna recensione trovata");
         if(reviewed != null) fillReviewed(reviewed);
         else {
           emptyLabel.setText("Errore di connessione con il server");
@@ -269,10 +254,6 @@ public class UserHomeController {
     double lat = user.getLatitude();
     double lon = user.getLongitude();
 
-    emptyLabel.setText("Caricamento in corso...");
-    emptyLabel.setVisible(true);
-    emptyLabel.setManaged(true);
-
     CompletableFuture.supplyAsync(() -> {
       try{
         return ServerConnection.getServer().getSerachedRestaurants(currentSearchPlace, filterCuisine, filterPrice, filterDelivery, filterBooking, filterStars, currentSearchOffset, lat, lon);
@@ -283,7 +264,6 @@ public class UserHomeController {
       }
     }).thenAccept(searchResults -> {
       Platform.runLater(() -> {
-        emptyLabel.setText("Nessun ristorante trovato");
         if(searchResults != null) {
           fillRestaurants(searchResults);
 

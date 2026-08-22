@@ -23,6 +23,7 @@ public class RestaurantQ {
   public static boolean isDatabaseEmpty() {
     String sql = "SELECT COUNT(*) AS total FROM restaurants";
     
+    System.out.println("[" + StringColor.YELLOW + "SERVER" + StringColor.RESET + "] Verifico che il DB non sia vuoto...");
     try(Connection connection = Database.getConnection(); PreparedStatement ps = connection.prepareStatement(sql)) {
       ResultSet rs = ps.executeQuery();
          
@@ -47,7 +48,8 @@ public class RestaurantQ {
                  "GROUP BY restaurants.id, restaurants.name, restaurants.address, restaurants.cuisine, restaurants.price, restaurants.delivery, restaurants.booking, restaurants.latitude, restaurants.longitude " +
                  "ORDER BY distance ASC " +
                  "LIMIT 10";
-  
+    
+    System.out.println("[" + StringColor.YELLOW + "SERVER" + StringColor.RESET + "] Cerco i ristoranti vicini all'utente...");
     try(Connection connection = Database.getConnection(); PreparedStatement ps = connection.prepareStatement(sql)) {
 
       ps.setDouble(1, lat);
@@ -73,6 +75,7 @@ public class RestaurantQ {
       }
     }catch(Exception e) { e.printStackTrace(); }
 
+    System.out.println("[" + StringColor.PURPLE + "DATABASE" + StringColor.RESET + "] lista di ristoranti vicini ottenuta");
     return list;
   }
 
@@ -86,7 +89,8 @@ public class RestaurantQ {
                  "WHERE bookmarks.user_id = ? " +
                  "GROUP BY restaurants.id, restaurants.name, restaurants.address, restaurants.cuisine, restaurants.price, restaurants.delivery, restaurants.booking, restaurants.latitude, restaurants.longitude " +
                  "ORDER BY distance ASC";
-  
+    
+    System.out.println("[" + StringColor.YELLOW + "SERVER" + StringColor.RESET + "] Cerco i ristoranti preferiti dello user(" + userId + ") ...");
     try(Connection connection = Database.getConnection(); PreparedStatement ps = connection.prepareStatement(sql)) {
 
       ps.setDouble(1, lat);
@@ -112,7 +116,8 @@ public class RestaurantQ {
         list.add(r);
       }
     }catch(Exception e) { e.printStackTrace(); }
-
+    
+    System.out.println("[" + StringColor.PURPLE + "DATABASE" + StringColor.RESET + "] lista di ristoranti preferiti ottenuta");
     return list;
   }
 
@@ -126,7 +131,8 @@ public class RestaurantQ {
                  "WHERE my_rev.user_id = ? " +
                  "GROUP BY restaurants.id, restaurants.name, restaurants.address, restaurants.cuisine, restaurants.price, restaurants.delivery, restaurants.booking, restaurants.latitude, restaurants.longitude " +
                  "ORDER BY distance ASC";
-  
+
+    System.out.println("[" + StringColor.YELLOW + "SERVER" + StringColor.RESET + "] Cerco i ristoranti recensiti dello user(" + userId + ") ...");
     try(Connection connection = Database.getConnection(); PreparedStatement ps = connection.prepareStatement(sql)) {
 
       ps.setDouble(1, lat);
@@ -153,6 +159,7 @@ public class RestaurantQ {
       }
     }catch(Exception e) { e.printStackTrace(); }
 
+    System.out.println("[" + StringColor.PURPLE + "DATABASE" + StringColor.RESET + "] lista di recensioni ottenuta");
     return list;
   }
 
@@ -221,12 +228,13 @@ public class RestaurantQ {
 
     sql.append("ORDER BY distance ASC LIMIT 10 OFFSET ?");
     params.add(offset);
-
-    try(java.sql.Connection connection = Database.getConnection(); java.sql.PreparedStatement ps = connection.prepareStatement(sql.toString())) {
+    
+    System.out.println("[" + StringColor.YELLOW + "SERVER" + StringColor.RESET + "] Cerco ristoranti a (" + place + ") ...");
+    try(Connection connection = Database.getConnection(); PreparedStatement ps = connection.prepareStatement(sql.toString())) {
       
       for(int i = 0; i < params.size(); i++) ps.setObject(i + 1, params.get(i));
       
-      java.sql.ResultSet rs = ps.executeQuery();
+      ResultSet rs = ps.executeQuery();
       
       while(rs.next()) {
         Restaurant r = new Restaurant(
@@ -247,7 +255,8 @@ public class RestaurantQ {
     }catch(Exception e) { 
       e.printStackTrace();
     }
-
+    
+    System.out.println("[" + StringColor.PURPLE + "DATABASE" + StringColor.RESET + "] lista di ristoranti a " + place + " ottenuta");
     return list;
   }
 
@@ -261,6 +270,7 @@ public class RestaurantQ {
                  "GROUP BY restaurants.id, restaurants.name, restaurants.address, restaurants.cuisine, restaurants.price, restaurants.delivery, restaurants.booking, restaurants.latitude, restaurants.longitude " +
                  "ORDER BY restaurants.id DESC";
   
+    System.out.println("[" + StringColor.YELLOW + "SERVER" + StringColor.RESET + "] Cerco i ristoranti del ristoratore(" + ownerId + ") ...");
     try(Connection connection = Database.getConnection(); PreparedStatement ps = connection.prepareStatement(sql)) {
       ps.setInt(1, ownerId);
       
@@ -284,6 +294,7 @@ public class RestaurantQ {
       e.printStackTrace();
     }
 
+    System.out.println("[" + StringColor.PURPLE + "DATABASE" + StringColor.RESET + "] lista di ristoranti del ristoratore(" + ownerId + ") ottenuta");
     return list;
   }
 
@@ -291,6 +302,7 @@ public class RestaurantQ {
   {
     String sql = "INSERT INTO restaurants (name, address, cuisine, price, delivery, booking, latitude, longitude, owner_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
     
+    System.out.println("[" + StringColor.YELLOW + "SERVER" + StringColor.RESET + "] Aggiungo un nuovo ristorante del ristoratore(" + ownerId + ") ...");
     try(Connection connection = Database.getConnection(); PreparedStatement ps = connection.prepareStatement(sql)) {
       ps.setString(1, name);
       ps.setString(2, address);
@@ -302,10 +314,11 @@ public class RestaurantQ {
       ps.setDouble(8, lon);
       ps.setInt(9, ownerId);
       
+      System.out.println("[" + StringColor.PURPLE + "DATABASE" + StringColor.RESET + "] Aggiunto il ristorante " + name + " del ristoratore(" + ownerId + ")");
       return ps.executeUpdate() > 0;
     }catch(Exception e) {
       e.printStackTrace();
-      System.out.println("[" + StringColor.RED + "ERROR" + StringColor.RESET + "] Failed adding restaurant");
+      System.out.println("[" + StringColor.RED + "ERRORE" + StringColor.RESET + "] Aggiunta nuovo ristorante fallita");
       return false;
     }
   }
@@ -314,13 +327,15 @@ public class RestaurantQ {
   {
     String sql = "DELETE FROM restaurants WHERE id = ?";
     
+    System.out.println("[" + StringColor.YELLOW + "SERVER" + StringColor.RESET + "] Rimuovo il ristorante(" + restaurantId + ") ...");
     try(Connection connection = Database.getConnection(); PreparedStatement ps = connection.prepareStatement(sql)) {
       ps.setInt(1, restaurantId);
       
+      System.out.println("[" + StringColor.PURPLE + "DATABASE" + StringColor.RESET + "] Rimosso il ristorante(" + restaurantId + ")");
       return ps.executeUpdate() > 0;
     }catch(Exception e) {
       e.printStackTrace();
-      System.out.println("[" + StringColor.RED + "ERROR" + StringColor.RESET + "] Failed removing restaurant");
+      System.out.println("[" + StringColor.RED + "ERRORE" + StringColor.RESET + "] Rimozione ristorante fallita");
       return false;
     }
   }

@@ -7,7 +7,12 @@ import com.lab.utility.StringColor;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import javafx.scene.control.Button;
 import javafx.scene.text.Text;
+
+import java.util.concurrent.CompletableFuture;
+import javafx.application.Platform;
+import java.rmi.RemoteException;
 
 public class YourRestaurantsController {
   
@@ -49,8 +54,8 @@ public class YourRestaurantsController {
     CompletableFuture.supplyAsync(() -> {
       try {
         return ServerConnection.getServer().removeRestaurant(currentRestaurant.getId());
-      } catch(RemoteException e) {
-        e.printStackTrace();
+      } catch(RemoteException ex) {
+        ex.printStackTrace();
         System.out.println("[" + StringColor.RED + "ERRORE" + StringColor.RESET + "] Richiesta di rimozione ristorante");
         return false;
       }

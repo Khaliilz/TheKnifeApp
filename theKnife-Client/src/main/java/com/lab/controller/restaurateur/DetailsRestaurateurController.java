@@ -2,6 +2,8 @@ package com.lab.controller.restaurateur;
 
 import java.io.IOException;
 import java.rmi.RemoteException;
+import java.util.concurrent.CompletableFuture;
+import javafx.application.Platform;
 import java.util.List;
 
 import com.lab.App;
@@ -46,10 +48,6 @@ public class DetailsRestaurateurController {
     list.getChildren().clear();
     if(currentRestaurant == null) return;
 
-    emptyLabel.setText("Caricamento in corso...");
-    emptyLabel.setVisible(true);
-    emptyLabel.setManaged(true);
-
     CompletableFuture.supplyAsync(() -> {
       try{
         return ServerConnection.getServer().getRestaurateurReviews(currentRestaurant.getId());
@@ -60,7 +58,6 @@ public class DetailsRestaurateurController {
       }
     }).thenAccept(reviews -> {
       Platform.runLater(() -> {
-        emptyLabel.setText("Nessun ristorante trovato");
         if(reviews != null) {
           for(String[] r : reviews) {
             try{

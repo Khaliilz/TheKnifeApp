@@ -12,6 +12,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextArea;
+import javafx.scene.control.Button;
 import javafx.scene.text.Text;
 
 public class ViewCommentController {
@@ -33,6 +34,7 @@ public class ViewCommentController {
     int stars = 1;
     if(starsTwo.isSelected()) stars = 2;
     else if(starsThree.isSelected()) stars = 3;
+    int tmpStars = stars;
 
     saveButton.setDisable(true);
     saveButton.setText("SALVATAGGIO...");
@@ -40,9 +42,9 @@ public class ViewCommentController {
     int userId = Session.getCurrentUser().getId();
     CompletableFuture.supplyAsync(() -> {
       try {
-        return ServerConnection.getServer().updateReview(userId, currentRestaurantId, stars, comment.getText());
+        return ServerConnection.getServer().updateReview(userId, currentRestaurantId, tmpStars, comment.getText());
       } catch(RemoteException ex) {
-        e.printStackTrace();
+        ex.printStackTrace();
         System.out.println("[" + StringColor.RED + "ERRORE" + StringColor.RESET + "] Richiesta salvataggio recensione");
         return false;
       }
@@ -69,7 +71,7 @@ public class ViewCommentController {
       try {
         return ServerConnection.getServer().removeReview(userId, currentRestaurantId);
       } catch(RemoteException ex) {
-        e.printStackTrace();
+        ex.printStackTrace();
         System.out.println("[" + StringColor.RED + "ERRORE" + StringColor.RESET + "] Richiesta rimozione recensione");
         return false;
       }

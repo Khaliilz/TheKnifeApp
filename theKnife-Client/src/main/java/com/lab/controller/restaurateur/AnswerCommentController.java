@@ -1,6 +1,8 @@
 package com.lab.controller.restaurateur;
 
 import java.rmi.RemoteException;
+import java.util.concurrent.CompletableFuture;
+import javafx.application.Platform;
 
 import com.lab.server.ServerConnection;
 import com.lab.utility.StringColor;
@@ -10,6 +12,7 @@ import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.TextArea;
 import javafx.scene.text.Text;
+import javafx.scene.control.Button;
 import javafx.stage.Stage;
 
 public class AnswerCommentController {
@@ -49,8 +52,8 @@ public class AnswerCommentController {
     CompletableFuture.supplyAsync(() -> {
       try {
         return ServerConnection.getServer().saveReviewAnswer(userId, restaurantId, answerText);
-      } catch(RemoteException e) {
-        e.printStackTrace();
+      } catch(RemoteException ex) {
+        ex.printStackTrace();
         System.out.println("[" + StringColor.RED + "ERRORE" + StringColor.RESET + "] Richiesta salvataggio dati (risposta recensione)");
         return false;
       }

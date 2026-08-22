@@ -1,10 +1,10 @@
 package com.lab.database.query;
+import com.lab.database.Database;
+import com.lab.utility.StringColor;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-
-import com.lab.database.Database;
 
 public class BookmarkQ {
   
@@ -28,13 +28,16 @@ public class BookmarkQ {
   {
     String sql = "INSERT INTO bookmarks (user_id, restaurant_id) VALUES (?, ?)";
 
+    System.out.println("[" + StringColor.YELLOW + "SERVER" + StringColor.RESET + "] Aggiungo il ristorante(" + restaurantId + ") ai preferiti dell'utente(" + userId + ")...");
     try(Connection connection = Database.getConnection(); PreparedStatement ps = connection.prepareStatement(sql)) {
       ps.setInt(1, userId);
       ps.setInt(2, restaurantId);
 
+      System.out.println("[" + StringColor.PURPLE + "DATABASE" + StringColor.RESET + "] Ristorante(" + restaurantId + ") aggiunto ai preferiti dell'utente(" + userId + ")");
       return ps.executeUpdate() > 0;
     } catch(Exception e) {
       e.printStackTrace();
+      System.out.println("[" + StringColor.PURPLE + "ERRORE" + StringColor.RESET + "] Impossibile aggiungere il ristorante(" + restaurantId + ") ai preferiti dell'utente(" + userId + ")");
       return false;
     }
   }
@@ -43,13 +46,16 @@ public class BookmarkQ {
   {
     String sql = "DELETE FROM bookmarks WHERE user_id = ? AND restaurant_id = ?";
 
+    System.out.println("[" + StringColor.YELLOW + "SERVER" + StringColor.RESET + "] Rimuovo il ristorante(" + restaurantId + ") dai preferiti dell'utente(" + userId + ")...");
     try(Connection connection = Database.getConnection(); PreparedStatement ps = connection.prepareStatement(sql)) {
       ps.setInt(1, userId);
       ps.setInt(2, restaurantId);
 
+      System.out.println("[" + StringColor.PURPLE + "DATABASE" + StringColor.RESET + "] Ristorante(" + restaurantId + ") rimosso dai preferiti dell'utente(" + userId + ")");
       return ps.executeUpdate() > 0;
     } catch(Exception e) {
       e.printStackTrace();
+      System.out.println("[" + StringColor.PURPLE + "ERRORE" + StringColor.RESET + "] Impossibile rimuovere il ristorante(" + restaurantId + ") dai preferiti dell'utente(" + userId + ")");
       return false;
     }
   }

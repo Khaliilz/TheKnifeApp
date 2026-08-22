@@ -2,6 +2,8 @@ package com.lab.controller.user;
 
 import java.io.IOException;
 import java.rmi.RemoteException;
+import java.util.concurrent.CompletableFuture;
+import javafx.application.Platform;
 import java.util.List;
 
 import com.lab.model.Restaurant;
@@ -80,10 +82,6 @@ public class DetailsUserController {
   {
     listOfComments.getChildren().clear();
 
-    emptyLabel.setText("Caricamento in corso...");
-    emptyLabel.setVisible(true);
-    emptyLabel.setManaged(true);
-
     CompletableFuture.supplyAsync(() -> {
       try{
         return ServerConnection.getServer().getRestaurantReviews(restaurantId);
@@ -94,7 +92,6 @@ public class DetailsUserController {
       }
     }).thenAccept(reviews -> {
       Platform.runLater(() -> {
-        emptyLabel.setText("Nessuna recensione trovata");
         if(reviews == null) {
           System.out.println("[" + StringColor.RED + "ERRORE" + StringColor.RESET + "] Richiesta recensioni ristorante");
           emptyLabel.setText("Errore di connessione con il server");
