@@ -29,7 +29,7 @@ public class ViewCommentController {
   private int currentRestaurantId;
 
   @FXML
-  public void saveClicked(ActionEvent e)
+  public void saveClicked(ActionEvent event)
   {
     int stars = 1;
     if(starsTwo.isSelected()) stars = 2;
@@ -56,13 +56,12 @@ public class ViewCommentController {
         else {
           System.out.println("[" + StringColor.GREEN + "AZIONE" + StringColor.RESET + "] Recensione salvata");
           UserHomeController.getInstance().closeComment();
-          UserHomeController.getInstance().loadReviews();
         }
       });
     });
   }
 
-  @FXML void removeClicked(ActionEvent e)
+  @FXML void removeClicked(ActionEvent event)
   { 
     removeButton.setDisable(true);
     int userId = Session.getCurrentUser().getId();
@@ -83,7 +82,6 @@ public class ViewCommentController {
         else {
           System.out.println("[" + StringColor.GREEN + "AZIONE" + StringColor.RESET + "] Recensione rimossa");
           UserHomeController.getInstance().closeComment();
-          UserHomeController.getInstance().loadReviews();
         }
       });
     });

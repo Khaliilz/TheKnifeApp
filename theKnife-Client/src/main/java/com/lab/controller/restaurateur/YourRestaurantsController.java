@@ -42,12 +42,12 @@ public class YourRestaurantsController {
     reviewsNum.setText(String.valueOf(r.getReviewsNum()));
   }
 
-  @FXML public void detailClicked(ActionEvent e)
+  @FXML public void detailClicked(ActionEvent event)
   {
     RestaurateurHomeController.getInstance().openDetails(currentRestaurant);
   }
 
-  @FXML public void removeClicked(ActionEvent e)
+  @FXML public void removeClicked(ActionEvent event)
   {
     removeButton.setDisable(true);
 

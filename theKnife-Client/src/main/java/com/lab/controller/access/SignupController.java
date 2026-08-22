@@ -116,7 +116,7 @@ public class SignupController {
     signup_B.setDisable(true);
     signup_B.setText("REGISTRAZIONE...");
 
-    Date SQLDATE = sqlDate;
+    final Date SQLDATE = sqlDate;
 
     CompletableFuture.supplyAsync(() -> {
       try {

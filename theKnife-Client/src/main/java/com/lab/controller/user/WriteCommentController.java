@@ -57,13 +57,13 @@ public class WriteCommentController {
     });
   }
 
-  @FXML void backClicked(ActionEvent e)
+  @FXML void backClicked(ActionEvent event)
   {
     UserHomeController.getInstance().closeWriteComment();
   }
 
   @FXML
-  public void saveClicked(ActionEvent e)
+  public void saveClicked(ActionEvent event)
   {
     RadioButton selectedRadioButton = (RadioButton) starsGroup.getSelectedToggle();
     int stars = Integer.parseInt(selectedRadioButton.getText());

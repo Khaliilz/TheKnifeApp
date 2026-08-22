@@ -37,6 +37,12 @@ public class ServerImpl extends UnicastRemoteObject implements ServerInterface {
     return UserQ.signup(name, surname, birthDate, address, username, plainPassword, role);
   }
 
+  @Override
+  public void signout(int userId)
+  {
+    System.out.println("[" + StringColor.YELLOW + "SERVER" + StringColor.RESET + "] " + getClientIP() + ": Richiesta di uscita dell'utente(" + userId + ")");;
+  }
+
 
   @Override
   public List<Restaurant> getNearestRestaurants(double lat, double lon) throws RemoteException

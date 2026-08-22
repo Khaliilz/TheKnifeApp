@@ -18,13 +18,13 @@ public class PriceConverter {
   public static String symbolsToPrice(String symbols)
   {
     if(symbols == null || symbols.trim().isEmpty()) return null;
-
+    char value = symbols.charAt(0);
     switch (symbols.trim().length()) {
-        case 1: return "10-20";
-        case 2: return "30-40";
-        case 3: return "50-60";
-        case 4: return "70-80";
-        default: return "10-20"; 
+        case 1: return "10-20" + value;
+        case 2: return "30-40" + value;
+        case 3: return "50-60" + value;
+        case 4: return "70-80" + value;
+        default: return "10-20" + value; 
     }
   }
 }

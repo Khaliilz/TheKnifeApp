@@ -137,9 +137,12 @@ public class RestaurateurHomeController {
 
     setTitle("I tuoi ristoranti");
     mainArea.setVisible(true);
+    mainArea.requestFocus();
+
+    fillRestaurants();
   }
 
-  @FXML public void addClicked(ActionEvent e)
+  @FXML public void addClicked(ActionEvent event)
   {
     openNewRestaurant();
   }
@@ -169,5 +172,8 @@ public class RestaurateurHomeController {
 
     setTitle("I tuoi ristoranti");
     mainArea.setVisible(true);
+    mainArea.requestFocus();
+
+    fillRestaurants();
   }
 }

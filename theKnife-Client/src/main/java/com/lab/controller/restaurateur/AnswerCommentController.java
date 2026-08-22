@@ -40,7 +40,7 @@ public class AnswerCommentController {
   }
 
   @FXML
-  public void saveClicked(ActionEvent e)
+  public void saveClicked(ActionEvent event)
   {
     int userId = Integer.parseInt(reviewData[4]);
     int restaurantId = Integer.parseInt(reviewData[5]);
@@ -64,7 +64,7 @@ public class AnswerCommentController {
         if(!success) System.out.println("[" + StringColor.RED + "ERRORE" + StringColor.RESET + "] Richiesta salvataggio dati (risposta recensione))");
         else {
           System.out.println("[" + StringColor.GREEN + "AZIONE" + StringColor.RESET + "] Risposta alla recensione salvata");
-          Stage stage = (Stage) ((Node) e.getSource()).getScene().getWindow();
+          Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
           stage.close();
         }
       });

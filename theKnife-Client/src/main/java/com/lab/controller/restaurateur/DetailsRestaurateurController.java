@@ -87,7 +87,7 @@ public class DetailsRestaurateurController {
     });
   }
 
-  @FXML public void backClicked(ActionEvent e)
+  @FXML public void backClicked(ActionEvent event)
   {
     System.out.println("[" + StringColor.GREEN + "AZIONE" + StringColor.RESET + "] Back button clicked");
     RestaurateurHomeController.getInstance().closeDetails();

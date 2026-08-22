@@ -10,6 +10,9 @@ import javafx.scene.control.Button;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
+import java.util.concurrent.CompletableFuture;
+import javafx.application.Platform;
+
 public class ToolbarController {
   @FXML private StackPane toolbar;
   @FXML private Button exit_B;
@@ -93,6 +96,16 @@ public class ToolbarController {
   @FXML
   public void signoutClicked(ActionEvent event)
   {
+    if(Session.getCurrentUser() != null){
+      final int userId = Session.getCurrentUser().getId();
+
+      CompletableFuture.runAsync(() -> {
+        try {
+          ServerConnection.getServer().signout(userId);
+        } catch(Exception e) { }
+      });
+    }
+
     Session.signOut();
     System.out.println("[" + StringColor.PURPLE + "DATABASE" + StringColor.RESET + "] Signed out");
     PageController.selectPage("/com/lab/fxml/basic/home.fxml");

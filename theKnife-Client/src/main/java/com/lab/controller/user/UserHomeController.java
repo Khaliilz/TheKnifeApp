@@ -54,6 +54,15 @@ public class UserHomeController {
   private int currentSearchOffset = 0;
 
   public static String guestSearchPlace = null;
+  private int currentLoadId = 0;
+  
+  private enum UserState {
+    NEAREST,
+    BOOKMARKED,
+    REVIEWS,
+    SEARCH
+  }
+  private UserState currentState = UserState.NEAREST;
 
   @FXML
   public void initialize()
@@ -82,8 +91,34 @@ public class UserHomeController {
     return instance;
   }
 
+  public void refreshCurrentList()
+  {
+    switch(currentState) {
+      case NEAREST: {
+        loadNearest();
+        break;
+      }
+      case BOOKMARKED: {
+        loadBookmarked();
+        break;
+      }
+      case REVIEWS: {
+        loadReviews();
+        break;
+      }
+      case SEARCH: {
+        listOfRestaurants.getChildren().clear(); 
+        currentSearchOffset = 0;
+        executeSearch();
+        break;
+      }
+    }
+  }
+
   public void loadNearest()
   {
+    currentState = UserState.NEAREST;
+
     if(loadMoreButton != null) {
       loadMoreButton.setVisible(false);
       loadMoreButton.setManaged(false);
@@ -94,6 +129,7 @@ public class UserHomeController {
     User user = Session.getCurrentUser();
     double lat = user.getLatitude();
     double lon = user.getLongitude();
+    final int loadId = ++currentLoadId;
 
     CompletableFuture.supplyAsync(() -> {
       try{
@@ -105,6 +141,7 @@ public class UserHomeController {
       }
     }).thenAccept(nearest -> {
       Platform.runLater(() -> {
+        if(loadId != currentLoadId) return;
         if(nearest != null) fillRestaurants(nearest);
         else {
           emptyLabel.setText("Errore di connessione con il server");
@@ -117,12 +154,14 @@ public class UserHomeController {
 
   public void loadBookmarked()
   {
+    currentState = UserState.BOOKMARKED;
+
     if(loadMoreButton != null) {
       loadMoreButton.setVisible(false);
       loadMoreButton.setManaged(false);
     }
-    closeDetails();
-    closeComment();
+    
+    closeWithoutRefresh();
 
     title.setText("Ristoranti preferiti");
     listOfRestaurants.getChildren().clear();
@@ -130,6 +169,7 @@ public class UserHomeController {
     User user = Session.getCurrentUser();
     double lat = user.getLatitude();
     double lon = user.getLongitude();
+    final int loadId = ++currentLoadId;
 
     CompletableFuture.supplyAsync(() -> {
       try{
@@ -141,6 +181,7 @@ public class UserHomeController {
       }
     }).thenAccept(bookmarked -> {
       Platform.runLater(() -> {
+        if(loadId != currentLoadId) return;
         if(bookmarked != null) fillRestaurants(bookmarked);
         else {
           emptyLabel.setText("Errore di connessione con il server");
@@ -153,12 +194,14 @@ public class UserHomeController {
 
   public void loadReviews()
   {
+    currentState = UserState.REVIEWS;
+
     if(loadMoreButton != null) {
       loadMoreButton.setVisible(false);
       loadMoreButton.setManaged(false);
     }
-    closeDetails();
-    closeComment();
+    
+    closeWithoutRefresh();
 
     title.setText("Ristoranti recensiti");
     listOfRestaurants.getChildren().clear();
@@ -166,6 +209,7 @@ public class UserHomeController {
     User user = Session.getCurrentUser();
     double lat = user.getLatitude();
     double lon = user.getLongitude();
+    final int loadId = ++currentLoadId;
 
     CompletableFuture.supplyAsync(() -> {
       try{
@@ -177,6 +221,7 @@ public class UserHomeController {
       }
     }).thenAccept(reviewed -> {
       Platform.runLater(() -> {
+        if(loadId != currentLoadId) return;
         if(reviewed != null) fillReviewed(reviewed);
         else {
           emptyLabel.setText("Errore di connessione con il server");
@@ -201,8 +246,9 @@ public class UserHomeController {
 
   public void searchByPlace(String place)
   {
-    closeDetails();
-    closeComment();
+    currentState = UserState.SEARCH;
+
+    closeWithoutRefresh();
 
     filterCuisine = null;
     filterPrice = null;
@@ -220,8 +266,7 @@ public class UserHomeController {
 
   public void applyFilters(String cuisine, String price, String delivery, String booking, String stars)
   {
-    closeDetails();
-    closeComment();
+    closeWithoutRefresh();
     
     filterCuisine = cuisine;
     filterPrice = price;
@@ -238,7 +283,7 @@ public class UserHomeController {
   }
 
   @FXML
-  public void loadMoreClicked(ActionEvent e)
+  public void loadMoreClicked(ActionEvent event)
   {
     currentSearchOffset += 10; 
     
@@ -253,6 +298,7 @@ public class UserHomeController {
     User user = Session.getCurrentUser();
     double lat = user.getLatitude();
     double lon = user.getLongitude();
+    final int loadId = ++currentLoadId;
 
     CompletableFuture.supplyAsync(() -> {
       try{
@@ -264,6 +310,7 @@ public class UserHomeController {
       }
     }).thenAccept(searchResults -> {
       Platform.runLater(() -> {
+        if(loadId != currentLoadId) return;
         if(searchResults != null) {
           fillRestaurants(searchResults);
 
@@ -375,12 +422,8 @@ public class UserHomeController {
 
   public void closeDetails()
   {
-    if(detailsNode != null) {
-      leftMenuArea.getChildren().remove(detailsNode);
-      detailsNode = null;
-    }
-    
-    listContainer.setVisible(true); 
+    closeWithoutRefresh();
+    refreshCurrentList();
   }
 
   public void viewComment(String[] comment)
@@ -403,12 +446,8 @@ public class UserHomeController {
 
   public void closeComment()
   {
-    if(commentNode != null) {
-      leftMenuArea.getChildren().remove(commentNode);
-      commentNode = null;
-    }
-    
-    listContainer.setVisible(true); 
+    closeWithoutRefresh();
+    refreshCurrentList();
   }
 
   public void openWriteComment(Restaurant restaurant)
@@ -437,5 +476,19 @@ public class UserHomeController {
     }
     
     if (detailsNode != null) detailsNode.setVisible(true);
+  }
+
+  public void closeWithoutRefresh()
+  {
+    if(detailsNode != null) {
+      leftMenuArea.getChildren().remove(detailsNode);
+      detailsNode = null;
+    }
+    if(commentNode != null) {
+      leftMenuArea.getChildren().remove(commentNode);
+      commentNode = null;
+    }
+    listContainer.setVisible(true);
+    listContainer.requestFocus();
   }
 }

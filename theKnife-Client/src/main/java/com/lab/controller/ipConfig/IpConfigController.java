@@ -36,7 +36,7 @@ public class IpConfigController {
   }
 
   @FXML
-  public void connectClicked(ActionEvent e)
+  public void connectClicked(ActionEvent event)
   {
   	String ip = ipContent.getText().trim();
     if(ip.isEmpty()) ip = "localhost";
@@ -51,7 +51,7 @@ public class IpConfigController {
       return ServerConnection.connect(serverIP);
     }).thenAccept(connected -> {
       Platform.runLater(() -> {
-        if(connected) loadMainApp(e);
+        if(connected) loadMainApp(event);
         else {
           connectButton.setDisable(false);
           connectButton.setText("CONNETTITI");
@@ -63,19 +63,19 @@ public class IpConfigController {
   }
 
   @FXML
-  public void exitClicked(ActionEvent e)
+  public void exitClicked(ActionEvent event)
 	{
     System.exit(0);
   }
 
-  private void loadMainApp(ActionEvent e)
+  private void loadMainApp(ActionEvent event)
 	{
     try {
       Parent root = FXMLLoader.load(App.class.getResource("/com/lab/fxml/basic/page.fxml"));
 
 			//if(root instanceof Pane) drawGridLines((Pane) root);
 
-			Stage stage = (Stage) ((Node) e.getSource()).getScene().getWindow();
+			Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 
 			Scene scene = new Scene(root, 1280, 700);
 			scene.setFill(Color.TRANSPARENT);

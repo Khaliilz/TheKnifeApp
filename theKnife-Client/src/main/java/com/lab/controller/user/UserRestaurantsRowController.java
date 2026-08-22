@@ -63,13 +63,13 @@ public class UserRestaurantsRowController {
     } else bookmark.setVisible(false);
   }
 
-  @FXML public void detailClicked(ActionEvent e)
+  @FXML public void detailClicked(ActionEvent event)
   {
     System.out.println("[" + StringColor.GREEN + "AZIONE" + StringColor.RESET + "] Detail button clicked");
     UserHomeController.getInstance().openDetails(restaurant);
   }
 
-  @FXML void bookmarkClicked(ActionEvent e)
+  @FXML void bookmarkClicked(ActionEvent event)
   {
     if (Session.getCurrentUser() == null) return;
 
@@ -92,6 +92,7 @@ public class UserRestaurantsRowController {
           if(success) isBookmarked = false;
           updateBookmark();
           bookmark.setDisable(false);
+          UserHomeController.getInstance().refreshCurrentList();
         });
       });
     } else {

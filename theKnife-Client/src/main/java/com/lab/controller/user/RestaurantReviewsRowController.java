@@ -37,7 +37,7 @@ public class RestaurantReviewsRowController {
   }
 
   @FXML
-  public void viewClicked(ActionEvent e)
+  public void viewClicked(ActionEvent event)
   {
     System.out.println("[" + StringColor.GREEN + "AZIONE" + StringColor.RESET + "] View button clicked");
     String[] completedReview = {restaurantName, review[1], review[2], review[0], restaurantId};

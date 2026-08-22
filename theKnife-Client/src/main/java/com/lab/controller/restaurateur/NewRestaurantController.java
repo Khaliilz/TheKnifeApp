@@ -45,7 +45,7 @@ public class NewRestaurantController {
   }
 
   @FXML
-  public void saveClicked(ActionEvent e)
+  public void saveClicked(ActionEvent event)
   {
     boolean error = false;
 
@@ -141,7 +141,6 @@ public class NewRestaurantController {
         if(!success) System.out.println("[" + StringColor.RED + "ERRORE" + StringColor.RESET + "] Richiesta salvataggio dati nuovo ristorante");
         else {
           System.out.println("[" + StringColor.PURPLE + "DATABASE" + StringColor.RESET + "] Nuovo ristorante salvato");
-          RestaurateurHomeController.getInstance().fillRestaurants();
           RestaurateurHomeController.getInstance().closeNewRestaurant();
         }
       });
@@ -149,10 +148,9 @@ public class NewRestaurantController {
   }
 
   @FXML
-  public void cancelClicked(ActionEvent e)
+  public void cancelClicked(ActionEvent event)
   {
     System.out.println("[" + StringColor.GREEN + "AZIONE" + StringColor.RESET + "] Cancel button clicked");
     RestaurateurHomeController.getInstance().closeNewRestaurant();
   }
-
 }

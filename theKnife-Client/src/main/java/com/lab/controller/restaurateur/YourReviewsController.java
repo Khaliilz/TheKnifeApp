@@ -33,7 +33,7 @@ public class YourReviewsController {
     starsNum.setText(c[1]);
   }
 
-  @FXML public void answerClicked(ActionEvent e)
+  @FXML public void answerClicked(ActionEvent event)
   {
     System.out.println("[" + StringColor.GREEN + "AZIONE" + StringColor.RESET + "] Answer button clicked");
 
