@@ -297,13 +297,19 @@ public class UserHomeController {
     loadMoreButton.setManaged(false);
 
     User user = Session.getCurrentUser();
-    double lat = user.getLatitude();
-    double lon = user.getLongitude();
+    double lat = 0.0;
+    double lon = 0.0;
+    if(user != null) {
+      lat = user.getLatitude();
+      lon = user.getLongitude();
+    }
     final int loadId = ++currentLoadId;
+    final double userLat = lat;
+    final double userLon = lon;
 
     CompletableFuture.supplyAsync(() -> {
       try{
-        return ServerConnection.getServer().getSerachedRestaurants(currentSearchPlace, filterCuisine, filterPrice, filterDelivery, filterBooking, filterStars, currentSearchOffset, lat, lon);
+        return ServerConnection.getServer().getSerachedRestaurants(currentSearchPlace, filterCuisine, filterPrice, filterDelivery, filterBooking, filterStars, currentSearchOffset, userLat, userLon);
       } catch (RemoteException e) {
         e.printStackTrace();
         System.out.println("[" + StringColor.RED + "ERRORE" + StringColor.RESET + "] Richiesta dei ristoranti per: " + currentSearchPlace);
