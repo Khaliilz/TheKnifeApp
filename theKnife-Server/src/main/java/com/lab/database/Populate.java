@@ -17,7 +17,7 @@ public class Populate {
 
 	public static void restaurants(String datasetPath)
 	{
-		String sql = "INSERT INTO restaurants (name, address, location, price, cuisine, latitude, longitude, delivery, booking, award) " + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+		String sql = "INSERT INTO restaurants (name, address, location, price, cuisine, latitude, longitude, delivery, booking) " + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
 		
 		try(InputStream is = Populate.class.getResourceAsStream(datasetPath)) {
       if(is == null) {
@@ -55,7 +55,6 @@ public class Populate {
 
           String phone = record.isSet("PhoneNumber") ? record.get("PhoneNumber").trim() : "";
           String website = record.isSet("WebsiteUrl") ? record.get("WebsiteUrl").trim() : "";
-          String award = record.isSet("Award") ? record.get("Award").trim() : "";
 
           ps.setString(1, name);
           ps.setString(2, address);
@@ -66,7 +65,6 @@ public class Populate {
           ps.setDouble(7, longitude);
           ps.setString(8, phone);
           ps.setString(9, website);
-          ps.setString(10, award);
 
           ps.addBatch();
           count++;

@@ -69,7 +69,6 @@ public class UserQ {
       ps.setString(9, role);
             
       int insertRow = ps.executeUpdate();
-      connection.commit();
       System.out.println("[" + StringColor.PURPLE + "DATABASE" + StringColor.RESET + "] Utente " + username + " registrato");
       return insertRow > 0;
             
