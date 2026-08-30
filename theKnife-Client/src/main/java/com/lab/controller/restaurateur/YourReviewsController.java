@@ -1,3 +1,7 @@
+/**
+ * @author Devi Atti 754536  VA
+ * @author Zribi Khalil 758699 VA
+ */
 package com.lab.controller.restaurateur;
 
 import java.io.IOException;
@@ -16,7 +20,15 @@ import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import javafx.scene.paint.Color;
 
+/**
+ * YourReviewsController Gestisce l'interfaccia della singola riga della lista delle recensioni del ristorante del ristoratore.
+ * <p>
+ * Questa classe si occupa di impostare i dati delle componenti grafiche della singola recensione del ristorante del ristoratore.
+ * Inoltre gestisce anche la possibilita' del ristoratore di rispondere ad una recensione specifica.
+ * </p>
+ */
 public class YourReviewsController {
   
   @FXML private Text name;
@@ -25,6 +37,11 @@ public class YourReviewsController {
 
   private String[] reviewData;
 
+  /**
+   * Spacchetta l'array ricevuto tramite passaggio di parametro, impostando ogni elemento al suo rispettivo oggetto grafico.
+   * 
+   * @param c Informazioni di aggiornamento per le componenti grafiche della singola recensione 
+   */
   public void setReviewData(String[] c)
   {
     reviewData = c;
@@ -33,7 +50,12 @@ public class YourReviewsController {
     starsNum.setText(c[1]);
   }
 
-  @FXML public void answerClicked(ActionEvent e)
+  /**
+   * Si occupa di caricare il popup grafico che permette al ristoratore di rispondere ad un commento specifico, e di impostare la configurazione della schermata del popup.
+   * 
+   * @param event L'evento scatenato dal click sul bottone Rispondi.
+   */
+  @FXML public void answerClicked(ActionEvent event)
   {
     System.out.println("[" + StringColor.GREEN + "AZIONE" + StringColor.RESET + "] Answer button clicked");
 
@@ -53,7 +75,7 @@ public class YourReviewsController {
       popupStage.initModality(Modality.APPLICATION_MODAL);
 
       Scene scene = new Scene(root, 450, 530);
-      scene.setFill(javafx.scene.paint.Color.TRANSPARENT);
+      scene.setFill(Color.TRANSPARENT);
       popupStage.setScene(scene);
       popupStage.showAndWait();
     }catch (IOException ex) {

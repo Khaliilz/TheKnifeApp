@@ -1,3 +1,7 @@
+/**
+ * @author Devi Atti 754536  VA
+ * @author Zribi Khalil 758699 VA
+ */
 package com.lab.controller.user;
 
 import java.io.IOException;
@@ -5,6 +9,7 @@ import java.rmi.RemoteException;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
+import javafx.scene.Node;
 import javafx.event.ActionEvent;
 
 import com.lab.App;
@@ -13,9 +18,8 @@ import com.lab.controller.basic.ToolbarController;
 import com.lab.model.Restaurant;
 import com.lab.model.Session;
 import com.lab.model.User;
-import com.lab.server.ServerConnection;
+import com.lab.network.ServerConnection;
 import com.lab.utility.StringColor;
-import com.lab.utility.ErrorContainer;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -30,6 +34,13 @@ import javafx.scene.text.Text;
 
 import javafx.application.Platform;
 
+/**
+ * UserHomePage gestisce la homepage dell'utente e fornisce la maggior parte dei metodi che permettono all'utente di eseguire le azioni desiderate.
+ * <p>
+ * Questa classe agisce come controller centrale per la navigazione: gestisce sia la visualizzazione per l'utente registrato, sia quella per l'ospite.
+ * Per ridurre la complessità del codice, l'interfaccia viene adattata nascondendo i componenti grafici non accessibili al ruolo corrente.
+ * </p>
+ */
 public class UserHomeController {
   
   @FXML private StackPane rightMenuArea;
@@ -42,8 +53,9 @@ public class UserHomeController {
   @FXML private Label emptyLabel;
 
   private static UserHomeController instance;
-  private javafx.scene.Node detailsNode;
-  private javafx.scene.Node commentNode;
+  private DetailsUserController currentDetailsController;
+  private Node detailsNode;
+  private Node commentNode;
 
   private String currentSearchPlace = "";
   private String filterCuisine;
@@ -54,7 +66,26 @@ public class UserHomeController {
   private int currentSearchOffset = 0;
 
   public static String guestSearchPlace = null;
+  private int currentLoadId = 0;
+  
+  private enum UserState {
+    NEAREST,
+    BOOKMARKED,
+    REVIEWS,
+    SEARCH
+  }
+  private UserState currentState = UserState.NEAREST;
 
+  /**
+   * initialize e' un metodo invocato automaticamente da JavaFX al caricamento del file fxml.
+   * <p>
+   * Instanzia se stessa.
+   * Nasconde il titolo originale e il bottone di ritorno indietro della toolbar.
+   * Valuta se l'utente è un ospite o un utente registrato, nascondendo i pulsanti non necessari.
+   * Carica il menu di navigazione laterale.
+   * Se l'ospite ha avviato una ricerca iniziale, la esegue automaticamente, altrimenti carica i ristoranti vicini.
+   * </p>
+   */
   @FXML
   public void initialize()
   {
@@ -77,13 +108,50 @@ public class UserHomeController {
     } else loadNearest();
   }
 
+  /**
+   * Restituisce l'istanza singleton corrente del controller.
+   * 
+   * @return L'istanza attiva di {@link UserHomeController}.
+   */
   public static UserHomeController getInstance()
   {
     return instance;
   }
 
+  /**
+   * Ricarica la vista attuale interrogando nuovamente il server in base allo stato corrente.
+   */
+  public void refreshCurrentList()
+  {
+    switch(currentState) {
+      case NEAREST: {
+        loadNearest();
+        break;
+      }
+      case BOOKMARKED: {
+        loadBookmarked();
+        break;
+      }
+      case REVIEWS: {
+        loadReviews();
+        break;
+      }
+      case SEARCH: {
+        listOfRestaurants.getChildren().clear(); 
+        currentSearchOffset = 0;
+        executeSearch();
+        break;
+      }
+    }
+  }
+
+  /**
+   * Scarica in modo asincrono la lista dei ristoranti nelle vicinanze dell'utente e aggiorna la grafica.
+   */
   public void loadNearest()
   {
+    currentState = UserState.NEAREST;
+
     if(loadMoreButton != null) {
       loadMoreButton.setVisible(false);
       loadMoreButton.setManaged(false);
@@ -94,6 +162,7 @@ public class UserHomeController {
     User user = Session.getCurrentUser();
     double lat = user.getLatitude();
     double lon = user.getLongitude();
+    final int loadId = ++currentLoadId;
 
     CompletableFuture.supplyAsync(() -> {
       try{
@@ -105,6 +174,7 @@ public class UserHomeController {
       }
     }).thenAccept(nearest -> {
       Platform.runLater(() -> {
+        if(loadId != currentLoadId) return;
         if(nearest != null) fillRestaurants(nearest);
         else {
           emptyLabel.setText("Errore di connessione con il server");
@@ -115,14 +185,19 @@ public class UserHomeController {
     });
   }
 
+  /**
+   * Scarica in modo asincrono la lista dei ristoranti preferiti dell'utente registrato.
+   */
   public void loadBookmarked()
   {
+    currentState = UserState.BOOKMARKED;
+
     if(loadMoreButton != null) {
       loadMoreButton.setVisible(false);
       loadMoreButton.setManaged(false);
     }
-    closeDetails();
-    closeComment();
+    
+    closeWithoutRefresh();
 
     title.setText("Ristoranti preferiti");
     listOfRestaurants.getChildren().clear();
@@ -130,6 +205,7 @@ public class UserHomeController {
     User user = Session.getCurrentUser();
     double lat = user.getLatitude();
     double lon = user.getLongitude();
+    final int loadId = ++currentLoadId;
 
     CompletableFuture.supplyAsync(() -> {
       try{
@@ -141,6 +217,7 @@ public class UserHomeController {
       }
     }).thenAccept(bookmarked -> {
       Platform.runLater(() -> {
+        if(loadId != currentLoadId) return;
         if(bookmarked != null) fillRestaurants(bookmarked);
         else {
           emptyLabel.setText("Errore di connessione con il server");
@@ -151,14 +228,19 @@ public class UserHomeController {
     });
   }
 
+  /**
+   * Scarica in modo asincrono la lista dei ristoranti che l'utente registrato ha recensito in passato.
+   */
   public void loadReviews()
   {
+    currentState = UserState.REVIEWS;
+
     if(loadMoreButton != null) {
       loadMoreButton.setVisible(false);
       loadMoreButton.setManaged(false);
     }
-    closeDetails();
-    closeComment();
+    
+    closeWithoutRefresh();
 
     title.setText("Ristoranti recensiti");
     listOfRestaurants.getChildren().clear();
@@ -166,6 +248,7 @@ public class UserHomeController {
     User user = Session.getCurrentUser();
     double lat = user.getLatitude();
     double lon = user.getLongitude();
+    final int loadId = ++currentLoadId;
 
     CompletableFuture.supplyAsync(() -> {
       try{
@@ -177,6 +260,7 @@ public class UserHomeController {
       }
     }).thenAccept(reviewed -> {
       Platform.runLater(() -> {
+        if(loadId != currentLoadId) return;
         if(reviewed != null) fillReviewed(reviewed);
         else {
           emptyLabel.setText("Errore di connessione con il server");
@@ -187,6 +271,12 @@ public class UserHomeController {
     });
   }
 
+  /**
+   * Carica un nuovo menu contestuale nella barra laterale destra dell'interfaccia.
+   * 
+   * @param newTitle Il titolo da assegnare alla sezione caricata.
+   * @param fileName L'indirizzo del menu da inserire.
+   */
   public void loadRightMenu(String newTitle, String fileName)
   {
     try{
@@ -199,10 +289,16 @@ public class UserHomeController {
     }
   }
 
+  /**
+   * Inizializza e avvia una nuova ricerca di ristoranti basata esclusivamente sulla posizione inserita.
+   * 
+   * @param place La stringa rappresentante il luogo o l'indirizzo da cercare.
+   */
   public void searchByPlace(String place)
   {
-    closeDetails();
-    closeComment();
+    currentState = UserState.SEARCH;
+
+    closeWithoutRefresh();
 
     filterCuisine = null;
     filterPrice = null;
@@ -218,10 +314,18 @@ public class UserHomeController {
     executeSearch();
   }
 
+  /**
+   * Avvia una ricerca applicando vari filtri per restringere i risultati desiderati.
+   * 
+   * @param cuisine Tipologia di cucina.
+   * @param price Fascia di prezzo selezionata.
+   * @param delivery Richiesta disponibilità di consegna a domicilio.
+   * @param booking Richiesta disponibilità di prenotazione online.
+   * @param stars Media recensioni minima desiderata.
+   */
   public void applyFilters(String cuisine, String price, String delivery, String booking, String stars)
   {
-    closeDetails();
-    closeComment();
+    closeWithoutRefresh();
     
     filterCuisine = cuisine;
     filterPrice = price;
@@ -237,26 +341,44 @@ public class UserHomeController {
     executeSearch();
   }
 
+  /**
+   * Avanza l'offset di paginazione dei risultati e interroga nuovamente il database.
+   * 
+   * @param event L'evento scatenato dal click sul bottone Carica altri.
+   */
   @FXML
-  public void loadMoreClicked(ActionEvent e)
+  public void loadMoreClicked(ActionEvent event)
   {
     currentSearchOffset += 10; 
     
     executeSearch();
   }
 
+  /**
+   * Esegue la query di ricerca sul server combinando parametri di testo, offset e filtri attivi.
+   * <p>
+   * Gestisce dinamicamente la paginazione dei risultati, valutando se mostrare o nascondere il pulsante Carica altri.
+   * </p>
+   */
   private void executeSearch()
   {
     loadMoreButton.setVisible(false);
     loadMoreButton.setManaged(false);
 
     User user = Session.getCurrentUser();
-    double lat = user.getLatitude();
-    double lon = user.getLongitude();
+    double lat = 0.0;
+    double lon = 0.0;
+    if(user != null) {
+      lat = user.getLatitude();
+      lon = user.getLongitude();
+    }
+    final int loadId = ++currentLoadId;
+    final double userLat = lat;
+    final double userLon = lon;
 
     CompletableFuture.supplyAsync(() -> {
       try{
-        return ServerConnection.getServer().getSerachedRestaurants(currentSearchPlace, filterCuisine, filterPrice, filterDelivery, filterBooking, filterStars, currentSearchOffset, lat, lon);
+        return ServerConnection.getServer().getSerachedRestaurants(currentSearchPlace, filterCuisine, filterPrice, filterDelivery, filterBooking, filterStars, currentSearchOffset, userLat, userLon);
       } catch (RemoteException e) {
         e.printStackTrace();
         System.out.println("[" + StringColor.RED + "ERRORE" + StringColor.RESET + "] Richiesta dei ristoranti per: " + currentSearchPlace);
@@ -264,6 +386,7 @@ public class UserHomeController {
       }
     }).thenAccept(searchResults -> {
       Platform.runLater(() -> {
+        if(loadId != currentLoadId) return;
         if(searchResults != null) {
           fillRestaurants(searchResults);
 
@@ -283,6 +406,14 @@ public class UserHomeController {
     });
   }
 
+  /**
+   * Popola dinamicamente il contenitore grafico principale con la lista dei ristoranti ottenuta.
+   * <p>
+   * Per ogni ristorante della lista passata come parametro, vengono specificate le singole informazioni del ristorante chiamando il metodo {@link UserRestaurantRowController#setRestaurant(Restaurant)}
+   * </p>
+   * 
+   * @param restaurants La lista dei ristoranti da inserire nella lista.
+   */
   private void fillRestaurants(List<Restaurant> restaurants) 
   {
     boolean isEmpty = restaurants.isEmpty();
@@ -307,6 +438,14 @@ public class UserHomeController {
     }
   }
 
+  /**
+   * Popola dinamicamente il contenitore grafico principale con la lista ristoranti recensiti ottenuta.
+   * <p>
+   * Per ogni ristorante della lista passata come parametro, vengono specificate le singole informazioni del ristorante chiamando il metodo {@link RestaurantReviewsRowController#setReview(String[], String[])}
+   * </p>
+   * 
+   * @param restaurants La lista dei ristoranti da inserire nella lista.
+   */
   private void fillReviewed(List<Restaurant> restaurants)
   {
     listOfRestaurants.getChildren().clear();
@@ -355,14 +494,19 @@ public class UserHomeController {
     }
   }
 
+  /**
+   * Apre la finestra contenente i dettagli informativi completi di uno specifico ristorante.
+   * 
+   * @param restaurant L'oggetto ristorante selezionato dalla lsita.
+   */
   public void openDetails(Restaurant restaurant)
   {
     try {
       FXMLLoader loader = new FXMLLoader(App.class.getResource("/com/lab/fxml/user/detailsUser.fxml"));
       detailsNode = loader.load();
 
-      DetailsUserController controller = loader.getController();
-      controller.setDetails(restaurant);
+      currentDetailsController = loader.getController();
+      currentDetailsController.setDetails(restaurant);
 
       listContainer.setVisible(false); 
       leftMenuArea.getChildren().add(detailsNode); 
@@ -373,16 +517,20 @@ public class UserHomeController {
     }
   }
 
+  /**
+   * Chiude la finestra dei dettagli del ristorante e ricarica i risultati correnti.
+   */
   public void closeDetails()
   {
-    if(detailsNode != null) {
-      leftMenuArea.getChildren().remove(detailsNode);
-      detailsNode = null;
-    }
-    
-    listContainer.setVisible(true); 
+    closeWithoutRefresh();
+    refreshCurrentList();
   }
 
+  /**
+   * Apre il form visivo per gestire la modifica o la lettura di un commento precedentemente inserito.
+   * 
+   * @param comment Array contenente le informazioni per la visualizzazione della recensione.
+   */
   public void viewComment(String[] comment)
   {
     try {
@@ -401,16 +549,20 @@ public class UserHomeController {
     }
   }
 
+  /**
+   * Chiude la finestra del commento e ripristina la visualizzazione dell'elenco ristoranti.
+   */
   public void closeComment()
   {
-    if(commentNode != null) {
-      leftMenuArea.getChildren().remove(commentNode);
-      commentNode = null;
-    }
-    
-    listContainer.setVisible(true); 
+    closeWithoutRefresh();
+    refreshCurrentList();
   }
 
+  /**
+   * Apre l'interfaccia dedicata alla scrittura di una nuova recensione per un ristorante.
+   * 
+   * @param restaurant Ristorante da recensire.
+   */
   public void openWriteComment(Restaurant restaurant)
   {
     try {
@@ -429,6 +581,9 @@ public class UserHomeController {
     }
   }
 
+  /**
+   * Chiude la finestra per la scrittura del commento e riattiva il nodo dei dettagli del ristorante riaggiornando le recensioni.
+   */
   public void closeWriteComment()
   {
     if(commentNode != null) {
@@ -436,6 +591,26 @@ public class UserHomeController {
       commentNode = null;
     }
     
-    if (detailsNode != null) detailsNode.setVisible(true);
+    if(detailsNode != null) {
+      detailsNode.setVisible(true);
+      if(currentDetailsController != null) currentDetailsController.refreshReviews();
+    }
+  }
+
+  /**
+   * Metodo utility per svuotare graficamente i pannelli in sovrimpressione.
+   */
+  public void closeWithoutRefresh()
+  {
+    if(detailsNode != null) {
+      leftMenuArea.getChildren().remove(detailsNode);
+      detailsNode = null;
+    }
+    if(commentNode != null) {
+      leftMenuArea.getChildren().remove(commentNode);
+      commentNode = null;
+    }
+    listContainer.setVisible(true);
+    listContainer.requestFocus();
   }
 }

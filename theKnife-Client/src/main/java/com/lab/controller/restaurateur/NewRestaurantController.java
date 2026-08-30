@@ -1,3 +1,7 @@
+/**
+ * @author Devi Atti 754536  VA
+ * @author Zribi Khalil 758699 VA
+ */
 package com.lab.controller.restaurateur;
 
 import java.rmi.RemoteException;
@@ -5,7 +9,7 @@ import java.util.concurrent.CompletableFuture;
 import javafx.application.Platform;
 
 import com.lab.model.Session;
-import com.lab.server.ServerConnection;
+import com.lab.network.ServerConnection;
 import com.lab.utility.StringColor;
 import com.lab.utility.ErrorContainer;
 
@@ -16,6 +20,12 @@ import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
 
+/**
+ * NewRestaurantController Gestisce l'interfaccia per l'aggiunta di un nuovo ristorante per il ristoratore.
+ * <p>
+ * Questa classe si occupa di ottenere i dati di un ristorante, di verificarne la correttezza e di inviarli al server per il salvataggio.
+ * </p>
+ */
 public class NewRestaurantController {
   
   @FXML private TextField name;
@@ -30,6 +40,12 @@ public class NewRestaurantController {
   @FXML private ToggleGroup priceGroup;
   @FXML private Button saveButton;
 
+  /**
+   * initialize e' un metodo invocato automaticamente da JavaFX al caricamento del file fxml.
+   * <p>
+   * Ripristina la corretta visualizzazione dello stile degli oggetti relativi alla raccolta degli input dell'utente
+   * </p>
+   */
   @FXML
   public void initialize()
   {
@@ -44,8 +60,15 @@ public class NewRestaurantController {
     ErrorContainer.resetBorder(phoneNumber);
   }
 
+  /**
+   * Raccoglie i dati in input del ristoratore, verifica la loro correttezza, in caso di errori, viene segnalato tramite la classe {@link ErrorContainer}.
+   * Una volta verificata la correttezza dei dati, viene inoltrata una richiesta di registrazione del ristorante al server remoto, tramite un thead in esecuzione in background.
+   * Una volta ricevuta la risposta, la schermata viene chiusa, mostrando la lista dei propri ristoranti.
+   * 
+   * @param event L'evento scatenato dal click sul bottone Salva.
+   */
   @FXML
-  public void saveClicked(ActionEvent e)
+  public void saveClicked(ActionEvent event)
   {
     boolean error = false;
 
@@ -141,18 +164,25 @@ public class NewRestaurantController {
         if(!success) System.out.println("[" + StringColor.RED + "ERRORE" + StringColor.RESET + "] Richiesta salvataggio dati nuovo ristorante");
         else {
           System.out.println("[" + StringColor.PURPLE + "DATABASE" + StringColor.RESET + "] Nuovo ristorante salvato");
-          RestaurateurHomeController.getInstance().fillRestaurants();
           RestaurateurHomeController.getInstance().closeNewRestaurant();
         }
       });
     });
   }
 
+  /**
+   * Gestisce l'evento cancella dalla schermata di aggiunta del ristorante per il ristoratore.
+   * <p>
+   * Nel caso il ristoratore non volesse piu' aggiungere un ristorante, gli e' permesso tornare indietro alla visualizzazione dei propri ristoranti.
+   * Questo viene fatto chiamando il metodo {@link RestaurateurHomeController#closeNewRestaurant()}
+   * </p>
+   * 
+   * @param event L'evento scatenato dal click sul bottone Cancella.
+   */
   @FXML
-  public void cancelClicked(ActionEvent e)
+  public void cancelClicked(ActionEvent event)
   {
     System.out.println("[" + StringColor.GREEN + "AZIONE" + StringColor.RESET + "] Cancel button clicked");
     RestaurateurHomeController.getInstance().closeNewRestaurant();
   }
-
 }

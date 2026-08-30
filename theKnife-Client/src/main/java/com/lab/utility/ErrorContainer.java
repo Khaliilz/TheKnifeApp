@@ -1,8 +1,15 @@
+/**
+ * @author Devi Atti 754536  VA
+ * @author Zribi Khalil 758699 VA
+ */
 package com.lab.utility;
 
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
 
+/**
+ * Questa classe si occupa di cambiare lo stile degli oggetti grafici per sengalare un errore, per migliorare la UX.
+ */
 public class ErrorContainer {
 
   public static void errorBorder(TextField field)

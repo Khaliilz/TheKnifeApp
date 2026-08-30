@@ -1,3 +1,7 @@
+/**
+ * @author Devi Atti 754536  VA
+ * @author Zribi Khalil 758699 VA
+ */
 package com.lab.utility;
 
 import java.net.URI;
@@ -9,6 +13,9 @@ import java.nio.charset.StandardCharsets;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+/**
+ * Questa classe si occupa essenzialmente di creare una richiesta http per accedere ai servizi di openstreetmap, utilizzati per risalire alle coordinate latitudinale e longitudinali partendo da un indirizzo.
+ */
 public class Geocoding {
   
   public static double[] getCoordinates(String address)

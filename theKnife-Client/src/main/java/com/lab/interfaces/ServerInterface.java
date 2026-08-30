@@ -1,3 +1,7 @@
+/**
+ * @author Devi Atti 754536  VA
+ * @author Zribi Khalil 758699 VA
+ */
 package com.lab.interfaces;
 
 import java.rmi.Remote;
@@ -8,10 +12,14 @@ import java.util.List;
 import com.lab.model.Restaurant;
 import com.lab.model.User;
 
+/**
+ * Interfaccia del server, contiene tutti i metodi resi pubblici dal server.
+ */
 public interface ServerInterface extends Remote {
   
   public User signin(String username, String password) throws RemoteException;
   public boolean signup(String name, String surname, Date birthDate, String address, String username, String plainPassword, String role) throws RemoteException;
+  public void signout(int userId) throws RemoteException;
 
   public List<Restaurant> getNearestRestaurants(double lat, double lon) throws RemoteException;
   public List<Restaurant> getBookmarkedRestaurants(int userId, double lat, double lon) throws RemoteException;

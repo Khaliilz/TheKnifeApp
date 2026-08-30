@@ -1,3 +1,7 @@
+/**
+ * @author Devi Atti 754536  VA
+ * @author Zribi Khalil 758699 VA
+ */
 package com.lab.database.query;
 
 import java.sql.Connection;
@@ -9,8 +13,26 @@ import java.util.List;
 import com.lab.database.Database;
 import com.lab.utility.StringColor;
 
+/**
+ * Gestisce le interrogazioni al database relative alla funzionalità delle recensioni.
+ * <p>
+ * Questa classe racchiude la logica di persistenza per l'associazione tra utenti, ristoranti e recensioni. 
+ * Sfrutta le API JDBC per comunicare con il database PostgreSQL, utilizzando i {@link PreparedStatement} 
+ * per gestire in modo sicuro le operazioni sulle tabelle relazionali.
+ * </p>
+ */
 public class ReviewQ {
   
+  /**
+   * Richiede le recensioni di uno specifico ristorante.
+   * <p>
+   * Esegue una query di tipo SELECT per richiedere i ristoranti recensiti nella tabella reviews.
+   * La connessione viene recuperata dinamicamente e chiusa automaticamente grazie al blocco try-with-resources.
+   * </p>
+   * 
+   * @param restaurantId L'id del ristorante recensito.
+   * @return Lista di ristoranti trovati, null altrimenti (o in caso di errore di connessione).
+   */
   public static List<String[]> getRestaurantReviews(int restaurantId)
   {
     List<String[]> list = new ArrayList<>();
@@ -43,6 +65,17 @@ public class ReviewQ {
     return list;
   }
 
+  /**
+   * Richiede le recensioni di uno specifico utente.
+   * <p>
+   * Esegue una query di tipo SELECT per richiedere i ristoranti recensiti da uno specifico utente dalla tabella reviews.
+   * La connessione viene recuperata dinamicamente e chiusa automaticamente grazie al blocco try-with-resources.
+   * </p>
+   * 
+   * @param userId Id dell'utente che effettua la richiesta.
+   * @param restaurantId L'id del ristorante recensito.
+   * @return Array di recensioni trovate, null altrimenti (o in caso di errore di connessione).
+   */
   public static String[] getUserReview(int userId, int restaurantId)
   {
     String sql = "SELECT stars, comment, answer FROM reviews WHERE user_id = ? AND restaurant_id = ?";
@@ -65,6 +98,19 @@ public class ReviewQ {
       return null;
   }
 
+  /**
+   * Richiede l'aggiunta di una recensione di uno specifico ristorante.
+   * <p>
+   * Esegue una query di tipo INSERT per inserire una recensione nella tabella reviews.
+   * La connessione viene recuperata dinamicamente e chiusa automaticamente grazie al blocco try-with-resources.
+   * </p>
+   * 
+   * @param userId L'id dell'utente che ha scritto la recensione.
+   * @param restaurantId L'id del ristorante recensito.
+   * @param stars Stelle assegnate dall'utente.
+   * @param comment Commento scritto dall'utente
+   * @return true se l'operazione e' andata a buon fine, false altrimenti (o in caso di errore di connessione).
+   */
   public static boolean addReview(int userId, int restaurantId, int stars, String comment)
   {
     String sql = "INSERT INTO reviews (user_id, restaurant_id, stars, comment) VALUES (?, ?, ?, ?)";
@@ -85,6 +131,19 @@ public class ReviewQ {
     }
   }
 
+  /**
+   * Richiede l'aggiornamento di una recensione di uno specifico ristorante.
+   * <p>
+   * Esegue una query di tipo UPDATE per aggiornare una recensione nella tabella reviews.
+   * La connessione viene recuperata dinamicamente e chiusa automaticamente grazie al blocco try-with-resources.
+   * </p>
+   * 
+   * @param userId L'id dell'utente che ha scritto la recensione.
+   * @param restaurantId L'id del ristorante recensito.
+   * @param stars Stelle assegnate dall'utente.
+   * @param comment Commento scritto dall'utente
+   * @return true se l'operazione e' andata a buon fine, false altrimenti (o in caso di errore di connessione).
+   */
   public static boolean updateReview(int userId, int restaurantId, int stars, String comment)
   {
     String sql = "UPDATE reviews SET stars = ?, comment = ? WHERE user_id = ? AND restaurant_id = ?";
@@ -105,6 +164,17 @@ public class ReviewQ {
     }
   }
 
+  /**
+   * Richiede la rimozione di una recensione di uno specifico ristorante.
+   * <p>
+   * Esegue una query di tipo DELETE per eliminare una recensione dalla tabella reviews.
+   * La connessione viene recuperata dinamicamente e chiusa automaticamente grazie al blocco try-with-resources.
+   * </p>
+   * 
+   * @param userId L'id dell'utente che ha scritto la recensione.
+   * @param restaurantId L'id del ristorante recensito.
+   * @return true se l'operazione e' andata a buon fine, false altrimenti (o in caso di errore di connessione).
+   */
   public static boolean removeReview(int userId, int restaurantId)
   {
     String sql = "DELETE FROM reviews WHERE user_id = ? AND restaurant_id = ?";
@@ -123,6 +193,16 @@ public class ReviewQ {
     }
   }
 
+  /**
+   * Richiede le recensione di uno specifico ristorante del ristoratore.
+   * <p>
+   * Esegue una query di tipo SELECT per richiedere le recensioni del proprio ristorante dalla tabella reviews.
+   * La connessione viene recuperata dinamicamente e chiusa automaticamente grazie al blocco try-with-resources.
+   * </p>
+   * 
+   * @param restaurantId L'id del ristorante per cui si effettua la richiesta.
+   * @return Lista di recensioni ottenute, null altrimenti (o in caso di errore di connessione).
+   */
   public static List<String[]> getRestaurateurReviews(int restaurantId)
   {
     List<String[]> list = new ArrayList<>();
@@ -155,6 +235,18 @@ public class ReviewQ {
     return list;
   }
 
+  /**
+   * Richiede di salvataggio della risposta ad una recensione di uno specifico utente.
+   * <p>
+   * Esegue una query di tipo UPDATE per inserire una risposta ad una recensione nella tabella reviews.
+   * La connessione viene recuperata dinamicamente e chiusa automaticamente grazie al blocco try-with-resources.
+   * </p>
+   * 
+   * @param userId L'id dell'utente che ha scritto la recensione.
+   * @param restaurantId L'id del ristorante recensito.
+   * @param answer Risposta scritta dal ristoratore.
+   * @return true se l'operazione e' andata a buon fine, false altrimenti (o in caso di errore di connessione).
+   */
   public static boolean saveReviewAnswer(int userId, int restaurantId, String answer)
   {
     String sql = "UPDATE reviews SET answer = ? WHERE user_id = ? AND restaurant_id = ?";

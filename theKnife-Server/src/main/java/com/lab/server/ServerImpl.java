@@ -1,3 +1,7 @@
+/**
+ * @author Devi Atti 754536  VA
+ * @author Zribi Khalil 758699 VA
+ */
 package com.lab.server;
 
 import java.rmi.RemoteException;
@@ -16,8 +20,16 @@ import com.lab.database.query.UserQ;
 import com.lab.interfaces.ServerInterface;
 import com.lab.utility.StringColor;
 
+/**
+ * Rappresenta l'implementazione dei metodi resi pubblici dal server.
+ * Per questioni di separazione del codice e isolamento dei compiti, le implementazioni vere e proprie si trovano nelle seguenti classi:
+ * {@link UserQ}
+ * {@link RestaurantQ}
+ * {@link BookmarkQ}
+ * {@link ReviewQ}
+ */
 public class ServerImpl extends UnicastRemoteObject implements ServerInterface {
-  
+
   public ServerImpl() throws RemoteException
   {
     super();
@@ -35,6 +47,12 @@ public class ServerImpl extends UnicastRemoteObject implements ServerInterface {
   {
     System.out.println("[" + StringColor.YELLOW + "SERVER" + StringColor.RESET + "] " + getClientIP() + ": Richiesta di registrazione" + username);
     return UserQ.signup(name, surname, birthDate, address, username, plainPassword, role);
+  }
+
+  @Override
+  public void signout(int userId)
+  {
+    System.out.println("[" + StringColor.YELLOW + "SERVER" + StringColor.RESET + "] " + getClientIP() + ": Richiesta di uscita");
   }
 
 
@@ -127,7 +145,7 @@ public class ServerImpl extends UnicastRemoteObject implements ServerInterface {
   public List<String[]> getRestaurateurReviews(int restaurantId) throws RemoteException
   {
     System.out.println("[" + StringColor.YELLOW + "SERVER" + StringColor.RESET + "] " + getClientIP() + ": Richiesta recensioni ristorante");
-    return ReviewQ.getRestaurantReviews(restaurantId);
+    return ReviewQ.getRestaurateurReviews(restaurantId);
   }
 
   @Override

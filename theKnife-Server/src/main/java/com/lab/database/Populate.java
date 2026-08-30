@@ -1,3 +1,7 @@
+/**
+ * @author Devi Atti 754536  VA
+ * @author Zribi Khalil 758699 VA
+ */
 package com.lab.database;
 
 import java.io.InputStream;
@@ -13,11 +17,19 @@ import org.apache.commons.csv.CSVRecord;
 
 import com.lab.utility.StringColor;
 
+/**
+ * Populate
+ * Si occupa di popolare il Database tramite i due metodi {@link #restaurants(String)} e {@link #users()}
+ */
 public class Populate {
 
+  /**
+   * Popola i ristoranti della relazione restaurants del database tramite query di tipo INSERT.
+   * @param datasetPath Indirizzo del dataset contenente tutti i ristoranti.
+   */
 	public static void restaurants(String datasetPath)
 	{
-		String sql = "INSERT INTO restaurants (name, address, location, price, cuisine, latitude, longitude, delivery, booking, award) " + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+		String sql = "INSERT INTO restaurants (name, address, location, price, cuisine, latitude, longitude, delivery, booking) " + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
 		
 		try(InputStream is = Populate.class.getResourceAsStream(datasetPath)) {
       if(is == null) {
@@ -55,7 +67,6 @@ public class Populate {
 
           String phone = record.isSet("PhoneNumber") ? record.get("PhoneNumber").trim() : "";
           String website = record.isSet("WebsiteUrl") ? record.get("WebsiteUrl").trim() : "";
-          String award = record.isSet("Award") ? record.get("Award").trim() : "";
 
           ps.setString(1, name);
           ps.setString(2, address);
@@ -66,7 +77,6 @@ public class Populate {
           ps.setDouble(7, longitude);
           ps.setString(8, phone);
           ps.setString(9, website);
-          ps.setString(10, award);
 
           ps.addBatch();
           count++;
@@ -84,6 +94,9 @@ public class Populate {
     }
 	}
 
+  /**
+   * Popola la tabella users con due utenti standard, un utente normale e un ristoratore tramite una query di tipo INSERT.
+   */
   public static void users()
 	{
 		String sql = "INSERT INTO users (id, name, surname, birth_date, address, latitude, longitude, username, password, role) " +

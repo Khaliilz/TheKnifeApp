@@ -1,7 +1,11 @@
+/**
+ * @author Devi Atti 754536  VA
+ * @author Zribi Khalil 758699 VA
+ */
 package com.lab.controller.restaurateur;
 
 import com.lab.model.Restaurant;
-import com.lab.server.ServerConnection;
+import com.lab.network.ServerConnection;
 import com.lab.utility.StringColor;
 
 import javafx.event.ActionEvent;
@@ -14,6 +18,13 @@ import java.util.concurrent.CompletableFuture;
 import javafx.application.Platform;
 import java.rmi.RemoteException;
 
+/**
+ * YourRestaurantsController Gestisce l'interfaccia per la singola riga della lista del ristorante del ristoratore.
+ * <p>
+ * Questa classe si occupa di formattare i dati ricevuti dal server e di inserirli nei componenti grafici della riga relativa alle informazioni del ristorante.
+ * Inoltre gestisce lla richiesta di visualizzazione dei dettagli del ristorante da parte del ristoratore, e dell'eliminazione di un ristorante del ristoratore.
+ * </p>
+ */
 public class YourRestaurantsController {
   
   @FXML private Text name;
@@ -24,6 +35,11 @@ public class YourRestaurantsController {
 
   private Restaurant currentRestaurant;
   
+  /**
+   * Spacchetta le singole informazioni del ristorante ottenuto tramite parametro, li carica nei componenti grafici dedicati e se necessario li formatta adeguatamente.
+   * 
+   * @param r Ristorante corrente da cui estrarre i dati da formattare e caricare.
+   */
   public void setRestaurantData(Restaurant r)
   {
     currentRestaurant = r;
@@ -42,12 +58,23 @@ public class YourRestaurantsController {
     reviewsNum.setText(String.valueOf(r.getReviewsNum()));
   }
 
-  @FXML public void detailClicked(ActionEvent e)
+  /**
+   * Apre la visualizzazione dei dettagli del ristorante corrente tramite il metodo {@link RestaurateurHomeController#openDetails(Restaurant)}
+   * 
+   * @param event L'evento scatenato dal click sul bottone Dettagli.
+   */
+  @FXML public void detailClicked(ActionEvent event)
   {
     RestaurateurHomeController.getInstance().openDetails(currentRestaurant);
   }
 
-  @FXML public void removeClicked(ActionEvent e)
+  /**
+   * Disabilita temporaneamente il controllo del thread grafico, per lanciare un thread asincrono che chiede al server remoto di eseguire l'operazione di rimozione del ristorante dal database.
+   * Una volta ricevuta risposta, il thread grafico riprende il controllo riaggiornando la lista dei ristoranti posseduti.
+   * 
+   * @param event L'evento scatenato dal click sul bottone Rimuovi.
+   */
+  @FXML public void removeClicked(ActionEvent event)
   {
     removeButton.setDisable(true);
 

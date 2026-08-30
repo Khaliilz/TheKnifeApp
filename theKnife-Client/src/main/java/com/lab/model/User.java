@@ -1,7 +1,15 @@
+/**
+ * @author Devi Atti 754536  VA
+ * @author Zribi Khalil 758699 VA
+ */
 package com.lab.model;
 
 import java.io.Serializable;
 
+/**
+ * Oggetto seriale rappresentante l'utente.
+ * Contiene i metodi getter per ottenere le informazioni specifiche relative ad un utente in particolare.
+ */
 public class User implements Serializable{
 
   private static final long serialVersionUID = 1L;
@@ -13,11 +21,11 @@ public class User implements Serializable{
   private double latitude;
   private double longitude;
 
-  public User(int id, String username, String address, double latitutde, double longitude, String role) {
+  public User(int id, String username, String address, double latitude, double longitude, String role) {
     this.id = id;
     this.username = username;
     this.address = address;
-    this.latitude = latitutde;
+    this.latitude = latitude;
     this.longitude = longitude;
     this.role = role;
   }

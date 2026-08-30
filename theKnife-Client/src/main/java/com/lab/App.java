@@ -1,27 +1,40 @@
+/**
+ * @author Devi Atti 754536  VA
+ * @author Zribi Khalil 758699 VA
+ */
 package com.lab;
 
 import javafx.fxml.FXMLLoader;
 import java.io.IOException;
 
-import com.lab.server.ServerConnection;
 import com.lab.utility.StringColor;
 
 import javafx.application.Application;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.layout.Pane;
-import javafx.scene.shape.Line;
 import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
+/**
+ * App gestisce il caricamento della prima schermata all'utente dando vita al motore grafico.
+ * <p>
+ * Permette di mostrare la prima schermata {@link IpConfigController} che permette all'utente di inserire l'indirizzo del server a cui connettersi.
+ * </p> 
+ */
 public class App extends Application {
 
 	public static void main(String[] args) {
     launch(args);
 	}
 
+	/**
+ * Il metodo start e' il metodo che viene lanciato automaticamente dal motore grafico.
+ * <p>
+ * Permette di definire quale schermata mostrare all'utente e di impostare alcuni configurazione della schermata.
+ * </p> 
+ */
 	@Override
 	public void start(Stage stage)
 	{

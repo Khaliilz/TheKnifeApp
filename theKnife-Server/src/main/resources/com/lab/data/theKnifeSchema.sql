@@ -1,29 +1,28 @@
 CREATE TABLE IF NOT EXISTS users (
     id SERIAL PRIMARY KEY,
-    name character varying(50),
-    surname character varying(50),
-    birth_date date,
-    address character varying(255),
+    name varchar(50) NOT NULL,
+    surname varchar(50) NOT NULL,
+    birth_date date NOT NULL,
+    address varchar(255) NOT NULL,
     latitude double precision,
     longitude double precision,
-    username character varying(50) NOT NULL UNIQUE,
-    password character varying(255) NOT NULL,
-    role character varying(20) NOT NULL
+    username varchar(50) NOT NULL UNIQUE,
+    password varchar(255) NOT NULL,
+    role varchar(20) NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS restaurants (
     id SERIAL PRIMARY KEY,
     owner_id integer REFERENCES users(id) ON DELETE CASCADE,
-    name character varying(255) NOT NULL,
-    address character varying(255),
-    location character varying(255),
-    price character varying(10),
-    cuisine character varying(255),
+    name varchar(255) NOT NULL,
+    address varchar(255) NOT NULL,
+    location varchar(255),
+    price varchar(10) NOT NULL,
+    cuisine varchar(255) NOT NULL ,
     latitude double precision,
     longitude double precision,
-    delivery character varying(50),
-    booking character varying(255),
-    award character varying(50)
+    delivery varchar(50),
+    booking varchar(255)
 );
 
 CREATE TABLE IF NOT EXISTS bookmarks (

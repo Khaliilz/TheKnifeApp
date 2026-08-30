@@ -1,3 +1,7 @@
+/**
+ * @author Devi Atti 754536  VA
+ * @author Zribi Khalil 758699 VA
+ */
 package com.lab.database.query;
 
 import java.sql.Connection;
@@ -11,8 +15,28 @@ import com.lab.utility.Geocoding;
 import com.lab.utility.StringColor;
 import com.lab.utility.PasswordHashing;
 
+/**
+ * Gestisce le interrogazioni al database relative alla funzionalità degli utenti.
+ * <p>
+ * Questa classe racchiude la logica di persistenza degli utenti. 
+ * Sfrutta le API JDBC per comunicare con il database PostgreSQL, utilizzando i {@link PreparedStatement} 
+ * per gestire in modo sicuro le operazioni sulle tabelle relazionali.
+ * </p>
+ */
 public class UserQ {
   
+  /**
+   * Richiede l'utente che corrisponde alle credenziali inserite.
+   * <p>
+   * Esegue una query di tipo SELECT per ottenere un utente dalla tabella users.
+   * Viene effettuato un controllo sulla correttezza dell'username e password.
+   * La connessione viene recuperata dinamicamente e chiusa automaticamente grazie al blocco try-with-resources.
+   * </p>
+   * 
+   * @param username Username.
+   * @param password Password.
+   * @return User se le credenziali sono corrette, null altrimenti (o in caso di errore di connessione).
+   */
   public static User signin(String username, String password)
   {
     String sql = "SELECT id, username, password, role, address, latitude, longitude FROM users WHERE username = ?";
@@ -45,6 +69,23 @@ public class UserQ {
     return null;
   }
 
+  /**
+   * Richiede la registrazione di un nuovo utente.
+   * <p>
+   * Esegue una query di tipo INSERT per isnerire un utente dalla tabella users.
+   * Nel caso venisse rilevato un errore di codice "23505", significa che il vincolo NOT UNIQUE e' stato infranto e che l'utente esiste gia'.
+   * La connessione viene recuperata dinamicamente e chiusa automaticamente grazie al blocco try-with-resources.
+   * </p>
+   * 
+   * @param name Nome dell'utente che effettua la richiesta.
+   * @param surname Cognome dell'utente che effettua la richiesta.
+   * @param birthDate Anno di nascita dell'utente che effettua la richiesta.
+   * @param address Domicilio dell'utente che effettua la richiesta.
+   * @param username Username dell'utente che effettua la richiesta.
+   * @param plainPassword Password in chiaro dell'utente che effettua la richiesta.
+   * @param role Ruolo dell'utente che effettua la richiesta.
+   * @return true se la registrazione va a buon fine, false altrimenti (o in caso di errore di connessione).
+   */
   public static boolean signup(String name, String surname, Date birthDate, String address, String username, String plainPassword, String role)
   {
     double lat = 0.0;
@@ -69,7 +110,6 @@ public class UserQ {
       ps.setString(9, role);
             
       int insertRow = ps.executeUpdate();
-      connection.commit();
       System.out.println("[" + StringColor.PURPLE + "DATABASE" + StringColor.RESET + "] Utente " + username + " registrato");
       return insertRow > 0;
             
