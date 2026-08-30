@@ -4,6 +4,8 @@
  */
 package com.lab.controller.basic;
 
+import com.lab.controller.access.GuestController;
+import com.lab.controller.access.SignupController;
 import com.lab.controller.user.UserHomeController;
 import com.lab.utility.StringColor;
 
@@ -42,7 +44,7 @@ public class HomeController {
   /**
    * Gestisce l'evento di accesso alla pagina di accesso al sistema.
    * <p>
-   * Direzione l'utente alla pagina di accesso al sistema {@link SigninController}
+   * Direzione l'utente alla pagina di accesso al sistema {@link com.lab.controller.access.SigninController}
    * </p>
    * 
    * @param event L'evento scatenato dal click sul bottone Accedi.
@@ -57,7 +59,7 @@ public class HomeController {
   /**
    * Gestisce l'evento di accesso alla pagina di registrazione al sistema.
    * <p>
-   * Direzione l'utente alla pagina di registrazione al sistema {@link SignupController}
+   * Direzione l'utente alla pagina di registrazione al sistema {@link com.lab.controller.access.SignupController}
    * </p>
    * 
    * @param event L'evento scatenato dal click sul bottone Registrati.
@@ -72,7 +74,7 @@ public class HomeController {
   /**
    * Gestisce l'evento di accesso alla pagina di accesso per ospiti al sistema.
    * <p>
-   * Direzione l'utente alla pagina di accesso per ospiti al sistema {@link GuestController}
+   * Direzione l'utente alla pagina di accesso per ospiti al sistema {@link com.lab.controller.access.GuestController}
    * </p>
    * 
    * @param event L'evento scatenato dal click sul bottone Ospite.

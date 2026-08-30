@@ -384,6 +384,8 @@ public class RestaurantQ {
    * La connessione viene recuperata dinamicamente e chiusa automaticamente grazie al blocco try-with-resources.
    * </p>
    * 
+   * @param name Nome del ristorante.
+   * @param address Indirizzo del ristorante.
    * @param place Luogo in cui si trova il ristorante.
    * @param cuisine Tipologia di cucina.
    * @param price Fascia di prezzo media.

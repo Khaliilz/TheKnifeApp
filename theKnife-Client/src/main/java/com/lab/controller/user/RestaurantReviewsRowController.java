@@ -57,7 +57,7 @@ public class RestaurantReviewsRowController {
   /**
    * Gestisce l'evento di visualizzazione della recensione scritta dall'utente.
    * <p>
-   * Chiama il metodo {@link UserHomeController#viewComment()} che si occupa di mostrare meglio la recensione e di modificarla se l'utente lo preferisce.
+   * Chiama il metodo {@link UserHomeController#viewComment(String[])} che si occupa di mostrare meglio la recensione e di modificarla se l'utente lo preferisce.
    * </p>
    * 
    * @param event L'evento scatenato dal click sul bottone Visualizza

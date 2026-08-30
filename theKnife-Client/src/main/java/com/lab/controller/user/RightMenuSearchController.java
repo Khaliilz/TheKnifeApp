@@ -57,7 +57,7 @@ public class RightMenuSearchController {
    * Gestisce l'evento di ricerca dei ristoranti.
    * <p>
    * Controlla la validita' degli input dell'utente.
-   * Chiama il metodo {@link UserHomeController#searchByPlace()} che si occupa di applicare la ricerca.
+   * Chiama il metodo {@link UserHomeController#searchByPlace(String)} che si occupa di applicare la ricerca.
    * </p>
    * 
    * @param event L'evento scatenato dal click sul bottone Cerca.
