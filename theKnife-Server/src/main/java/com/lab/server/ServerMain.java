@@ -30,7 +30,6 @@ public class ServerMain {
   
   /**
    * Metodo di ingresso principale che avvia e configura il server TheKnife.
-   * <p>
    * Il flusso di esecuzione si divide in tre fasi principali:
    * <ol>
    *  <li><b>Configurazione Database:</b> Tramite CLI, interroga l'utente per ottenere host, username, password e preferenza di formattazione del database.</li>
@@ -38,7 +37,6 @@ public class ServerMain {
    *  <li><b>Avvio RMI:</b> Crea un Registry RMI locale sulla porta 1099 e associa l'implementazione dei servizi  al nome "TheKnifeServer".</li>
    * </ol>
    * Infine, un thread parallelo rimane in ascolto sull'input di sistema per permettere uno spegnimento tramite i comandi testuali: stop o exit, deregistrando l'oggetto remoto in modo sicuro.
-   * </p>
    */
   public static void main(String[] args)
   {

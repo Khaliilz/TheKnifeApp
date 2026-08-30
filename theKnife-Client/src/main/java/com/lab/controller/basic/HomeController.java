@@ -44,7 +44,7 @@ public class HomeController {
   /**
    * Gestisce l'evento di accesso alla pagina di accesso al sistema.
    * <p>
-   * Direzione l'utente alla pagina di accesso al sistema {@link com.lab.controller.access.SigninController}
+   * Direzione l'utente alla pagina di accesso al sistema.
    * </p>
    * 
    * @param event L'evento scatenato dal click sul bottone Accedi.
@@ -59,7 +59,7 @@ public class HomeController {
   /**
    * Gestisce l'evento di accesso alla pagina di registrazione al sistema.
    * <p>
-   * Direzione l'utente alla pagina di registrazione al sistema {@link com.lab.controller.access.SignupController}
+   * Direzione l'utente alla pagina di registrazione al sistema.
    * </p>
    * 
    * @param event L'evento scatenato dal click sul bottone Registrati.
@@ -74,7 +74,7 @@ public class HomeController {
   /**
    * Gestisce l'evento di accesso alla pagina di accesso per ospiti al sistema.
    * <p>
-   * Direzione l'utente alla pagina di accesso per ospiti al sistema {@link com.lab.controller.access.GuestController}
+   * Direzione l'utente alla pagina di accesso per ospiti al sistema.
    * </p>
    * 
    * @param event L'evento scatenato dal click sul bottone Ospite.

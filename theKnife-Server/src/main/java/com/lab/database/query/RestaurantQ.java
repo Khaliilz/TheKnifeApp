@@ -386,12 +386,10 @@ public class RestaurantQ {
    * 
    * @param name Nome del ristorante.
    * @param address Indirizzo del ristorante.
-   * @param place Luogo in cui si trova il ristorante.
    * @param cuisine Tipologia di cucina.
    * @param price Fascia di prezzo media.
    * @param delivery Disponibilita' della consegna a domicilio.
    * @param booking Disponibilita' di prenotazione.
-   * @param stars Fascia di stelle medie.
    * @param lat Latitudine del ristorante.
    * @param lon Longitudine del rsitorante.
    * @param ownerId id del proprietario del ristorante.

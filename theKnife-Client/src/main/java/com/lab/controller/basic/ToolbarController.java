@@ -137,7 +137,7 @@ public class ToolbarController {
   /**
    * Gestisce l'evento di accesso alla piattaforma.
    * <p>
-   * Direzione l'utente alla pagina di accesso alla piattaforma {@link SigninController}
+   * Direzione l'utente alla pagina di accesso alla piattaforma.
    * </p>
    * 
    * @param event L'evento scatenato dal click sul bottone Accedi.
@@ -151,7 +151,7 @@ public class ToolbarController {
   /**
    * Gestisce l'evento di registrazione alla piattaforma.
    * <p>
-   * Direzione l'utente alla pagina di registrazione alla piattaforma {@link SignupController}
+   * Direzione l'utente alla pagina di registrazione alla piattaforma.
    * </p>
    * 
    * @param event L'evento scatenato dal click sul bottone Registrati.
@@ -165,7 +165,7 @@ public class ToolbarController {
   /**
    * Gestisce l'evento di uscita dal profilo.
    * <p>
-   * Direzione l'utente alla pagina principali di scelta della metodologia di accesso alla piattaforma {@link HomeController}
+   * Direzione l'utente alla pagina principali di scelta della metodologia di accesso alla piattaforma.
    * </p>
    * 
    * @param event L'evento scatenato dal click sul bottone Esci.

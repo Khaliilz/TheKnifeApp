@@ -20,7 +20,7 @@ import javafx.stage.StageStyle;
 /**
  * App gestisce il caricamento della prima schermata all'utente dando vita al motore grafico.
  * <p>
- * Permette di mostrare la prima schermata {@link com.lab.controller.ipConfig.IpConfigController} che permette all'utente di inserire l'indirizzo del server a cui connettersi.
+ * Permette di mostrare la prima schermata IpConfigController che permette all'utente di inserire l'indirizzo del server a cui connettersi.
  * </p> 
  */
 public class App extends Application {
