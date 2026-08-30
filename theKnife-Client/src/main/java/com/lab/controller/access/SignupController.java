@@ -1,3 +1,7 @@
+/**
+ * @author Devi Atti 754536  VA
+ * @author Zribi Khalil 758699 VA
+ */
 package com.lab.controller.access;
 
 import java.rmi.RemoteException;
@@ -25,6 +29,14 @@ import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
 
+/**
+ * SignupController Gestisce l'interfaccia di registrazione dell'utente alla piattaforma.
+ * <p>
+ * Questa classe si occupa di raccogliere le credenziali inserite dall'utente e di comunicare con il server tramite protocollo RMI per la registrazione.
+ * L'operazione di rete viene gestita in modo asincrono per non bloccare l'interfaccia grafica.
+ * In caso di successo, la classe esegue un accesso automatico, inizializza la sessione e reindirizza l'utente alla homepage corrispondente al proprio ruolo.
+ * </p>
+ */
 public class SignupController {
   
   @FXML private TextField name_TF;
@@ -37,6 +49,17 @@ public class SignupController {
   @FXML private RadioButton restaurateur;
   @FXML private Button signup_B;
 
+  /**
+   * initialize e' un metodo invocato automaticamente da JavaFX al caricamento del file fxml.
+   * <p>
+   * Configura l'interfaccia grafica iniziale, impostando:
+   * - titolo della pagina
+   * - a quale pagine si riferisce il bottone "torna indietro" della toolbar
+   * - disattiva le opzioni di di accesso, registrazione e uscita dal profilo della toolbar
+   * - imposta l'azione al premersi del tasto invio
+   * - reimposta i colori standard dei bordi dell'input
+   * </p>
+   */
   @FXML
   public void initialize()
   {
@@ -53,6 +76,17 @@ public class SignupController {
     ErrorContainer.resetBorder(password_PF);
   }
 
+  /**
+   * Gestisce l'evento di registrazione al sistema.
+   * <p>
+   * Verifica che gli input non siano vuoti e validi secondo delle regole (regex). In caso di errore, applica un bordo di segnalazione tramite {@link ErrorContainer}.
+   * Se la validificazione va a buon fine, l'intefaccia viene temporaneamente disabilitata e viene avviato un thread in background per inviare la richiesta al server remoto.
+   * Ricevuta la risposta, viene avviato un secondo thread in background per inviare la richiesta di accesso al server remote.
+   * Una volta ricevuta la risposta, il controllo ritorna al thread grafico, e se le credenziali sono correte viene salvata la sessione e l'utente viene indirizzato alla sua homepage dedicata.
+   * </p>
+   * 
+   * @param event L'evento scatenato dal click sul bottone Accedi o dalla pressione del tasto invio.
+   */
   @FXML
   public void signupClicked(ActionEvent event)
   {
@@ -161,7 +195,17 @@ public class SignupController {
     });
   }
 
-  public boolean checkBirthDate(LocalDate d)
+  /**
+   * Controlla la correttezza della data di nascita dell'utente.
+   * <p>
+   * Verifica che l'input sia valido, controllando che:
+   * - la data non sia superiore ad oggi
+   * - l'utente non abbia un eta' superiore a 89 anni o inferiore a 16
+   * </p>
+   * 
+   * @param d La data di nascita impostata dall'utente.
+   */
+  private boolean checkBirthDate(LocalDate d)
   {
     LocalDate today = LocalDate.now();
     long age = java.time.temporal.ChronoUnit.YEARS.between(d, today);

@@ -1,3 +1,7 @@
+/**
+ * @author Devi Atti 754536  VA
+ * @author Zribi Khalil 758699 VA
+ */
 package com.lab.controller.restaurateur;
 
 import java.rmi.RemoteException;
@@ -15,6 +19,13 @@ import javafx.scene.text.Text;
 import javafx.scene.control.Button;
 import javafx.stage.Stage;
 
+/**
+ * AnswerCommentController Gestisce l'interfaccia relativa al form di risposta ad una recensione per il ristoratore.
+ * <p>
+ * Instanzia le informazioni relative al nome dell'utente, commento e risposta.
+ * Al salvataggio viene mandato una richiesta di aggiunta/aggiornamento al server, che a sua volta la inoltrera' al database.
+ * </p>
+ */
 public class AnswerCommentController {
   
   @FXML private Text name;
@@ -24,6 +35,14 @@ public class AnswerCommentController {
   
   private String[] reviewData;
 
+  /**
+   * Imposta i valori delle componente grafiche.
+   * <p>
+   * In base ai dati presente nell'array passato come argomento del metodo, vengono assegnati i vari valori.
+   * </p>
+   * 
+   * @param data valori del nome utente, commento, risposta, id utente e id ristoratore
+   */
   public void setReviewData(String[] data)
   {
     reviewData = data;
@@ -39,6 +58,15 @@ public class AnswerCommentController {
     answer.positionCaret(answer.getText().length());
   }
 
+  /**
+   * Gestisce l'evento di richiesta di salvataggio della risposta alla recensione al server remoto.
+   * <p>
+   * L'intefaccia viene temporaneamente disabilitata e viene avviato un thread in background per inviare la richiesta al server remoto.
+   * Ricevuta la risposta, il controllo ritorna al thread grafico, e la finestra viene chiusa.
+   * </p>
+   * 
+   * @param event L'evento scatenato dal click sul bottone Salva.
+   */
   @FXML
   public void saveClicked(ActionEvent event)
   {

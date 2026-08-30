@@ -20,7 +20,8 @@ public class RestaurantQ {
            "sin( radians( latitude ) ) ) )";
   }
 
-  public static boolean isDatabaseEmpty() {
+  public static boolean isDatabaseEmpty()
+  {
     String sql = "SELECT COUNT(*) AS total FROM restaurants";
     
     try(Connection connection = Database.getConnection(); PreparedStatement ps = connection.prepareStatement(sql)) {
@@ -124,7 +125,7 @@ public class RestaurantQ {
 
     String sql = "SELECT restaurants.id, restaurants.name, restaurants.address, restaurants.cuisine, restaurants.price, restaurants.delivery, restaurants.booking, " + haversineFormula() + " AS distance, COALESCE(AVG(reviews.stars), 0) AS avg_stars, COUNT(reviews.id) AS total_reviews " +
                  "FROM restaurants " +
-                 "INNER JOIN reviews my_rev ON restaurants.id = my_rev.restaurant_id LEFT JOIN reviews ON restaurants.id = reviews.restaurant_id " +        // <-- Per la media totale
+                 "INNER JOIN reviews my_rev ON restaurants.id = my_rev.restaurant_id LEFT JOIN reviews ON restaurants.id = reviews.restaurant_id " +
                  "WHERE my_rev.user_id = ? " +
                  "GROUP BY restaurants.id, restaurants.name, restaurants.address, restaurants.cuisine, restaurants.price, restaurants.delivery, restaurants.booking, restaurants.latitude, restaurants.longitude " +
                  "ORDER BY distance ASC";
@@ -167,7 +168,7 @@ public class RestaurantQ {
       "SELECT restaurants.id, restaurants.name, restaurants.address, restaurants.cuisine, restaurants.price, restaurants.delivery, restaurants.booking, " + haversineFormula() + " AS distance, COALESCE(AVG(reviews.stars), 0) AS avg_stars, COUNT(reviews.id) AS total_reviews " +
       "FROM restaurants " +
       "LEFT JOIN reviews ON restaurants.id = reviews.restaurant_id " +
-      "WHERE 1=1 "
+      "WHERE 1=1"
     );
 
     List<Object> params = new ArrayList<>();

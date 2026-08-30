@@ -13,11 +13,11 @@ public class User implements Serializable{
   private double latitude;
   private double longitude;
 
-  public User(int id, String username, String address, double latitutde, double longitude, String role) {
+  public User(int id, String username, String address, double latitude, double longitude, String role) {
     this.id = id;
     this.username = username;
     this.address = address;
-    this.latitude = latitutde;
+    this.latitude = latitude;
     this.longitude = longitude;
     this.role = role;
   }

@@ -1,3 +1,7 @@
+/**
+ * @author Devi Atti 754536  VA
+ * @author Zribi Khalil 758699 VA
+ */
 package com.lab.controller.restaurateur;
 
 import java.io.IOException;
@@ -23,7 +27,15 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
+import javafx.scene.Node;
 
+/**
+ * RestaurateurHomeController Gestisce l'interfaccia relativa alla homepage del ristoratore.
+ * <p>
+ * Questa classe si occupa caricare graficamente la lista dei propri ristoranti e delle recensioni relative ad essi.
+ * Inoltre si occupa della chiusura e apertura dell finestre di dialogo per la visualizzazione dei dettagli del ristorante e per la risposta ad una recensione.
+ * </p>
+ */
 public class RestaurateurHomeController {
   
   @FXML private Text title;
@@ -33,11 +45,20 @@ public class RestaurateurHomeController {
   @FXML private Label emptyLabel;
   @FXML private VBox mainArea;
 
-  private javafx.scene.Node detailsNode;
-  private javafx.scene.Node newRestaurantNode;
+  private Node detailsNode;
+  private Node newRestaurantNode;
 
   private static RestaurateurHomeController instance;
 
+  /**
+   * initialize e' un metodo invocato automaticamente da JavaFX al caricamento del file fxml.
+   * <p>
+   * Instanzia la classe a se stessa, per poterla richiamare staticamente nelle altre schermate dipendenti da essa.
+   * Nasconde il titolo originale dell'applicazione.
+   * Nasconde il bottone indietro della toolbar.
+   * Mostra il bottone di uscita dal profilo ristoratore.
+   * </p>
+   */
   @FXML
   public void initialize()
   {
@@ -51,16 +72,28 @@ public class RestaurateurHomeController {
     fillRestaurants();
   }
 
+  /**
+   * Restituisce l'istanza della classe per poter richiamare i metodi forniti dalla homepage del ristoratore.
+   */
   public static RestaurateurHomeController getInstance()
   {
     return instance;
   }
 
+  /**
+   * Imposta il titolo della pagina in base al valore passato per parametro.
+   * 
+   * @param t Titolo della pagina
+   */
   public void setTitle(String t)
   {
     title.setText(t);
   }
 
+  /**
+   * Effettua una chiamata al server remoto, in un thread asincorno in background, richiedendo la lista dei ristoranti del ristoratore, tramite id ottenuto dalla sessione in corso.
+   * Una volta ottenuta la risposta, la lista di ristoranti viene spacchettata, e il thread grafico riprende il controllo impostando i singoli valori degli oggetti grafici e aggiungendo gli elementi alla lista di ristoranti grafica.
+   */
   public void fillRestaurants()
   {
     list.getChildren().clear();
@@ -109,6 +142,13 @@ public class RestaurateurHomeController {
     });
   }
 
+  /**
+   * Chiama il metodo {@link DetailsRestaurateurController#setRestaurant(Restaurant)} mandando il ristorante dal quale si vogliono vedere le recensioni.
+   * Viene caricata una finestra fittizzia soprastante alla homepage del ristoratore in modo tale da ridurre i tempi di caricamento della finestra.
+   * Al termine verra' distrutta e si tornera' alla visualizzazione di tutti i ristoranti.
+   *  
+   * @param r Ristorante corrente da visualizzare nel dettaglio
+   */
   public void openDetails(Restaurant r)
   {
     try{
@@ -128,6 +168,10 @@ public class RestaurateurHomeController {
     }
   }
 
+  /**
+   * Viene chiusa la finestra fittizzia caricata sopra la homepage del ristoratore e reimpostati i valori degli oggetti standard della homepage.
+   * Infine, visto che si e' scelto di usare questa tecnica, vengono ricaricati i ristoranti del ristoratore in modo da essere aggiornati con le modifiche piu' recenti.
+   */
   public void closeDetails()
   {
     if(detailsNode != null) {
@@ -142,12 +186,13 @@ public class RestaurateurHomeController {
     fillRestaurants();
   }
 
+  /**
+   * Viene caricata la risorsa, tramite link, della schermata per l'aggiunta di un nuovo ristorante.
+   * La schermata viene caricata sopra la homepage del ristoratore.
+   * 
+   * @param event L'evento scatenato dal click sul bottone Aggiungi.
+   */
   @FXML public void addClicked(ActionEvent event)
-  {
-    openNewRestaurant();
-  }
-
-  private void openNewRestaurant()
   {
     try {
       FXMLLoader loader = new FXMLLoader(App.class.getResource("/com/lab/fxml/restaurateur/newRestaurant.fxml"));
@@ -163,6 +208,10 @@ public class RestaurateurHomeController {
     }
   }
 
+  /**
+   * Viene chiusa la finestra fittizzia caricata sopra la homepage del ristoratore, per l'aggiunta di un nuovo ristorante, e reimpostati i valori degli oggetti standard della homepage.
+   * Infine, visto che si e' scelto di usare questa tecnica, vengono ricaricati i ristoranti del ristoratore in modo da essere aggiornati con le modifiche piu' recenti.
+   */
   public void closeNewRestaurant()
   {
     if(newRestaurantNode != null) {

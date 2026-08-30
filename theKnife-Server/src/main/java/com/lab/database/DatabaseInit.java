@@ -34,7 +34,7 @@ public class DatabaseInit {
       }
     } catch(Exception e) {
       e.printStackTrace();
-      System.out.println("[" + StringColor.RED + "ERRORE" + StringColor.RESET + "] Errore durante l'inizializzazione dello schema!");
+      System.out.println("[" + StringColor.RED + "ERRORE" + StringColor.RESET + "] Errore durante l'inizializzazione dello schema");
     }
   }
 }

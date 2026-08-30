@@ -5,6 +5,7 @@ import java.rmi.RemoteException;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
+import javafx.scene.Node;
 import javafx.event.ActionEvent;
 
 import com.lab.App;
@@ -43,8 +44,8 @@ public class UserHomeController {
 
   private static UserHomeController instance;
   private DetailsUserController currentDetailsController;
-  private javafx.scene.Node detailsNode;
-  private javafx.scene.Node commentNode;
+  private Node detailsNode;
+  private Node commentNode;
 
   private String currentSearchPlace = "";
   private String filterCuisine;

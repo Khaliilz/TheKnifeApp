@@ -1,3 +1,7 @@
+/**
+ * @author Devi Atti 754536  VA
+ * @author Zribi Khalil 758699 VA
+ */
 package com.lab.controller.access;
 
 import java.rmi.RemoteException;
@@ -20,12 +24,31 @@ import javafx.scene.control.TextField;
 import java.util.concurrent.CompletableFuture;
 import javafx.application.Platform;
 
+/**
+ * SigninController Gestisce l'interfaccia di accesso dell'utente registrato alla piattaforma.
+ * <p>
+ * Questa classe si occupa di raccogliere le credenziali inserite dall'utente e di comunicare con il server tramite protocollo RMI per l'autenticazione.
+ * L'operazione di rete viene gestita in modo asincrono per non bloccare l'interfaccia grafica.
+ * In caso di successo, la classe inizializza la sessione e reindirizza l'utente alla homepage corrispondente al proprio ruolo.
+ * </p>
+ */
 public class SigninController {
   
   @FXML private Button signin_B;
   @FXML private TextField username_TF;
   @FXML private PasswordField password_PF;
 
+  /**
+   * initialize e' un metodo invocato automaticamente da JavaFX al caricamento del file fxml.
+   * <p>
+   * Configura l'interfaccia grafica iniziale, impostando:
+   * - titolo della pagina
+   * - a quale pagine si riferisce il bottone "torna indietro" della toolbar
+   * - disattiva le opzioni di di accesso, registrazione e uscita dal profilo della toolbar
+   * - imposta l'azione al premersi del tasto invio
+   * - reimposta i colori standard dei bordi dell'input
+   * </p>
+   */
   @FXML
   public void initialize()
   {
@@ -38,6 +61,16 @@ public class SigninController {
     ErrorContainer.resetBorder(password_PF);
   }
 
+  /**
+   * Gestisce l'evento di accesso al sistema.
+   * <p>
+   * Verifica che l'input non sia vuoto. In caso di errore, applica un bordo di segnalazione tramite {@link ErrorContainer}.
+   * Se la validificazione va a buon fine, l'intefaccia viene temporaneamente disabilitata e viene avviato un thread in background per inviare la richiesta al server remoto.
+   * Ricevuta la risposta, il controllo ritorna al thread grafico, e se le credenziali sono correte viene salvata la sessione e l'utente viene indirizzato alla sua homepage dedicata.
+   * </p>
+   * 
+   * @param event L'evento scatenato dal click sul bottone Accedi o dalla pressione del tasto invio.
+   */
   @FXML
   public void signinClicked(ActionEvent event)
   {

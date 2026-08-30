@@ -1,3 +1,7 @@
+/**
+ * @author Devi Atti 754536  VA
+ * @author Zribi Khalil 758699 VA
+ */
 package com.lab.controller.basic;
 
 import com.lab.model.Session;
@@ -14,6 +18,12 @@ import java.util.concurrent.CompletableFuture;
 import javafx.application.Platform;
 import com.lab.network.ServerConnection;
 
+/**
+ * ToolbarController Gestisce l'interfaccia toolbar della piattaforma.
+ * <p>
+ * Questa classe si occupa di gestire la grafica degli oggetti presenti nella toolbar.
+ * </p>
+ */
 public class ToolbarController {
   @FXML private StackPane toolbar;
   @FXML private Button exit_B;
@@ -29,6 +39,13 @@ public class ToolbarController {
   private double offsetY = 0;
   private String page = "/com/lab/fxml/basic/home.fxml";
 
+  /**
+   * initialize e' un metodo invocato automaticamente da JavaFX al caricamento del file fxml.
+   * <p>
+   * Instanzia la classe a se stessa.
+   * Ottiene le coordinate del mouse alla pressione sulla toolbar, e alla suo rilascio per riposizionare la finestra.
+   * </p>
+   */
   @FXML
   public void initialize()
   {
@@ -47,6 +64,14 @@ public class ToolbarController {
     });
   }
 
+  /**
+   * Mostra il bottone Indietro della toolbar.
+   * <p>
+   * In base alla scelta passata come parametro mostra o meno il bottone Indietro.
+   * </p>
+   * 
+   * @param show Valore booleano della scelta.
+   */
   public static void showBackButton(boolean show)
   {
     if(toolbarController != null) {
@@ -55,6 +80,15 @@ public class ToolbarController {
     }
   }
 
+  /**
+   * Imposta la pagina di ritorno del bottone Indietro della toolbar.
+   * <p>
+   * In base alla scelta passata come parametro mostra o meno il bottone di ritorno indietro e imposta la pagina a cui tornare.
+   * </p>
+   * 
+   * @param show Valore booleano della scelta.
+   * @param prevPage Indirizzo della pagina a cui tornare.
+   */
   public static void setupBackButton(boolean show, String prevPage)
   {
     if(toolbarController != null) {
@@ -64,6 +98,16 @@ public class ToolbarController {
     }
   }
 
+  /**
+   * Imposta la visibilita' dei bottoni di accesso, registrazione, uscita dal profilo della toolbar.
+   * <p>
+   * In base alla scelta passata come parametro mostra o meno i bottoni specificati.
+   * </p>
+   * 
+   * @param signin Valore booleano della scelta.
+   * @param signup Valore booleano della scelta.
+   * @param signout Valore booleano della scelta.
+   */
   public static void showLeftSide(boolean signin, boolean signup, boolean signout)
   {
     if(toolbarController != null) {
@@ -76,24 +120,56 @@ public class ToolbarController {
     }
   }
 
+  /**
+   * Gestisce l'evento di ritorno alla pagina precedente.
+   * <p>
+   * Direzione l'utente alla pagina salvata come precedente dal metodo {@link #setupBackButton(boolean, String)}
+   * </p>
+   * 
+   * @param event L'evento scatenato dal click sul bottone Indietro.
+   */
   @FXML
   public void backClicked(ActionEvent event)
   {
     PageController.selectPage(page);
   }
 
+  /**
+   * Gestisce l'evento di accesso alla piattaforma.
+   * <p>
+   * Direzione l'utente alla pagina di accesso alla piattaforma {@link SigninController}
+   * </p>
+   * 
+   * @param event L'evento scatenato dal click sul bottone Accedi.
+   */
   @FXML
   public void signinClicked(ActionEvent event)
   {
     PageController.selectPage("/com/lab/fxml/access/signin.fxml");
   }
 
+  /**
+   * Gestisce l'evento di registrazione alla piattaforma.
+   * <p>
+   * Direzione l'utente alla pagina di registrazione alla piattaforma {@link SignupController}
+   * </p>
+   * 
+   * @param event L'evento scatenato dal click sul bottone Registrati.
+   */
   @FXML
   public void signupClicked(ActionEvent event)
   {;
     PageController.selectPage("/com/lab/fxml/access/signup.fxml");
   }
 
+  /**
+   * Gestisce l'evento di uscita dal profilo.
+   * <p>
+   * Direzione l'utente alla pagina principali di scelta della metodologia di accesso alla piattaforma {@link HomeController}
+   * </p>
+   * 
+   * @param event L'evento scatenato dal click sul bottone Esci.
+   */
   @FXML
   public void signoutClicked(ActionEvent event)
   {
@@ -112,6 +188,14 @@ public class ToolbarController {
     PageController.selectPage("/com/lab/fxml/basic/home.fxml");
   }
 
+  /**
+   * Gestisce l'evento di uscita dall'applicazione.
+   * <p>
+   * Chiude l'applicazione.
+   * </p>
+   * 
+   * @param event L'evento scatenato dal click sul bottone X.
+   */
   @FXML
   public void exitClicked(ActionEvent event)
   { 
@@ -131,6 +215,14 @@ public class ToolbarController {
     Platform.exit();
   }
 
+  /**
+   * Gestisce l'evento di minimizzazione dell'applicazione.
+   * <p>
+   * Minimizza la finestra mettendola a finestra.
+   * </p>
+   * 
+   * @param event L'evento scatenato dal click sul bottone -.
+   */
   @FXML
   public void minimizeClicked(ActionEvent event)
   {

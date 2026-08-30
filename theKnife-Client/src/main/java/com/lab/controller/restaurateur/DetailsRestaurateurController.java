@@ -1,3 +1,7 @@
+/**
+ * @author Devi Atti 754536  VA
+ * @author Zribi Khalil 758699 VA
+ */
 package com.lab.controller.restaurateur;
 
 import java.io.IOException;
@@ -21,6 +25,12 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
+/**
+ * DetailsRestaurateurController Gestisce l'interfaccia per la rappresentazione dei dettagli di un ristorante per il ristoratore.
+ * <p>
+ * Questa classe si occupa di ottenere i commenti di un ristoratore e di impostarli per la loro visualizzazione.
+ * </p>
+ */
 public class DetailsRestaurateurController {
 
   @FXML private VBox list;
@@ -29,6 +39,14 @@ public class DetailsRestaurateurController {
 
   private Restaurant currentRestaurant;
 
+  /**
+   * initialize e' un metodo invocato automaticamente da JavaFX al caricamento del file fxml.
+   * <p>
+   * Rende invisibile il titolo della pagina
+   * Rende invisibile il bottone Indietro della toolbar
+   * Rende visibile il bottone Esci della toolbar
+   * </p>
+   */
   @FXML
   public void initialize()
   {
@@ -37,12 +55,20 @@ public class DetailsRestaurateurController {
     ToolbarController.showLeftSide(false, false, true);
   }
 
+  /**
+   * Imposta il ristorante corrente e carica le recensioni relative ad esso.
+   */
   public void setRestaurant(Restaurant r)
   {
     currentRestaurant = r;
     fillReviews();
   }
 
+  /**
+   * Richiede la lista delle recensioni al server remoto, tramite un thread in background. 
+   * Una volta ricevuta la risposta, riprendere il controllo il thread grafico, interrotto precedentemente per non generare innumerevoli chiamate al server,
+   * La lista delle recensioni viene spacchettata, impostati i singoli dati e aggiunti alla lista di recensioni grafica.
+   */
   public void fillReviews()
   {
     list.getChildren().clear();
@@ -89,6 +115,15 @@ public class DetailsRestaurateurController {
     });
   }
 
+  /**
+   * Gestisce l'evento torna indietro dalla schermata di visualizzazione dei dettagli del ristorante per il ristoratore.
+   * <p>
+   * Nel caso il ristoratore non volesse piu' visualizzare le recensioni, gli e' permesso tornare indietro alla visualizzazione dei propri ristoranti.
+   * Questo viene fatto chiamando il metodo {@link RestaurateurHomeController#closeDetails()}
+   * </p>
+   * 
+   * @param event L'evento scatenato dal click sul bottone Indietro.
+   */
   @FXML public void backClicked(ActionEvent event)
   {
     System.out.println("[" + StringColor.GREEN + "AZIONE" + StringColor.RESET + "] Back button clicked");
