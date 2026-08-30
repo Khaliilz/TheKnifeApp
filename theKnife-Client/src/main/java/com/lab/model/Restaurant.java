@@ -1,7 +1,15 @@
+/**
+ * @author Devi Atti 754536  VA
+ * @author Zribi Khalil 758699 VA
+ */
 package com.lab.model;
 
 import java.io.Serializable;
 
+/**
+ * Oggetto seriale rappresentante il ristorante.
+ * Contiene i metodi getter per ottenere le informazioni specifiche relative ad un ristorante in particolare.
+ */
 public class Restaurant implements Serializable{
   
   private static final long serialVersionUID = 1L; 

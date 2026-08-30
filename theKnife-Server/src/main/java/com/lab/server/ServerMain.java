@@ -1,3 +1,7 @@
+/**
+ * @author Devi Atti 754536  VA
+ * @author Zribi Khalil 758699 VA
+ */
 package com.lab.server;
 
 import java.net.InetAddress;
@@ -14,8 +18,28 @@ import com.lab.database.Populate;
 import com.lab.database.query.RestaurantQ;
 import com.lab.utility.StringColor;
 
+/**
+ * Classe principale di avvio per il Server dell'applicazione TheKnife.
+ * <p>
+ * Questa classe gestisce l'intero ciclo di vita del server.
+ * Si occupa di richiedere  all'amministratore le credenziali e l'host per l'accesso al database PostgreSQL al momento del lancio.
+ * Successivamente si occupa di inizializzare la persistenza, eventualmente popolando il database, e pubblica l'oggetto remoto per abilitare  RMI, restando in attesa delle connessioni client.
+ * </p>
+ */
 public class ServerMain {
   
+  /**
+   * Metodo di ingresso principale che avvia e configura il server TheKnife.
+   * <p>
+   * Il flusso di esecuzione si divide in tre fasi principali:
+   * <ol>
+   *  <li><b>Configurazione Database:</b> Tramite CLI, interroga l'utente per ottenere host, username, password e preferenza di formattazione del database.</li>
+   *  <li><b>Inizializzazione Dati:</b> Connesso al DBMS, avvia la rigenerazione dello schema relazionale (se richiesta) e l'importazione del dataset (ristoranti e utenti base) qualora il database risulti vuoto.</li>
+   *  <li><b>Avvio RMI:</b> Crea un Registry RMI locale sulla porta 1099 e associa l'implementazione dei servizi  al nome "TheKnifeServer".</li>
+   * </ol>
+   * Infine, un thread parallelo rimane in ascolto sull'input di sistema per permettere uno spegnimento tramite i comandi testuali: stop o exit, deregistrando l'oggetto remoto in modo sicuro.
+   * </p>
+   */
   public static void main(String[] args)
   {
     System.out.println(StringColor.GREEN + "===== "+ StringColor.RESET + "THE KNIFE - SERVER" + StringColor.GREEN + " =====" + StringColor.RESET);

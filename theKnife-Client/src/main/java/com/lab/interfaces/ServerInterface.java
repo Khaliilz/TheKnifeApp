@@ -1,3 +1,7 @@
+/**
+ * @author Devi Atti 754536  VA
+ * @author Zribi Khalil 758699 VA
+ */
 package com.lab.interfaces;
 
 import java.rmi.Remote;
@@ -8,6 +12,9 @@ import java.util.List;
 import com.lab.model.Restaurant;
 import com.lab.model.User;
 
+/**
+ * Interfaccia del server, contiene tutti i metodi resi pubblici dal server.
+ */
 public interface ServerInterface extends Remote {
   
   public User signin(String username, String password) throws RemoteException;

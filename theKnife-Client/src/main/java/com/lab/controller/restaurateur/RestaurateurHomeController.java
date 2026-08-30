@@ -13,6 +13,7 @@ import java.util.List;
 import com.lab.App;
 import com.lab.controller.basic.PageController;
 import com.lab.controller.basic.ToolbarController;
+import com.lab.controller.user.UserHomeController;
 import com.lab.model.Session;
 import com.lab.network.ServerConnection;
 import com.lab.model.Restaurant;
@@ -73,7 +74,9 @@ public class RestaurateurHomeController {
   }
 
   /**
-   * Restituisce l'istanza della classe per poter richiamare i metodi forniti dalla homepage del ristoratore.
+   * Restituisce l'istanza singleton corrente del controller.
+   * 
+   * @return L'istanza attiva di {@link RestaurateurHomeController}.
    */
   public static RestaurateurHomeController getInstance()
   {

@@ -1,3 +1,7 @@
+/**
+ * @author Devi Atti 754536  VA
+ * @author Zribi Khalil 758699 VA
+ */
 package com.lab.server;
 
 import java.rmi.RemoteException;
@@ -16,8 +20,16 @@ import com.lab.database.query.UserQ;
 import com.lab.interfaces.ServerInterface;
 import com.lab.utility.StringColor;
 
+/**
+ * Rappresenta l'implementazione dei metodi resi pubblici dal server.
+ * Per questioni di separazione del codice e isolamento dei compiti, le implementazioni vere e proprie si trovano nelle seguenti classi:
+ * {@link UserQ}
+ * {@link RestaurantQ}
+ * {@link BookmarkQ}
+ * {@link ReviewQ}
+ */
 public class ServerImpl extends UnicastRemoteObject implements ServerInterface {
-  
+
   public ServerImpl() throws RemoteException
   {
     super();

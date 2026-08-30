@@ -7,7 +7,6 @@ package com.lab.controller.access;
 import com.lab.controller.basic.PageController;
 import com.lab.controller.basic.ToolbarController;
 import com.lab.controller.user.UserHomeController;
-import com.lab.utility.StringColor;
 import com.lab.utility.ErrorContainer;
 
 import javafx.event.ActionEvent;

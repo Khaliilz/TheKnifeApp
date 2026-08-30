@@ -1,3 +1,7 @@
+/**
+ * @author Devi Atti 754536  VA
+ * @author Zribi Khalil 758699 VA
+ */
 package com.lab.database.query;
 
 import com.lab.utility.StringColor;
@@ -11,6 +15,14 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Gestisce le interrogazioni al database relative alla funzionalità dei ristoranti.
+ * <p>
+ * Questa classe racchiude la logica di persistenza per l'associazione tra ristoranti, recensioni e utenti. 
+ * Sfrutta le API JDBC per comunicare con il database PostgreSQL, utilizzando i {@link PreparedStatement} 
+ * per gestire in modo sicuro le operazioni sulle tabelle relazionali.
+ * </p>
+ */
 public class RestaurantQ {
   
   private static String haversineFormula()
@@ -20,6 +32,15 @@ public class RestaurantQ {
            "sin( radians( latitude ) ) ) )";
   }
 
+  /**
+   * Verifica se la relazione restaurants e' vuota per l'eventuale popolamento.
+   * <p>
+   * Esegue una query di tipo SELECT per controllare l'esistenza dei ristoranti.
+   * La connessione viene recuperata dinamicamente e chiusa automaticamente grazie al blocco try-with-resources.
+   * </p>
+   * 
+   * @return true se la relazione e' vuota, false altrimenti (o in caso di errore di connessione).
+   */
   public static boolean isDatabaseEmpty()
   {
     String sql = "SELECT COUNT(*) AS total FROM restaurants";
@@ -38,6 +59,17 @@ public class RestaurantQ {
     return true;
   }
 
+  /**
+   * Richiede i ristoranti piu' vicini all'utente tramite coordinate.
+   * <p>
+   * Esegue una query di tipo SELECT per selezionare i ristoranti.
+   * La connessione viene recuperata dinamicamente e chiusa automaticamente grazie al blocco try-with-resources.
+   * </p>
+   * 
+   * @param lat Latitudine dell'utente.
+   * @param lon Longitudine dell'utente.
+   * @return lista di ristoranti trovati, null altrimenti (o in caso di errore di connessione).
+   */
   public static List<Restaurant> getNearestRestaurants(double lat, double lon)
   {
     List<Restaurant> list = new ArrayList<>();
@@ -78,6 +110,18 @@ public class RestaurantQ {
     return list;
   }
 
+  /**
+   * Richiede i ristoranti preferiti dall'utente e li ordina in base alla loro distanza dall'utente tramite coordinate.
+   * <p>
+   * Esegue una query di tipo SELECT per selezionare i ristoranti.
+   * La connessione viene recuperata dinamicamente e chiusa automaticamente grazie al blocco try-with-resources.
+   * </p>
+   * 
+   * @param userId L'id dell'utente che effettua la richiesta.
+   * @param lat Latitudine dell'utente.
+   * @param lon Longitudine dell'utente.
+   * @return lista di ristoranti trovati, null altrimenti (o in caso di errore di connessione).
+   */
   public static List<Restaurant> getBookmarkedRestaurants(int userId, double lat, double lon)
   {
     List<Restaurant> list = new ArrayList<>();
@@ -119,6 +163,18 @@ public class RestaurantQ {
     return list;
   }
 
+  /**
+   * Richiede i ristoranti recensiti dall'utente e li ordina in base alla loro distanza dall'utente tramite coordinate.
+   * <p>
+   * Esegue una query di tipo SELECT per selezionare i ristoranti.
+   * La connessione viene recuperata dinamicamente e chiusa automaticamente grazie al blocco try-with-resources.
+   * </p>
+   * 
+   * @param userId L'id dell'utente che effettua la richiesta.
+   * @param lat Latitudine dell'utente.
+   * @param lon Longitudine dell'utente.
+   * @return lista di ristoranti trovati, null altrimenti (o in caso di errore di connessione).
+   */
   public static List<Restaurant> getReviewedRestaurants(int userId, double lat, double lon)
   {
     List<Restaurant> list = new ArrayList<>();
@@ -160,6 +216,24 @@ public class RestaurantQ {
     return list;
   }
 
+  /**
+   * Richiede i ristoranti cercati dall'utente in base ad un eventuale filtro e li ordina in base alla loro distanza dall'utente tramite coordinate.
+   * <p>
+   * Esegue una query di tipo SELECT per selezionare i ristoranti.
+   * La connessione viene recuperata dinamicamente e chiusa automaticamente grazie al blocco try-with-resources.
+   * </p>
+   * 
+   * @param place Luogo in cui cercare.
+   * @param cuisine Tipologia di cucina.
+   * @param price Fascia di prezzo media.
+   * @param delivery Disponibilita' della consegna a domicilio.
+   * @param booking Disponibilita' di prenotazione.
+   * @param stars Fascia di stelle medie.
+   * @param offset Valore di offset dei valori trovati.
+   * @param lat Latitudine dell'utente.
+   * @param lon Longitudine dell'utente.
+   * @return lista di ristoranti trovati, null altrimenti (o in caso di errore di connessione).
+   */
   public static List<Restaurant> getSerachedRestaurants(String place, String cuisine, String price, String delivery, String booking, String stars, int offset, double lat, double lon)
   {
     List<Restaurant> list = new ArrayList<>();
@@ -256,6 +330,16 @@ public class RestaurantQ {
     return list;
   }
 
+  /**
+   * Richiede i ristoranti del ristoratore.
+   * <p>
+   * Esegue una query di tipo SELECT per selezionare i ristoranti.
+   * La connessione viene recuperata dinamicamente e chiusa automaticamente grazie al blocco try-with-resources.
+   * </p>
+   * 
+   * @param ownerId L'id del ristoratore che effettua la richiesta.
+   * @return lista di ristoranti trovati, null altrimenti (o in caso di errore di connessione).
+   */
   public static List<Restaurant> getRestaurantsByOwner(int ownerId)
   {
     List<Restaurant> list = new ArrayList<>();
@@ -293,6 +377,24 @@ public class RestaurantQ {
     return list;
   }
 
+  /**
+   * Richiesta di aggiunta di un nuovo ristorante.
+   * <p>
+   * Esegue una query di tipo INSERT per inserire il ristorante.
+   * La connessione viene recuperata dinamicamente e chiusa automaticamente grazie al blocco try-with-resources.
+   * </p>
+   * 
+   * @param place Luogo in cui si trova il ristorante.
+   * @param cuisine Tipologia di cucina.
+   * @param price Fascia di prezzo media.
+   * @param delivery Disponibilita' della consegna a domicilio.
+   * @param booking Disponibilita' di prenotazione.
+   * @param stars Fascia di stelle medie.
+   * @param lat Latitudine del ristorante.
+   * @param lon Longitudine del rsitorante.
+   * @param ownerId id del proprietario del ristorante.
+   * @return true se l'operazione va a buon fine, false altrimenti (o in caso di errore di connessione).
+   */
   public static boolean addRestaurant(String name, String address, String cuisine, String price, String delivery, String booking, double lat, double lon, int ownerId)
   {
     String sql = "INSERT INTO restaurants (name, address, cuisine, price, delivery, booking, latitude, longitude, owner_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
@@ -318,6 +420,16 @@ public class RestaurantQ {
     }
   }
 
+  /**
+   * Rimuove un ristorante del ristoratore.
+   * <p>
+   * Esegue una query di tipo DELETE per eliminare un ristorante specifico.
+   * La connessione viene recuperata dinamicamente e chiusa automaticamente grazie al blocco try-with-resources.
+   * </p>
+   * 
+   * @param restaurantId L'id del ristorante da eliminare.
+   * @return true se l'operazione va a buon fine, false altrimenti (o in caso di errore di connessione).
+   */
   public static boolean removeRestaurant(int restaurantId)
   {
     String sql = "DELETE FROM restaurants WHERE id = ?";

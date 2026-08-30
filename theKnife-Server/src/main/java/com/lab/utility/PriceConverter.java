@@ -1,5 +1,12 @@
+/**
+ * @author Devi Atti 754536  VA
+ * @author Zribi Khalil 758699 VA
+ */
 package com.lab.utility;
 
+/**
+ * Questa classe si occupa di converstire la fascia di prezzo ottenuta dal database dal formato simbolico ad un formato numerale comprensibile all'utente e viceversa.
+ */
 public class PriceConverter {
   
   public static String priceToSymbols(String priceRange)

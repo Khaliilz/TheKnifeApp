@@ -1,3 +1,7 @@
+/**
+ * @author Devi Atti 754536  VA
+ * @author Zribi Khalil 758699 VA
+ */
 package com.lab.database;
 
 import java.sql.Connection;
@@ -9,6 +13,10 @@ import java.nio.charset.StandardCharsets;
 import java.util.stream.Collectors;
 import com.lab.utility.StringColor;
 
+/**
+ * DatabaseInit inizializza il database tramite il metodo {@link #initialize()}
+ * Prende il file .sql rappresentante lo schema del database e costruisce le relazioni.
+ */
 public class DatabaseInit {
 
   public static void initialize()

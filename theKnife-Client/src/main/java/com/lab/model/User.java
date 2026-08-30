@@ -1,7 +1,15 @@
+/**
+ * @author Devi Atti 754536  VA
+ * @author Zribi Khalil 758699 VA
+ */
 package com.lab.model;
 
 import java.io.Serializable;
 
+/**
+ * Oggetto seriale rappresentante l'utente.
+ * Contiene i metodi getter per ottenere le informazioni specifiche relative ad un utente in particolare.
+ */
 public class User implements Serializable{
 
   private static final long serialVersionUID = 1L;

@@ -7,14 +7,11 @@ package com.lab;
 import javafx.fxml.FXMLLoader;
 import java.io.IOException;
 
-import com.lab.network.ServerConnection;
 import com.lab.utility.StringColor;
 
 import javafx.application.Application;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.layout.Pane;
-import javafx.scene.shape.Line;
 import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;

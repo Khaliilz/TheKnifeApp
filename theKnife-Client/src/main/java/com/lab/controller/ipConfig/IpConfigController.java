@@ -76,9 +76,9 @@ public class IpConfigController {
 
     CompletableFuture.supplyAsync(() -> {
       return ServerConnection.connect(serverIP);
-    }).thenAccept(connected -> {
+    }).thenAccept(success -> {
       Platform.runLater(() -> {
-        if(connected) loadMainApp(event);
+        if(success) loadMainApp(event);
         else {
           connectButton.setDisable(false);
           connectButton.setText("CONNETTITI");

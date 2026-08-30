@@ -1,3 +1,7 @@
+/**
+ * @author Devi Atti 754536  VA
+ * @author Zribi Khalil 758699 VA
+ */
 package com.lab.controller.user;
 
 import com.lab.utility.StringColor;
@@ -10,6 +14,12 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
 import javafx.stage.Stage;
 
+/**
+ * FilterController gestisce l'interfaccia relativa al popup dei filtri di ricerca.
+ * <p>
+ * Permette di ottenere dalle componenti grafiche, la metodologia di filtro da applicare alla ricerca.
+ * </p> 
+ */
 public class FilterController {
   
   @FXML private TextField cuisine_TF;
@@ -18,6 +28,15 @@ public class FilterController {
   @FXML private ToggleGroup starsGroup;
   @FXML private ToggleGroup bookingGroup;
 
+  /**
+   * Gestisce l'evento di scelta dei filtri di ricerca.
+   * <p>
+   * Decodifica i filtri scelti dall'utente dalle componenti grafiche.
+   * Le spedisce alla homepage dell'utente, la quale eseguira' la ricerca, chiamando il metodo {@link UserHomeController#applyFilters(String, String, String, String, String)}
+   * </p>
+   * 
+   * @param event L'evento scatenato dal click sul bottone Indietro
+   */
   @FXML
   public void applyFilterClicked(ActionEvent event)
   {

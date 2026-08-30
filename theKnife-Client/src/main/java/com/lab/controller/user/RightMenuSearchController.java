@@ -1,3 +1,7 @@
+/**
+ * @author Devi Atti 754536  VA
+ * @author Zribi Khalil 758699 VA
+ */
 package com.lab.controller.user;
 
 import java.io.IOException;
@@ -18,12 +22,23 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
+/**
+ * RightMenuSearchController gestisce l'interfaccia relativa al menu laterale e delle interazione con i suoi componenti grafici.
+ */
 public class RightMenuSearchController {
   
   @FXML private TextField luogo_TF;
   @FXML private Button bookmarkedButton;
   @FXML private Button reviewedButton;
 
+  /**
+   * initialize e' un metodo invocato automaticamente da JavaFX al caricamento del file fxml.
+   * <p>
+   * Reimposta la corretta visualizzazione dello stile degli input dell'utente.
+	 * Imposta la pressione del tasto invio all'evento {@link #searchClicked(ActionEvent)}
+   * Imposta la visualizzazione dei bottoni "recensiti" e "preferiti" visibili solo all'utente registrato.
+   * </p>
+   */
   @FXML
   public void initialize()
   {
@@ -38,6 +53,15 @@ public class RightMenuSearchController {
     }
   }
 
+  /**
+   * Gestisce l'evento di ricerca dei ristoranti.
+   * <p>
+   * Controlla la validita' degli input dell'utente.
+   * Chiama il metodo {@link UserHomeController#searchByPlace()} che si occupa di applicare la ricerca.
+   * </p>
+   * 
+   * @param event L'evento scatenato dal click sul bottone Cerca.
+   */
   @FXML
   public void searchClicked(ActionEvent event)
   {
@@ -55,6 +79,15 @@ public class RightMenuSearchController {
     UserHomeController.getInstance().searchByPlace(place);
   }
 
+  /**
+   * Gestisce l'evento di richiesta di selezione dei filtri.
+   * <p>
+   * Ottiene la risorsa del popup dei filtri tramite indirizzo.
+   * Ne configura la finestra e la mostra.
+   * </p>
+   * 
+   * @param event L'evento scatenato dal click sul bottone Filtra.
+   */
   @FXML
   public void filterClicked(ActionEvent event)
   {
@@ -81,6 +114,14 @@ public class RightMenuSearchController {
     }
   }
 
+  /**
+   * Gestisce l'evento di richiesta di visualizzazione dei ristoranti preferiti.
+   * <p>
+   * Chiama il metodo {@link UserHomeController#loadBookmarked()} che si occupa di visualizzare i ristoranti preferiti all'utente.
+   * </p>
+   * 
+   * @param event L'evento scatenato dal click sul bottone Preferiti.
+   */
   @FXML
   public void bookmarkClicked(ActionEvent event)
   {
@@ -88,6 +129,14 @@ public class RightMenuSearchController {
     System.out.println("[" + StringColor.GREEN + "AZIONE" + StringColor.RESET + "] Bookmark button clicked");
   }
 
+  /**
+   * Gestisce l'evento di richiesta di visualizzazione dei ristoranti recensiti.
+   * <p>
+   * Chiama il metodo {@link UserHomeController#loadReviews()} che si occupa di visualizzare i ristoranti recensiti all'utente.
+   * </p>
+   * 
+   * @param event L'evento scatenato dal click sul bottone Recensiti.
+   */
   @FXML
   public void reviewClicked(ActionEvent event)
   {

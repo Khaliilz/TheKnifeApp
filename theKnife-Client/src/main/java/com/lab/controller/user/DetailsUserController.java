@@ -1,10 +1,13 @@
+/**
+ * @author Devi Atti 754536  VA
+ * @author Zribi Khalil 758699 VA
+ */
 package com.lab.controller.user;
 
 import java.io.IOException;
 import java.rmi.RemoteException;
 import java.util.concurrent.CompletableFuture;
 import javafx.application.Platform;
-import java.util.List;
 
 import com.lab.model.Restaurant;
 import com.lab.model.Session;
@@ -20,8 +23,14 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 
+/**
+ * DetailsUserController gestisce l'interfaccia relativa ai dettagli di un ristorante per l'utente.
+ * <p>
+ * Permette di visualizzare maggiori informazioni relative ad un ristorante, di visualizzare le recensioni relative ad esse e anche di recensirlo.
+ * </p> 
+ */
 public class DetailsUserController {
-
+  
   @FXML private Text name_L;
   @FXML private Label address_L;
   @FXML private Label price_L;
@@ -35,6 +44,15 @@ public class DetailsUserController {
 
   private Restaurant restaurant;
   
+  /**
+   * Imposta il valore dei componenti grafici delle informazioni del ristorante.
+   * <p>
+   * Dal ristorante ottenuto dalla lista degli argomenti, ne prelega le informazioni e aggiorna la grafica testuale delle relative informazioni.
+   * Inoltre si occupa anche di chiamare il metodo {@link #loadReviews(int)} per caricare la lista delle recensioni relative al ristorante. 
+   * </p>
+   * 
+   * @param r Il ristorante da cui reperire i dati aggiuntivi.
+   */
   public void setDetails(Restaurant r)
 	{
     restaurant = r;
@@ -62,6 +80,14 @@ public class DetailsUserController {
     }
   }
 
+  /**
+   * Gestisce l'evento di ritorno indietro dalla visualizzazione dei dettagli del ristorante da parte di un utente.
+   * <p>
+   * Chiama il metodo {@link UserHomeController#closeDetails()} che si occupa della chiusura della sovrafinestra dei dettagli.
+   * </p>
+   * 
+   * @param event L'evento scatenato dal click sul bottone Indietro.
+   */
   @FXML
   public void backClicked(ActionEvent event)
 	{
@@ -69,15 +95,33 @@ public class DetailsUserController {
     UserHomeController.getInstance().closeDetails();
   }
 
+  /**
+   * Gestisce l'evento che permette all'utente di lasciare una recensione ad un ristorante.
+   * <p>
+   * Chiama il metodo {@link UserHomeController#openWriteComment(Restaurant)} che si occupa dell'apertura della finestra di dialogo che permette di eseguire la pratica per l'inserimento di una recensione.
+   * </p>
+   * 
+   * @param event L'evento scatenato dal click sul bottone Recensisci.
+   */
 	@FXML
   public void reviewClicked(ActionEvent event)
 	{
     System.out.println("[" + StringColor.GREEN + "ACTION] " + StringColor.RESET + "Review clicked");
 
-    String name = name_L.getText();
+    //String name = name_L.getText();
     UserHomeController.getInstance().openWriteComment(restaurant);
   }
 
+  /**
+   * Ottiene le recensioni del ristorante.
+   * <p>
+   * Il thread grafico perde momentaneamente il controllo, viene generato un thread asincrono in background che si occupa di inoltrare la richiesta dei dati al server remoto.
+   * Una volta ricevuta una risposta, il thread grafico riprende il controllo.
+   * Chiama il metodo {@link ReviewsRowController#setReviews(Stringp[])} che si occupa di collegare la visualizzazione grafica della singola recensione e i dati ottenuti.
+   * </p>
+   * 
+   * @param restaurantId id del ristorante da cui caricare le recensioni.
+   */
   private void loadReviews(int restaurantId)
   {
     listOfComments.getChildren().clear();
@@ -123,6 +167,9 @@ public class DetailsUserController {
     });
   }
 
+  /**
+   * Si occupa di richiamare il metodo {@link #loadReviews(int)} per aggiornare la lista delle recensioni dopo una modifica.
+   */
   public void refreshReviews()
   {
     if (restaurant != null) loadReviews(restaurant.getId());
