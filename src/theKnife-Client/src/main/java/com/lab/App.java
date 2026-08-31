@@ -38,6 +38,8 @@ public class App extends Application {
 	@Override
 	public void start(Stage stage)
 	{
+		System.out.println("\n" + StringColor.GREEN + "===== "+ StringColor.RESET + "THE KNIFE - CLIENT" + StringColor.GREEN + " =====" + StringColor.RESET + "\n");
+		
 		Parent root = null;
     try {
       root = FXMLLoader.load(App.class.getResource("/com/lab/fxml/ipConfig/ipConfig.fxml"));

@@ -5,6 +5,8 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Text?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.image.Image?>
 
 <HBox fx:id="row" alignment="CENTER_LEFT" stylesheets="@/com/lab/css/theKnifeStyle.css" xmlns="http://javafx.com/javafx/17.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.lab.controller.restaurateur.YourReviewsController">
   <HBox alignment="CENTER_LEFT" spacing="15">
@@ -16,7 +18,11 @@
 
   <HBox alignment="CENTER_LEFT" spacing="15">
     <Text fx:id="starsNum" styleClass="infos" text="value"/>
-    <Text fx:id="stars" styleClass="labels" text="Stelle"/>
+    <ImageView fitHeight="20" fitWidth="20" preserveRatio="true">
+      <image>
+        <Image url="/com/lab/img/starIcon.png" />
+      </image>
+    </ImageView>
   </HBox>
 
   <Pane HBox.hgrow="ALWAYS"/>

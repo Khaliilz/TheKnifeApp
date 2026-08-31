@@ -40,7 +40,7 @@ public class ServerMain {
    */
   public static void main(String[] args)
   {
-    System.out.println(StringColor.GREEN + "===== "+ StringColor.RESET + "THE KNIFE - SERVER" + StringColor.GREEN + " =====" + StringColor.RESET);
+    System.out.println("\n" + StringColor.GREEN + "===== "+ StringColor.RESET + "THE KNIFE - SERVER" + StringColor.GREEN + " =====" + StringColor.RESET + "\n");
     
     Scanner scanner = new Scanner(System.in);
     Boolean success;
@@ -62,6 +62,7 @@ public class ServerMain {
 
       System.out.print("\nVuoi formattare il database prima di iniziare? (S/N): ");
       String resetChoice = scanner.nextLine().trim();
+      if(resetChoice.isEmpty()) resetChoice = "N";
 
       Database.connect(host, user, password);
       

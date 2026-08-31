@@ -71,7 +71,7 @@ public class RightMenuSearchController {
     if(place.isEmpty() && Session.getCurrentUser() == null) {
       ErrorContainer.errorBorder(luogo_TF);
       error = true;
-    } else place = "vicino";
+    } else if(place.isEmpty() && Session.getCurrentUser() != null) place = "vicino";
 
     if(error) return;
 
