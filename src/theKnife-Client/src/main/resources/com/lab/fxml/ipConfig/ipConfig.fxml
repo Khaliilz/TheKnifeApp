@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.text.Text?>
+
+<StackPane fx:id="popup" prefWidth="640" prefHeight="350" stylesheets="@/com/lab/css/ipConfigStyle.css" xmlns="http://javafx.com/javafx/17.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.lab.controller.ipConfig.IpConfigController">
+  <VBox fx:id="mainArea" alignment="CENTER" spacing="20" maxWidth="620" maxHeight="330">
+        
+    <Text fx:id="title" text="Connessione al Server"/>
+        
+    <VBox spacing="20" alignment="CENTER">
+      <Label styleClass="labels" text="Indirizzo IP del Server:"/>
+      <TextField fx:id="ipContent" alignment="CENTER" minWidth="400" maxWidth="400" minHeight="40"  maxHeight="40"/>
+    </VBox>
+
+    <Label fx:id="errorLabel" alignment="CENTER" textAlignment="CENTER"/>
+        
+    <HBox alignment="CENTER" spacing="30">
+      <Button fx:id="exitButton" styleClass="redButton" text="ESCI" prefWidth="160"  prefHeight="50" onAction="#exitClicked"/>
+      <Button fx:id="connectButton" styleClass="greenButton" text="CONNETTITI" prefWidth="160"  prefHeight="50" onAction="#connectClicked"/>
+    </HBox>
+  </VBox>
+</StackPane>
