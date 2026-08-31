@@ -68,10 +68,10 @@ public class RightMenuSearchController {
     boolean error = false;
     String place = luogo_TF.getText();
     
-    if(place.isEmpty()) {
+    if(place.isEmpty() && Session.getCurrentUser() == null) {
       ErrorContainer.errorBorder(luogo_TF);
       error = true;
-    }
+    } else if(place.isEmpty() && Session.getCurrentUser() != null) place = "vicino";
 
     if(error) return;
 

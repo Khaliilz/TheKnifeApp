@@ -151,6 +151,7 @@ public class UserHomeController {
   public void loadNearest()
   {
     currentState = UserState.NEAREST;
+    currentSearchPlace = "";
 
     if(loadMoreButton != null) {
       loadMoreButton.setVisible(false);
@@ -296,6 +297,11 @@ public class UserHomeController {
    */
   public void searchByPlace(String place)
   {
+    if("vicino".equalsIgnoreCase(place.trim())) {
+      loadNearest();
+      return;
+    }
+
     currentState = UserState.SEARCH;
 
     closeWithoutRefresh();
@@ -305,7 +311,7 @@ public class UserHomeController {
     filterDelivery = null;
     filterBooking = null;
     filterStars = null;
-    currentSearchPlace = place;
+    currentSearchPlace = place.trim();
     currentSearchOffset = 0;
 
     listOfRestaurants.getChildren().clear();
@@ -327,6 +333,8 @@ public class UserHomeController {
   {
     closeWithoutRefresh();
     
+    currentState = UserState.SEARCH;
+
     filterCuisine = cuisine;
     filterPrice = price;
     filterDelivery = delivery;

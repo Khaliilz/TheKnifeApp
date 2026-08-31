@@ -242,7 +242,7 @@ public class RestaurantQ {
       "SELECT restaurants.id, restaurants.name, restaurants.address, restaurants.cuisine, restaurants.price, restaurants.delivery, restaurants.booking, " + haversineFormula() + " AS distance, COALESCE(AVG(reviews.stars), 0) AS avg_stars, COUNT(reviews.id) AS total_reviews " +
       "FROM restaurants " +
       "LEFT JOIN reviews ON restaurants.id = reviews.restaurant_id " +
-      "WHERE 1=1"
+      "WHERE 1=1 "
     );
 
     List<Object> params = new ArrayList<>();
