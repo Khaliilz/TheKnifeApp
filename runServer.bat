@@ -1,8 +1,7 @@
 @echo off
-title TheKnife - Client
+title TheKnife - Server
 
-IF EXIST "target\theknife-client-1.0-shaded.jar" GOTO AVVIA
-
+IF EXIST "bin\theknife-Server.jar" GOTO AVVIA
 echo.
 echo [INFO] File JAR non trovato. Avvio la compilazione con Maven...
 call mvn clean package
@@ -10,4 +9,4 @@ call mvn clean package
 :AVVIA
 echo.
 echo [INFO] Avvio in corso...
-java -jar target\theknife-client-1.0-shaded.jar
+java -jar bin\theknife-Server.jar
