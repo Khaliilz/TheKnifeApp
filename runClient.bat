@@ -5,7 +5,7 @@ IF EXIST "bin\theknife-Client.jar" GOTO AVVIA
 
 echo.
 echo [INFO] File JAR non trovato. Avvio la compilazione con Maven...
-call mvn clean package
+call mvn -f src\theKnife-Client\pom.xml clean package
 
 :AVVIA
 echo.

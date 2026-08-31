@@ -6,7 +6,7 @@
     <packaging>pom</packaging>
 
     <modules>
-        <module>theKnife-Client</module>
-        <module>theKnife-Server</module>
+        <module>src/theKnife-Client</module>
+        <module>src/theKnife-Server</module>
     </modules>
 </project>

@@ -23,7 +23,7 @@
               <goal>shade</goal>
             </goals>
             <configuration>
-              <outputFile>${project.basedir}/../bin/TheKnife-Server.jar</outputFile>
+              <outputFile>${project.basedir}/../../bin/TheKnife-Server.jar</outputFile>
               <shadedArtifactAttached>true</shadedArtifactAttached>
               <shadedClassifierName>shaded</shadedClassifierName>
               <transformers>
